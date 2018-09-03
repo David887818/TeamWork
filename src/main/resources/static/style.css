@@ -6,6 +6,8 @@
 
 .small {
     font-family: 'Varela Round', sans-serif;
+    font-size: 16px;
+    border: #00800061 1px solid;
 }
 
 .bold {
@@ -130,4 +132,19 @@
 .regBtn:hover{
    text-decoration:none;
     color: blue;
+}
+.loginForm{
+    margin: auto;
+    padding: 22px 108px 26px;
+    width: 396px;
+
+}
+.padding{
+    padding: 80px;
+}
+.width{
+    width: 500px;
+}
+.border-green{
+    border: #00800061 1px solid;
 }
