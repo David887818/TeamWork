@@ -1,0 +1,87 @@
+<!doctype html>
+<head>
+    <html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Jua|Varela+Round" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+    <title>GreenFB</title>
+    </head>
+<body>
+<div class="logBar ">
+    <div class="menuBar d-flex justify-content-between">
+        <div ><p class="GFBIcon">GreenFB</p></div>
+        <div >
+            <form>
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex flex-column">
+                        <label class="emailFont">Электронный адрес или номер телефона</label>
+                        <input class="border border-success rounded " type="email"
+                               name="email"/>
+                    </div>
+                    <div class="d-flex flex-column ml-5">
+                        <label class="emailFont">Пароль</label>
+                        <input class="  ml-2 border border-success rounded  "
+                               type="password"
+                               name="password"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class=" mainContent ">
+    <div class="main">
+        <div class="d-flex">
+            <div class="w-50 mt-5 mr-4">
+                <p class="GFBFont">
+                    GreenFB помогает вам всегда оставаться на связи и общаться со своими знакомыми.
+                </p>
+                <img class="w-100 indexImg" src="/099etSefEv-.png">
+            </div>
+            <div class="w-50">
+                <div class="mt-5">
+                    <div class="regFont">Регистрация</div>
+                    <div class="regFontSmall">Это бесплатно и всегда будет бесплатнo.</div>
+                </div>
+                <form class="d-flex mt-5 mb-5 flex-column">
+                    <div class="d-flex justify-content-between">
+                        <input placeholder="Имя" class="  inputFont border border-success rounded " type="text"
+                               name="name"/>
+                        <input placeholder="Фамилия" class="  inputFont ml-2 border border-success rounded  "
+                               type="text"
+                               name="surname"/>
+                    </div>
+                    <input placeholder="Номер мобильного телефона или эл. адрес"
+                           class=" inputFont mt-2 border border-success rounded " type="email"
+                           name="email"/>
+                    <input placeholder="Новый пароль" class=" inputFont mt-2 border border-success rounded "
+                           type="password"
+                           name="password"/>
+                    <span class="inputFont mt-2">Дата рождения</span>
+                    <input type="date" name="date" class="inputFont w-50  border border-success rounded ">
+                    <div class="d-flex w-50 mt-3 justify-content-center align-items-center regFontSmall ">
+                        <input class=" ml-2" type="radio" name="sex" value="male">
+                        <label class="mt-2 ml-2">Мужчина</label>
+                        <input class=" ml-2" type="radio" name="sex" value="female">
+                        <label class="mt-2 ml-2">Женщина</label>
+                    </div>
+                    <div class=" w-75">
+                        <p class="emailFont mt-2">Нажимая кнопку Регистрация, вы принимаете Условия Политику
+                            использования данных Политику в отношении файлов cookie. Вы можете получать от нас
+                            SMS-уведомления, отказаться от которых можно в любой момент.</p></div>
+                    <input type="submit" name="date" value="Регистрация" class="inputFont w-50 btn btn-success  border border-succes rounded ">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
