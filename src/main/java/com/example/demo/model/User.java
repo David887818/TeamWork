@@ -29,6 +29,9 @@ public class User {
     @Column(name = "user_type")
     @Enumerated(EnumType.STRING)
     private UserType userType;
+    @Column
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
     @Column(name = "pic_url")
     private String pic_url;
 }

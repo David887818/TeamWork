@@ -51,7 +51,7 @@
                     <div class="regFont">Регистрация</div>
                     <div class="regFontSmall">Это бесплатно и всегда будет бесплатнo.</div>
                 </div>
-                <form class="d-flex mt-5 mb-5 flex-column">
+                <form class="d-flex mt-5 mb-5 flex-column" action="/user/add" method="post" enctype="multipart/form-data">
                     <div class="d-flex justify-content-between">
                         <input placeholder="Имя" class="  inputFont border border-success rounded " type="text"
                                name="name"/>
@@ -68,16 +68,16 @@
                     <span class="inputFont mt-2">Дата рождения</span>
                     <input type="date" name="date" class="inputFont w-50  border border-success rounded ">
                     <div class="d-flex w-50 mt-3 justify-content-center align-items-center regFontSmall ">
-                        <input class=" ml-2" type="radio" name="sex" value="male">
+                        <input class=" ml-2" type="radio" name="gender" value="MALE">
                         <label class="mt-2 ml-2">Мужчина</label>
-                        <input class=" ml-2" type="radio" name="sex" value="female">
+                        <input class=" ml-2" type="radio" name="gender" value="FEMALE">
                         <label class="mt-2 ml-2">Женщина</label>
                     </div>
                     <div class=" w-75">
                         <p class="emailFont mt-2">Нажимая кнопку Регистрация, вы принимаете Условия Политику
                             использования данных Политику в отношении файлов cookie. Вы можете получать от нас
                             SMS-уведомления, отказаться от которых можно в любой момент.</p></div>
-                    <input type="submit" name="date" value="Регистрация" class="inputFont w-50 btn btn-success  border border-succes rounded ">
+                    <input type="submit" value="Регистрация" class="inputFont w-50 btn btn-success  border border-succes rounded ">
                 </form>
             </div>
         </div>

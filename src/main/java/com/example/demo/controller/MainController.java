@@ -14,14 +14,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class MainController {
     @GetMapping("/")
     public String mainPage() {
-        return "indexLog";
+        return "index";
     }
+
     @GetMapping("/homePage")
-    public String homePage(){
+    public String homePage() {
         return "home";
     }
+
     @GetMapping("/indexPage")
-    public String indexPage(){
+    public String indexPage() {
         return "login";
     }
 
@@ -32,7 +34,7 @@ public class MainController {
             modelMap.addAttribute("user", user);
             return "redirect:/homePage";
         }
-            return "redirect:/indexPage";
+        return "redirect:/indexPage";
     }
 //    @GetMapping("/indexLog")
 //    public String indPage(){

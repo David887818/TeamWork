@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.example.demo.model.Gender;
 import com.example.demo.model.User;
 import com.example.demo.model.UserType;
 import com.example.demo.repository.UserRepository;
@@ -33,6 +34,7 @@ public class DemoApplication implements CommandLineRunner {
                     .surname("admin")
                     .password(passwordEncoder.encode("admin"))
                     .userType(UserType.ADMIN)
+                    .gender(Gender.MALE)
                     .build();
             userRepository.save(admin);
         }
