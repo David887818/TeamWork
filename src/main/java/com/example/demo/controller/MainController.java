@@ -22,7 +22,7 @@ public class MainController {
     }
     @GetMapping("/indexPage")
     public String indexPage(){
-        return "index";
+        return "login";
     }
 
     @PostMapping("/loginUser")
