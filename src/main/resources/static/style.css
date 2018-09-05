@@ -25,6 +25,10 @@ body{
     width: 0;
     background-color: rgba(0, 0, 0, 0.71);
 }
+.panel::-webkit-scrollbar {
+    width: 0;
+    background-color: rgba(0, 0, 0, 0.71);
+}
 
 .messagePosition {
     position: absolute;
@@ -319,6 +323,12 @@ li {
 .description{
     font-size: 12px;
     border-bottom:solid 1px rgba(14, 95, 16, 0.11);
+}
+
+.panel {
+    height: 15vh;
+    overflow: auto;
+    padding: 70px;
 }
 
 .addTitle {
