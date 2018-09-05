@@ -40,14 +40,14 @@ public class MainController {
         return "index";
     }
 
-//    @GetMapping("/homePage")
-//    public String homePage() {
-//        return "home";
-//    }
+    @GetMapping("/userPage")
+    public String homePage() {
+        return "userPage";
+    }
 
     @GetMapping("/indexPage")
     public String indexPage() {
-        return "home";
+        return "redirect:/homePage";
     }
 
     @GetMapping("/homePage")

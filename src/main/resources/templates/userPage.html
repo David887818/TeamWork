@@ -60,11 +60,11 @@
 </div>
 
 <div class="d-flex sideNavTwo">
-    <div class=" bg-light borderRounded naveTwo border col-md-4 ml-2">33333333</div>
     <div class=" naveOne  col-md-7">
         <form action="/post/addPost" method="post" enctype="multipart/form-data">
             <div class="addPost mt-2 borderRounded border bg-light">
-                <div class="description m-2 w-100"><i class="fas iGreen fa-pencil-alt"></i><span>Сделать публикацию</span></div>
+                <div class="description mt-2 d-flex justify-content-center  w-100"><i
+                        class="fas iGreen fa-pencil-alt"></i><span class="ml-2">Сделать публикацию</span></div>
                 <div class="d-flex addTitle">
                     <div class="d-flex justify-content-center align-items-center w-25">
                         <img class="titlePic" src="/user.png" alt="">
@@ -76,16 +76,17 @@
                     </div>
                 </div>
                 <div class="addImage d-flex mt-2">
-                    <input type="file" name="image" class="btn m-1 btn-success w-50">
-                    <input type="submit" class="btn m-1 btn-outline-success w-50">
+                    <input type="file" placeholder="Загрузить фото " name="image" class="btn m-1 btn-success w-50">
+                    <input type="submit" value="отправить" class="btn m-1 btn-outline-success w-50">
                 </div>
 
             </div>
         </form>
         <div class="post mt-2 borderRounded border bg-light">
-            <div class="postUser m-2 d-flex">
+            <div class="postUser m-2 d-flex justify-content-between">
                 <a href="/userPage"><img src="/user.png" alt=""> <span
                         class="iconFontBar">user user</span> </a>
+                <p><i class="far iGreen fa-clock"></i> Date 21.21.21</p>
             </div>
             <div class="postTitle m-2">
                 <span> Keyt Upton</span>
@@ -103,11 +104,18 @@
                 <a class="w-50 m-1"><i class="far iGreen fa-thumbs-up"></i><span class="ml-1 ">Нравится</span></a>
                 <a class="w-50 m-1"><i class="far iGreen fa-comments"></i><span class="ml-1 ">Комментарий</span></a>
             </div>
+
+            <div class="d-flex postHr justify-content-center">
+                <hr/>
+            </div>
+            <div class="panel w-100 mt-2">
+                <div class="d-flex">sads</div>
+            </div>
         </div>
 
     </div>
+    <div class=" bg-light borderRounded naveTwo border col-md-4 ml-2">33333333</div>
 </div>
-
 
 <div class="borderMessage sideNavThree">
     <div>

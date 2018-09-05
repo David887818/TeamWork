@@ -42,10 +42,10 @@ public class PostController {
         return "redirect:/homePage";
     }
 
-    @GetMapping(value = "/adImage")
+    @GetMapping(value = "/userImage")
     public @ResponseBody
-    byte[] userImage(@RequestParam("pic_url") String pic_url) throws IOException {
-        InputStream in = new FileInputStream(adPicDir + pic_url);
+    byte[] userImage(@RequestParam("picUrl") String picUrl) throws IOException {
+        InputStream in = new FileInputStream(adPicDir + picUrl);
         return IOUtils.toByteArray(in);
     }
 }
