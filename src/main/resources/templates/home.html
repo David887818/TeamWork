@@ -3,27 +3,102 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Jua|Varela+Round" rel="stylesheet">
     <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+          integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <title>GreenFB</title>
-    </head>
+</head>
 <body>
-<div class="navbar ">
+<div class="navBar">
+    <div class="navBarMin  d-flex">
+        <div class="input-group d-flex  w-50">
+            <div class="G"><i class="fab fa-gofore"></i></div>
+            <input type="text" class="search w-75" placeholder="Поиск">
+            <div class="input-group-append">
+                <a href="/">
+                    <button class="search " type="button"><i class="fas fa-search"></i></button>
+                </a>
+            </div>
+        </div>
+        <div class="w-50 ml-4 d-flex ">
+            <ul class="d-flex mt-2 barIcons">
+                <li><a class="iconHover" href="/"><img class="userPicBar border border-light" src="/user.png" alt=""> <span
+                        class="iconFontBar">user</span></a>
+                </li>
+                <li class="ml-2"><a class="iconHover" href="/"><span class="iconFontBar">Главная</span></a></li>
+                <li class="ml-2"><a class="iconHover" href="/"><i class="fas fa-user-friends iWhite"></i></i></a></li>
+                <li class="ml-2"><a class="iconHover" href="/"><i class="fab fa-facebook-messenger iWhite"> </i></a></li>
+                <li class="ml-2"><a class="iconHover" href="/"><i class="far fa-bell iWhite"></i></a></li>
+            </ul>
+            <ul class="mt-1">
+                <li class="ml-2"><a class="iconHover" href="/"><i class="fas fa-sort-down   iWhite"></i></a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="d-flex">
+
+    <div class=" sideNav">
+        <div>
+            <ul>
+                <li><a class="iconHover" href="/"><img class="userPic" src="/user.png" alt=""> <span
+                        class="ml-2 iconFont">user user</span></a>
+                </li>
+                <li class="mt-3"><a class="iconHover" href="/"><i class="fas fa-columns iGreen"></i> <span
+                        class="ml-1 iconFont">Лента новостей</span></a>
+                </li>
+                <li class="mt-1"><a class="iconHover" href="/"><i class="fab fa-facebook-messenger iGreen"> </i> <span
+                        class="ml-2 iconFont">messenger</span></a></li>
+
+            </ul>
+        </div>
+
+        <div class="mt-3">
+            <h4 class="iconFontInteresting">Интересное</h4>
+            <ul>
+                <li class="mt-1"><a class="iconHover" href="/"><i class="fas fa-ribbon iGreen"></i> <span
+                        class="ml-1 iconFont">Лента Страниц</span></a>
+                </li>
+                <li class="mt-1"><a class="iconHover" href="/"><i class="fas fa-calendar iGreen"></i> <span
+                        class="ml-1 iconFont">Мероприятия</span></a></li>
+                <li class="mt-1"><a class="iconHover" href="/"><i class="fas fa-flag iGreen"> </i> <span
+                        class="ml-2 iconFont">Страницы</span></a></li>
+                <li class="mt-1"><a class="iconHover" href="/"><i class="fas fa-users iGreen"></i> </i> <span
+                        class="ml-2 iconFont">Группы</span></a></li>
+                <li class="mt-1"><a class="iconHover" href="/"><i class="fas fa-sun iGreen"> </i> <span
+                        class="ml-2 iconFont">Погода</span></a></li>
+
+            </ul>
+        </div>
+    </div>
+
+    <div class="d-flex border border-dark sideNavTwo">
+        <div class="border naveOne border-dark col-md-7">22222222</div>
+        <div class="border naveTwo border-dark col-md-5 ml-2">33333333</div>
+    </div>
+
+    <div class="borderMessage sideNavthree">
+        <div>
+            <div class="d-flex iconHover">
+                <ul class="d-flex m-2">
+                    <li class="d-flex"> <img class="userPicMessage" src="/user.png"><span class="ml-3 mt-1">User</span> <span class="ml-2 mt-1">User</span></li>
+                </ul>
+            </div>
+        </div>
+        <div>
+
+        </div>
+    </div>
 
 </div>
-
-<div class="border border-dark sidenav">sddgsdg</div>
-<div class="d-flex border border-dark sidenavtwo">
-    <div class="border border-dark col-md-7">dgdfhdfh</div>
-    <div class="border border-dark col-md-5 ml-2">dgdfhdfh</div>
-</div>
-<div class="border border-dark sidenavthree">sddgsdg</div>
-
 </body>
 </html>

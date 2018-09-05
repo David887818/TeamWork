@@ -24,7 +24,7 @@ public class MainController {
 
     @GetMapping("/indexPage")
     public String indexPage() {
-        return "login";
+        return "home";
     }
 
     @PostMapping("/loginUser")
