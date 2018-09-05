@@ -62,6 +62,6 @@ public class UserController {
         User user = ((CurrentUser) userDetails).getUser();
         user.setPic_url(picName);
 
-        return "redirect:/home";
+        return "redirect:/homePage";
     }
 }

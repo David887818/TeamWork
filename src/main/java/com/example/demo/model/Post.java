@@ -25,6 +25,8 @@ public class Post {
     private String description;
     @Column(name = "created_date")
     private Date date;
+    @ManyToOne
+    private User user_id;
     @Column
     private String pic_url;
     @OneToMany
