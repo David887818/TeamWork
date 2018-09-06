@@ -45,18 +45,18 @@
                         </li>
                     </div>
                 </div>
-                    <div class="iconHover">
-                        <li class="ml-2"><a href="/homePage"><span class="iconFontBar">Home</span></a></li>
-                    </div>
-                    <div class="iconHover">
-                        <li class="ml-2"><a href="/"><i class="fas fa-user-friends iWhite"></i></i></a></li>
-                    </div>
-                    <div class="iconHover">
-                        <li class="ml-2"><a href="/"><i class="fab fa-facebook-messenger iWhite"> </i></a></li>
-                    </div>
-                    <div class="iconHover">
-                        <li class="ml-2"><a href="/"><i class="far fa-bell iWhite"></i></a></li>
-                    </div>
+                <div class="iconHover">
+                    <li class="ml-2"><a href="/homePage"><span class="iconFontBar">Home</span></a></li>
+                </div>
+                <div class="iconHover">
+                    <li class="ml-2"><a href="/"><i class="fas fa-user-friends iWhite"></i></i></a></li>
+                </div>
+                <div class="iconHover">
+                    <li class="ml-2"><a href="/"><i class="fab fa-facebook-messenger iWhite"> </i></a></li>
+                </div>
+                <div class="iconHover">
+                    <li class="ml-2"><a href="/"><i class="far fa-bell iWhite"></i></a></li>
+                </div>
 
             </ul>
             <ul class="mt-1 ">
@@ -150,15 +150,15 @@
 
             <div class="post mt-2 borderRounded border bg-light" th:if="${posts !=null}" th:each="post : ${posts}">
                 <div class="postUser m-2 d-flex justify-content-between">
-                    <div th:if="${us.pic_url != null}">
+                    <div th:if="${post.user.pic_url != null}">
                         <a href="#"><img th:src="@{'/post/userImage?'(picUrl=${post.user.getPic_url()})}"> <span
                                 th:text="${post.user.name}+${post.user.surname} " class="iconFontBar"></span> </a>
                     </div>
-                    <div th:if="${us.pic_url == null}">
+                    <div th:if="${post.user.pic_url == null}">
                         <a href="#"><img src="/user.png"> <span
                                 th:text="${post.user.name}+${post.user.surname} " class="iconFontBar"></span> </a>
                     </div>
-                    <p class="dateFont" th:text="'Date'+' '+${post.date}"><i class="far iGreen fa-clock"></i></p>
+                    <p class="dateFont" th:text="'Date'+ ' '+ ${post.date}"><i class="far iGreen fa-clock"></i></p>
 
                 </div>
                 <div class="postTitle m-2">
@@ -175,36 +175,48 @@
                 </div>
                 <div class="postComment d-flex">
                     <a class="w-50 m-1"><i class="far iGreen fa-thumbs-up"></i><span
-                            class="ml-1 ">Нравится</span></a>
-                    <a class="w-50 m-1"><i class="far iGreen fa-comments"></i><span class="ml-1 ">Комментарий</span></a>
+                            class="ml-1 ">Like</span></a>
+                    <a class="w-50 m-1"><i class="far iGreen fa-comments"></i><span class="ml-1 ">Comment</span></a>
                 </div>
                 <div class="d-flex postHr justify-content-center">
                     <hr/>
                 </div>
-                <div class="panel w-100 mt-2">
-                    <div class="d-flex">sads</div>
+                <div class="panel w-100 mt-2 ">
+                    <div class="d-flex  align-items-center mt-3" th:each="commentts : ${post.comments}">
+                        <div  th:if="${commentts.user.pic_url != null}">
+                            <div style="display: flex"><img style="width:50px; height: 50px; border-radius: 50%" th:src="@{'/user/adImage?'(pic_url=${commentts.user.pic_url})}"> </div>
+                        </div>
+                        <div th:if="${commentts.user.pic_url == null}">
+                            <div style="display: flex"><img style="width:50px; height: 50px; border-radius: 50%" src="/user.png"></div>
+                        </div>
+                        <div class="ml-3" th:text="${commentts.comment}"></div>
+                    </div>
+                </div>
+                <form class="d-flex" action="/addComment" method="post" style="margin-top: 10px">
+                    <input class="w-100 btn btn-outline-success" type="text" name="comment"
+                           placeholder="Write Comment">
+                    <input type="hidden" name="post_id" th:value="${post.id}"/>
+                    <input type="hidden" name="user_id" th:value="${us.id}">
+                    <input type="submit" class="btn btn-outline-success" value="Add">
+                </form>
+            </div>
+            <div class="borderMessage sideNavThree">
+                <div>
+                    <div class="d-flex messagePosition iconHover">
+                        <ul class="d-flex m-2">
+                            <li class="d-flex"><img class="userPicMessage" src="/user.png"><span
+                                    class="ml-3 mt-1">User</span>
+                                <span class="ml-2 mt-1">User</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+
                 </div>
             </div>
 
         </div>
         <div class=" bg-light borderRounded naveTwo border col-md-4 ml-2">33333333</div>
     </div>
-
-    <div class="borderMessage sideNavThree">
-        <div>
-            <div class="d-flex messagePosition iconHover">
-                <ul class="d-flex m-2">
-                    <li class="d-flex"><img class="userPicMessage" src="/user.png"><span
-                            class="ml-3 mt-1">User</span>
-                        <span class="ml-2 mt-1">User</span></li>
-                </ul>
-            </div>
-        </div>
-        <div>
-
-        </div>
-    </div>
-
-</div>
 </body>
 </html>
