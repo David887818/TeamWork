@@ -20,7 +20,7 @@ import java.text.SimpleDateFormat;
 @Controller
 @RequestMapping("/post")
 public class PostController {
-    public SimpleDateFormat sdf = new SimpleDateFormat("yyyy-dd-mm");
+    public SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd 'at' HH:mm z");
     @Autowired
     PostRepository postRepository;
     @Autowired
