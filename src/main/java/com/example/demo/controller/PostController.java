@@ -29,7 +29,7 @@ public class PostController {
     private String adPicDir;
 
     @PostMapping("/addPost")
-    public String addAdvertise(@ModelAttribute Post post,@RequestParam("user_id") int id,
+    public String addAdvertise(@ModelAttribute Post post, @RequestParam("user_id") int id,
 
                                @RequestParam("image") MultipartFile multipartFile) {
         File dir = new File(adPicDir);

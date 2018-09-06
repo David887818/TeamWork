@@ -127,14 +127,63 @@ body {
     height: 100%;
 }
 
+.w-85{
+    width: 85%;
+    margin-top: 50px;
+}
+
+.profilePic{
+    background-image: url("/keyt-apton-10000x4840-keyt-apton-17362.jpg");
+    width: 150px;
+    height: 150px;
+    position: static;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.profileToolBar{
+    width: 780px;
+    height: 50px;
+    background-color: #0e5f1063;
+}
+
+.profileBar{
+    height: 50px;
+    width: 50px;
+    background-color: #0e5f1063;
+}
+.profileToolBar ul li{
+    width: 150px;
+    margin-top: 14px;
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    font-size: 17px;
+    color: white;
+}
+.profileToolBar ul li a{
+    color: white;
+}
+.profileToolBar ul li a:hover{
+    background-color: #0d4f0e;
+}
+
 .userProfile {
     top: 50px;
     width: 980px;
     min-width: 820px;
-    left: 10%;
-    height: 200px;
-    border: solid 1px;
-    position: absolute;
+    height: 350px;
+}
+
+.backgroundImg{
+    height: 100%;
+    width: 100%;
+    min-height: 350px;
+    position: static;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("/keyt-apton-10000x4840-keyt-apton-17362.jpg");
 }
 
 .naveTwo {
@@ -142,9 +191,11 @@ body {
     min-height: 350px;
     max-height: 450px;
 }
+
 .border-50{
     border-radius: 50%;
 }
+
 .dateFont {
     font-family: 'Varela Round', sans-serif;
     font-size: 10px;
