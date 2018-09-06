@@ -21,17 +21,17 @@
             <form th:action="@{/}"  method="post">
                 <div class="d-flex justify-content-between">
                     <div class="d-flex flex-column">
-                        <label class="emailFont">Электронный адрес или номер телефона</label>
+                        <label class="emailFont ml-2">Email or Phone</label>
                         <input class="border border-success rounded " type="email"
                                name="email"/>
                     </div>
                     <div class="d-flex flex-column ml-5">
-                        <label class="emailFont">Пароль</label>
+                        <label class="emailFont ml-3">Password</label>
                         <input class="  ml-2 border border-success rounded  "
                                type="password"
                                name="password"/>
                     </div>
-                    <input type="submit" value="Вход" class="login  ml-3 mt-4 btn btn-primary">
+                    <input type="submit" value="Log in" class="login  ml-3 mt-4 btn btn-success">
                 </div>
             </form>
         </div>
@@ -42,42 +42,42 @@
         <div class="d-flex">
             <div class="w-50 mt-5 mr-4">
                 <p class="GFBFont">
-                    GreenFB помогает вам всегда оставаться на связи и общаться со своими знакомыми.
+                    Connect with friends and the
+                    world around you on GreenFB.
                 </p>
                 <img class="w-100 indexImg" src="/099etSefEv-.png">
             </div>
             <div class="w-50">
                 <div class="mt-5">
-                    <div class="regFont">Регистрация</div>
-                    <div class="regFontSmall">Это бесплатно и всегда будет бесплатнo.</div>
+                    <div class="regFont">Create a New Account</div>
+                    <div class="regFontSmall">It’s free and always will be.</div>
                 </div>
                 <form class="d-flex mt-5 mb-4 flex-column" action="/user/add" method="post" enctype="multipart/form-data">
                     <div class="d-flex justify-content-between">
-                        <input placeholder="Имя" class="  inputFont border border-success rounded " type="text"
+                        <input placeholder="Name" class="  inputFont border border-success rounded " type="text"
                                name="name"/>
-                        <input placeholder="Фамилия" class="  inputFont ml-2 border border-success rounded  "
+                        <input placeholder="Surname" class="  inputFont ml-2 border border-success rounded  "
                                type="text"
                                name="surname"/>
                     </div>
-                    <input placeholder="Номер мобильного телефона или эл. адрес"
+                    <input placeholder="Email address or Phone number"
                            class=" inputFont mt-2 border border-success rounded " type="email"
                            name="email"/>
-                    <input placeholder="Новый пароль" class=" inputFont mt-2 border border-success rounded "
+                    <input placeholder="New password" class=" inputFont mt-2 border border-success rounded "
                            type="password"
                            name="password"/>
-                    <span class="inputFont mt-2">Дата рождения</span>
+                    <span class="inputFont mt-2">Date of birth</span>
                     <input type="date" name="date" class="inputFont w-50  border border-success rounded ">
                     <div class="d-flex w-50 mt-3 justify-content-center align-items-center regFontSmall ">
                         <input class=" ml-2" type="radio" name="gender" value="MALE">
-                        <label class="mt-2 ml-2">Мужчина</label>
+                        <label class="mt-2 ml-2">Male</label>
                         <input class=" ml-2" type="radio" name="gender" value="FEMALE">
-                        <label class="mt-2 ml-2">Женщина</label>
+                        <label class="mt-2 ml-2">Female</label>
                     </div>
                     <div class=" w-75">
-                        <p class="emailFont mt-2">Нажимая кнопку Регистрация, вы принимаете Условия Политику
-                            использования данных Политику в отношении файлов cookie. Вы можете получать от нас
-                            SMS-уведомления, отказаться от которых можно в любой момент.</p></div>
-                    <input type="submit" value="Регистрация" class="inputFont w-50 btn btn-success  border border-succes rounded ">
+                        <p class="emailFont mt-2">By clicking Sign Up, you agree to our Terms, Data Policy and Cookies Policy.
+                            You may receive SMS Notifications from us and can opt out any time.</p></div>
+                    <input type="submit" value="Sign Up" class="inputFont w-50 btn btn-success  border border-succes rounded ">
                 </form>
             </div>
         </div>

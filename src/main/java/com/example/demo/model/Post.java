@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -24,11 +24,11 @@ public class Post {
     @Column
     private String description;
     @Column(name = "created_date")
-    private Date date;
-    @ManyToOne
-    private User user_id;
+    private String date;
     @Column
     private String pic_url;
+    @ManyToOne
+    private User user;
     @OneToMany
     private List<Comment> comments;
 

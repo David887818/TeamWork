@@ -126,8 +126,8 @@
 
             <div class="post mt-2 borderRounded border bg-light" th:if="${posts !=null}" th:each="post : ${posts}">
                 <div class="postUser m-2 d-flex justify-content-between">
-                    <a href="#"><img  th:src="@{'/post/userImage?'(picUrl=${post.user_id.getPic_url()})}"> <span
-                            th:text="${post.user_id.name}+${post.user_id.surname} "  class="iconFontBar"></span> </a>
+                    <a href="#"><img  th:src="@{'/post/userImage?'(picUrl=${post.user.getPic_url()})}"> <span
+                            th:text="${post.user.name}+${post.user.surname} "  class="iconFontBar"></span> </a>
                     <p class="dateFont" th:text="'Date'+' '+${post.date}"><i class="far iGreen fa-clock"></i> </p>
                 </div>
                 <div class="postTitle m-2">
