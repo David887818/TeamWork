@@ -22,7 +22,7 @@
     <div class="navBarMin  d-flex">
         <div class="input-group d-flex  w-50">
             <div class="G"><a href="/homePage"><i class="fab fa-gofore"></i></a></div>
-            <input type="text" class="search w-75" placeholder="Поиск">
+            <input type="text" class="search w-75" placeholder="Search">
             <div class="input-group-append">
                 <a href="/">
                     <button class="search" type="button"><i class="fas fa-search"></i></button>
@@ -33,23 +33,30 @@
             <ul class="d-flex mt-2 barIcons">
 
                 <div class="iconHover">
-                    <li><a href="/userPage"><img class="userPicBar m-1 border border-light"
-                                                 th:src="@{'/post/userImage?'(picUrl=${us.getPic_url()})}"> <span
-                            th:text="${us.name} + ' ' + ${us.surname}" class=" iconFontBar"></span></a>
-                    </li>
+                    <div th:if="${us.pic_url != null}">
+                        <li><a href="/userPage"><img class="userPicBar m-1 border border-light"
+                                                     th:src="@{'/post/userImage?'(picUrl=${us.getPic_url()})}"> <span
+                                th:text="${us.name} + ' ' + ${us.surname}" class=" iconFontBar"></span></a>
+                        </li>
+                    </div>
+                    <div th:if="${us.pic_url == null}">
+                        <li><a href="/userPage"><img class="userPicBar m-1 border border-light" src="/user.png">
+                            <span th:text="${us.name} + ' ' + ${us.surname}" class=" iconFontBar"></span></a>
+                        </li>
+                    </div>
                 </div>
-                <div class="iconHover">
-                    <li class="ml-2"><a href="/homePage"><span class="iconFontBar">Главная</span></a></li>
-                </div>
-                <div class="iconHover">
-                    <li class="ml-2"><a href="/"><i class="fas fa-user-friends iWhite"></i></i></a></li>
-                </div>
-                <div class="iconHover">
-                    <li class="ml-2"><a href="/"><i class="fab fa-facebook-messenger iWhite"> </i></a></li>
-                </div>
-                <div class="iconHover">
-                    <li class="ml-2"><a href="/"><i class="far fa-bell iWhite"></i></a></li>
-                </div>
+                    <div class="iconHover">
+                        <li class="ml-2"><a href="/homePage"><span class="iconFontBar">Home</span></a></li>
+                    </div>
+                    <div class="iconHover">
+                        <li class="ml-2"><a href="/"><i class="fas fa-user-friends iWhite"></i></i></a></li>
+                    </div>
+                    <div class="iconHover">
+                        <li class="ml-2"><a href="/"><i class="fab fa-facebook-messenger iWhite"> </i></a></li>
+                    </div>
+                    <div class="iconHover">
+                        <li class="ml-2"><a href="/"><i class="far fa-bell iWhite"></i></a></li>
+                    </div>
 
             </ul>
             <ul class="mt-1 ">
@@ -81,32 +88,30 @@
                 </div>
                 <div class="iconHover">
                     <li class="mt-3"><a href="/homePage"><i class="fas fa-columns iGreen"></i> <span
-                            class="ml-1 iconFont">Лента новостей</span></a>
+                            class="ml-1 iconFont">News Feed</span></a>
                     </li>
                 </div>
                 <div class="iconHover">
                     <li class="mt-1"><a href="/"><i class="fab fa-facebook-messenger iGreen"> </i> <span
                             class="ml-2 iconFont">messenger</span></a></li>
                 </div>
-
-
             </ul>
         </div>
 
         <div class="mt-3">
-            <h4 class="iconFontInteresting">Интересное</h4>
+            <h4 class="iconFontInteresting">Explore</h4>
             <ul>
                 <li class="mt-1"><a class="iconHover" href="/"><i class="fas fa-ribbon iGreen"></i> <span
-                        class="ml-1 iconFont">Лента Страниц</span></a>
+                        class="ml-1 iconFont">News Feed</span></a>
                 </li>
                 <li class="mt-1"><a class="iconHover" href="/"><i class="fas fa-calendar iGreen"></i> <span
-                        class="ml-1 iconFont">Мероприятия</span></a></li>
+                        class="ml-1 iconFont">Events</span></a></li>
                 <li class="mt-1"><a class="iconHover" href="/"><i class="fas fa-flag iGreen"> </i> <span
-                        class="ml-2 iconFont">Страницы</span></a></li>
+                        class="ml-2 iconFont">Pages</span></a></li>
                 <li class="mt-1"><a class="iconHover" href="/"><i class="fas fa-users iGreen"></i> </i> <span
-                        class="ml-2 iconFont">Группы</span></a></li>
+                        class="ml-2 iconFont">Groups</span></a></li>
                 <li class="mt-1"><a class="iconHover" href="/"><i class="fas fa-sun iGreen"> </i> <span
-                        class="ml-2 iconFont">Погода</span></a></li>
+                        class="ml-2 iconFont">Weather</span></a></li>
 
             </ul>
         </div>
@@ -117,11 +122,16 @@
             <form action="/post/addPost" method="post" enctype="multipart/form-data">
                 <div class="addPost mt-2 borderRounded border bg-light">
                     <div class="description mt-2 d-flex justify-content-center w-100"><i
-                            class="fas iGreen fa-pencil-alt"></i><span class="ml-2 mb-2">Сделать публикацию</span></div>
+                            class="fas iGreen fa-pencil-alt"></i><span class="ml-2 mb-2">Compose Post</span></div>
                     <div class="d-flex addTitle">
-
                         <div class="d-flex justify-content-center align-items-center w-25">
-                            <img class="titlePic border-50" th:src="@{'/post/userImage?'(picUrl=${us.getPic_url()})}">
+                            <div th:if="${us.pic_url != null}">
+                                <img class="titlePic border-50"
+                                     th:src="@{'/post/userImage?'(picUrl=${us.getPic_url()})}">
+                            </div>
+                            <div th:if="${us.pic_url == null}">
+                                <img class="titlePic border-50" src="/user.png">
+                            </div>
                         </div>
                         <div class="d-flex justify-content-center align-items-center w-75">
                         <textarea placeholder="что у вас нового?" class="bg-light" name="name" rows="2" cols="40">
@@ -140,9 +150,16 @@
 
             <div class="post mt-2 borderRounded border bg-light" th:if="${posts !=null}" th:each="post : ${posts}">
                 <div class="postUser m-2 d-flex justify-content-between">
-                    <a href="#"><img th:src="@{'/post/userImage?'(picUrl=${post.user.getPic_url()})}"> <span
-                            th:text="${post.user.name}+${post.user.surname} " class="iconFontBar"></span> </a>
+                    <div th:if="${us.pic_url != null}">
+                        <a href="#"><img th:src="@{'/post/userImage?'(picUrl=${post.user.getPic_url()})}"> <span
+                                th:text="${post.user.name}+${post.user.surname} " class="iconFontBar"></span> </a>
+                    </div>
+                    <div th:if="${us.pic_url == null}">
+                        <a href="#"><img src="/user.png"> <span
+                                th:text="${post.user.name}+${post.user.surname} " class="iconFontBar"></span> </a>
+                    </div>
                     <p class="dateFont" th:text="'Date'+' '+${post.date}"><i class="far iGreen fa-clock"></i></p>
+
                 </div>
                 <div class="postTitle m-2">
                     <span th:text="${post.name}"></span>
@@ -157,7 +174,8 @@
                     <hr/>
                 </div>
                 <div class="postComment d-flex">
-                    <a class="w-50 m-1"><i class="far iGreen fa-thumbs-up"></i><span class="ml-1 ">Нравится</span></a>
+                    <a class="w-50 m-1"><i class="far iGreen fa-thumbs-up"></i><span
+                            class="ml-1 ">Нравится</span></a>
                     <a class="w-50 m-1"><i class="far iGreen fa-comments"></i><span class="ml-1 ">Комментарий</span></a>
                 </div>
                 <div class="d-flex postHr justify-content-center">
@@ -176,7 +194,8 @@
         <div>
             <div class="d-flex messagePosition iconHover">
                 <ul class="d-flex m-2">
-                    <li class="d-flex"><img class="userPicMessage" src="/user.png"><span class="ml-3 mt-1">User</span>
+                    <li class="d-flex"><img class="userPicMessage" src="/user.png"><span
+                            class="ml-3 mt-1">User</span>
                         <span class="ml-2 mt-1">User</span></li>
                 </ul>
             </div>
