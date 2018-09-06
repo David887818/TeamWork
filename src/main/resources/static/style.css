@@ -4,15 +4,15 @@
     box-sizing: border-box;
 }
 
-body{
+body {
     background-color: rgba(110, 255, 32, 0.05);
 }
 
-.postLike:hover{
+.postLike:hover {
     text-decoration: underline;
 }
 
-.post hr{
+.post hr {
     width: 90%;
 }
 
@@ -25,6 +25,7 @@ body{
     width: 0;
     background-color: rgba(0, 0, 0, 0.71);
 }
+
 .panel::-webkit-scrollbar {
     width: 0;
     background-color: rgba(0, 0, 0, 0.71);
@@ -126,10 +127,28 @@ body{
     height: 100%;
 }
 
+.userProfile {
+    top: 50px;
+    width: 980px;
+    min-width: 820px;
+    left: 10%;
+    height: 200px;
+    border: solid 1px;
+    position: absolute;
+}
+
 .naveTwo {
     height: 400px;
     min-height: 350px;
     max-height: 450px;
+}
+.border-50{
+    border-radius: 50%;
+}
+.dateFont {
+    font-family: 'Varela Round', sans-serif;
+    font-size: 10px;
+    color: rgba(14, 95, 16, 0.2);
 }
 
 .sideNavThree {
@@ -288,9 +307,9 @@ a:hover {
     color: white;
 }
 
-.titlePic{
+.titlePic {
     width: 60px;
-    height:60px;
+    height: 60px;
 }
 
 li {
@@ -320,9 +339,9 @@ li {
     width: 45px;
 }
 
-.description{
+.description {
     font-size: 15px;
-    border-bottom:solid 1px rgba(14, 95, 16, 0.11);
+    border-bottom: solid 1px rgba(14, 95, 16, 0.11);
 }
 
 .panel {
@@ -335,9 +354,9 @@ li {
     height: 70px;
 }
 
-.addImage{
-    border-top:solid 1px rgba(14, 95, 16, 0.1);
-    height:50px;
+.addImage {
+    border-top: solid 1px rgba(14, 95, 16, 0.1);
+    height: 50px;
 }
 
 .barIcons li::after {
@@ -368,22 +387,22 @@ li {
     color: rgba(14, 39, 1, 0.72);
 }
 
-.borderRounded{
+.borderRounded {
     border-radius: 10px;
 }
 
-.postComment a{
+.postComment a {
     align-items: center;
     justify-content: center;
     display: flex;
     height: 40px;
 }
 
-.postHr{
+.postHr {
     height: 15px;
 }
 
-.postComment a:hover{
+.postComment a:hover {
     background-color: rgba(66, 178, 75, 0.25);
 
 }
