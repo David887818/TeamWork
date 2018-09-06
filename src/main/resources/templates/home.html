@@ -31,9 +31,10 @@
         </div>
         <div class="w-50 ml-4 d-flex ">
             <ul class="d-flex mt-2 barIcons">
+
                 <div class="iconHover">
                     <li><a href="/userPage"><img class="userPicBar m-1 border border-light" th:src="@{'/post/userImage?'(picUrl=${us.getPic_url()})}"> <span
-                            th:text="${us.name}+ ' '+${us.surname} "  class=" iconFontBar"></span></a>
+                            th:text="${us.name} + ' ' + ${us.surname}" class=" iconFontBar"></span></a>
                     </li>
                 </div>
                 <div class="iconHover">
@@ -65,7 +66,7 @@
             <ul>
                 <div class="iconHover">
                     <li><a href="/userPage"><img class="userPic m-1" th:src="@{'/post/userImage?'(picUrl=${us.getPic_url()})}" > <span
-                            th:text="${us.name}+ ' '+${us.surname} "    class="ml-2  iconFont"></span></a>
+                            th:text="${us.name + ' ' + us.surname} "    class="ml-2  iconFont"></span></a>
                     </li>
                 </div>
                 <div class="iconHover">
@@ -107,6 +108,7 @@
             <div class="addPost mt-2 borderRounded border bg-light">
                 <div class="description mt-2 d-flex justify-content-center w-100"><i class="fas iGreen fa-pencil-alt"></i><span class="ml-2 mb-2">Сделать публикацию</span></div>
                 <div class="d-flex addTitle">
+
                     <div class="d-flex justify-content-center align-items-center w-25">
                         <img class="titlePic border-50" th:src="@{'/post/userImage?'(picUrl=${us.getPic_url()})}">
                     </div>
@@ -117,6 +119,7 @@
                     </div>
                 </div>
                 <div class="addImage d-flex mt-2">
+                    <input type="hidden" name="user_id" th:value="${us.id}">
                     <input type="file" name="image" class="btn m-1 btn-success w-50">
                     <input type="submit" class="btn m-1 btn-outline-success w-50">
                 </div>
