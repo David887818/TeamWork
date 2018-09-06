@@ -126,15 +126,15 @@
 
             <div class="post mt-2 borderRounded border bg-light" th:if="${posts !=null}" th:each="post : ${posts}">
                 <div class="postUser m-2 d-flex justify-content-between">
-                    <a href="#"><img  th:src="@{'/post/userImage?'(picUrl=${post.user.getPic_url()})}"> <span
-                            th:text="${post.user.name}+${post.user.surname} "  class="iconFontBar"></span> </a>
+                    <a href="#"><img  th:src="@{'/post/userImage?'(picUrl=${post.user.pic_url})}"> <span
+                            th:text="${post.user.name}+' '+${post.user.surname} "  class="iconFontBar"></span> </a>
                     <p class="dateFont" th:text="'Date'+' '+${post.date}"><i class="far iGreen fa-clock"></i> </p>
                 </div>
                 <div class="postTitle m-2">
                     <span th:text="${post.name}"></span>
                 </div>
                 <div class="postPic mt-2 w-100">
-                    <img class="w-100" th:src="@{'/post/userImage?'(picUrl=${post.getPic_url()})}">
+                    <img class="w-100" th:src="@{'/post/userImage?'(picUrl=${post.pic_url})}">
                 </div>
                 <div class="postLike mt-2">
                     <a href="/"><i class="ml-3 fas fa-thumbs-up"></i><span class="ml-1">152</span></a>
