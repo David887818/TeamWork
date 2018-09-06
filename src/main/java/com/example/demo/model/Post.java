@@ -31,5 +31,7 @@ public class Post {
     private User user;
     @OneToMany
     private List<Comment> comments;
+    @OneToMany
+    private List<Like> likes;
 
 }
