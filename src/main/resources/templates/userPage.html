@@ -58,7 +58,7 @@
         </div>
     </div>
 </div>
-<div class="d-flex w-85 justify-content-center align-items-center">
+<div class="d-flex flex-column w-85 justify-content-center align-items-center">
     <div class="userProfile">
         <div>
             <div class="backgroundImg d-flex align-items-end">
@@ -72,6 +72,71 @@
                     </ul>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="userPost d-flex">
+        <div class="userData mt-4 bg-light  col-md-5">33333333</div>
+        <div class="col-md-7 mt-4">
+            <form action="/post/addPost" method="post" enctype="multipart/form-data">
+                <div class="addPost    bg-light">
+                    <div class="description mt-2 d-flex justify-content-center w-100"><i
+                            class="fas iGreen fa-pencil-alt"></i><span class="ml-2 mb-2">Compose Post</span></div>
+                    <div class="d-flex addTitle">
+                        <div class="d-flex justify-content-center align-items-center w-25">
+                            <div >
+                                <img class="titlePic border-50" src="/user.png">
+                            </div>
+
+                        </div>
+                        <div class="d-flex justify-content-center align-items-center w-75">
+                        <textarea placeholder="что у вас нового?" class="bg-light" name="name" rows="2" cols="40">
+
+                        </textarea>
+                        </div>
+                    </div>
+                    <div class="addImage d-flex mt-2">
+                        <input type="hidden" name="user_id">
+                        <input type="file" name="image" class="btn m-1 btn-success w-50">
+                        <input type="submit" class="btn m-1 btn-outline-success w-50">
+                    </div>
+
+                </div>
+            </form>
+
+            <div class="post mt-2  bg-light" >
+                <div class="postUser m-2 d-flex justify-content-between">
+
+                    <div >
+                        <a href="#"><img src="/user.png"> <span class="iconFontBar">User User</span> </a>
+                    </div>
+                    <p class="dateFont" ><i class="far iGreen fa-clock">2018.21.21</i></p>
+
+                </div>
+                <div class="postTitle m-2">
+                    <span >name</span>
+                </div>
+                <div class="postPic mt-2 w-100">
+                    <img class="w-100" src="/099etSefEv-.png">
+                </div>
+                <div class="postLike mt-2">
+                    <a href="/"><i class="ml-3 fas fa-thumbs-up"></i><span class="ml-1">152</span></a>
+                </div>
+                <div class="d-flex postHr justify-content-center">
+                    <hr/>
+                </div>
+                <div class="postComment d-flex">
+                    <a class="w-50 m-1"><i class="far iGreen fa-thumbs-up"></i><span
+                            class="ml-1 ">Нравится</span></a>
+                    <a class="w-50 m-1"><i class="far iGreen fa-comments"></i><span class="ml-1 ">Комментарий</span></a>
+                </div>
+                <div class="d-flex postHr justify-content-center">
+                    <hr/>
+                </div>
+                <div class="panel w-100 mt-2">
+                    <div class="d-flex">sads</div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>

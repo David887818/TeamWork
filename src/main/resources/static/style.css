@@ -59,6 +59,11 @@ body {
     font-size: 72px;
 }
 
+.userData{
+    min-height: 100px;
+    max-height: 500px;
+}
+
 .boldLight {
     font-family: 'Jua', sans-serif;
     font-size: 32px;
@@ -89,6 +94,10 @@ body {
     border-radius: 50%;
     width: 20px;
     height: 20px;
+}
+
+.userPost div{
+    position: static;
 }
 
 .userPicBar {
@@ -153,6 +162,7 @@ body {
     width: 50px;
     background-color: #0e5f1063;
 }
+
 .profileToolBar ul li{
     width: 150px;
     margin-top: 14px;
@@ -160,9 +170,11 @@ body {
     font-size: 17px;
     color: white;
 }
+
 .profileToolBar ul li a{
     color: white;
 }
+
 .profileToolBar ul li a:hover{
     background-color: #0d4f0e;
 }
@@ -173,6 +185,11 @@ body {
     min-width: 820px;
     height: 350px;
 }
+
+.userPost{
+    width: 980px;
+}
+
 
 .backgroundImg{
     height: 100%;
