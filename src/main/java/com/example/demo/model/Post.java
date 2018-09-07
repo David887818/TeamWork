@@ -32,5 +32,7 @@ public class Post {
     private List<Comment> comments;
     @OneToMany
     private List<PostLike> likes;
+    @Enumerated(EnumType.STRING)
+    private ListStatus listStatus;
 
 }

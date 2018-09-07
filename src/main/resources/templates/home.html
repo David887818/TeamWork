@@ -19,12 +19,12 @@
 </head>
 <script>
 
-    $(document).ready(function(){
-        $(".click").click(function(){
+    $(document).ready(function () {
+        $(".click").click(function () {
             $(".panel").slideToggle("slow");
         });
 
-        $(".clickForm").click(function(){
+        $(".clickForm").click(function () {
             $(".panel").slideDown();
         });
     });
@@ -146,7 +146,7 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-center align-items-center w-75">
-                        <textarea  class="bg-light" name="name" rows="2" cols="40">
+                        <textarea class="bg-light" name="name" rows="2" cols="40">
 
                         </textarea>
                         </div>
@@ -181,31 +181,49 @@
                 </div>
                 <div class="postLike mt-2">
 
-                    <a href="/"><i class="ml-3 fas fa-thumbs-up"></i><span class="ml-1" th:text="${post.likes.size()}"></span></a>
+                    <a href="/"><i class="ml-3 fas fa-thumbs-up"></i><span class="ml-1"
+                                                                           th:text="${post.likes.size()}"></span></a>
 
                 </div>
                 <div class="d-flex postHr justify-content-center">
                     <hr/>
                 </div>
                 <div class="postComment d-flex">
-                    <form class="w-50 d-flex align-items-center justify-content-center" action="/post/addLike" method="post">
-                        <i class="far iGreen fa-thumbs-up"></i>
-                        <input type="submit" class="btn iGreen btn-link" value="Like">
-                        <input type="hidden" name="user_id" th:value="${us.id}">
-                        <input type="hidden" name="post_id" th:value="${post.id}">
-                    </form>
-                    <a class="w-50 click m-1"><i class="far iGreen fa-comments"></i><span class="ml-1 iGreen ">Comment</span></a>
+                    <div th:if="${post.listStatus.name()!='TRUE'}"
+                         class="w-50 d-flex align-items-center justify-content-center">
+                        <form action="/post/addLike" method="post">
+                            <i class="far iGreen fa-thumbs-up"></i>
+                            <input type="submit" class="btn iGreen btn-link" value="Like">
+                            <input type="hidden" name="user_id" th:value="${us.id}">
+                            <input type="hidden" name="post_id" th:value="${post.id}">
+                        </form>
+                    </div>
+                    <div th:if="${post.listStatus.name()=='TRUE'}"
+                         class="w-50 d-flex align-items-center justify-content-center">
+                        <form action="/post/disLike" method="post">
+                            <i class="far iBlue fa-thumbs-up"></i>
+                            <input type="submit" class="btn iBlue btn-link" value="Dislike">
+                            <input type="hidden" name="user_id" th:value="${us.id}">
+                            <input type="hidden" name="post_id" th:value="${post.id}">
+                        </form>
+                    </div>
+
+                    <a class="w-50 click m-1"><i class="far iGreen fa-comments"></i><span
+                            class="ml-1 iGreen ">Comment</span></a>
                 </div>
                 <div class="d-flex postHr justify-content-center">
                     <hr/>
                 </div>
                 <div class="panel w-100 mt-2 ">
                     <div class="d-flex  align-items-center mt-3" th:each="commentts : ${post.comments}">
-                        <div  th:if="${commentts.user.pic_url != null}">
-                            <div style="display: flex"><img style="width:50px; height: 50px; border-radius: 50%" th:src="@{'/user/adImage?'(pic_url=${commentts.user.pic_url})}"> </div>
+                        <div th:if="${commentts.user.pic_url != null}">
+                            <div style="display: flex"><img style="width:50px; height: 50px; border-radius: 50%"
+                                                            th:src="@{'/user/adImage?'(pic_url=${commentts.user.pic_url})}">
+                            </div>
                         </div>
                         <div th:if="${commentts.user.pic_url == null}">
-                            <div style="display: flex"><img style="width:50px; height: 50px; border-radius: 50%" src="/user.png"></div>
+                            <div style="display: flex"><img style="width:50px; height: 50px; border-radius: 50%"
+                                                            src="/user.png"></div>
                         </div>
                         <div class="ml-3" th:text="${commentts.comment}"></div>
                     </div>

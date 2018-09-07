@@ -49,6 +49,19 @@ public class PostController {
         return "redirect:/homePage";
     }
 
+    @PostMapping("/disLike")
+    public String disLike(@RequestParam("user_id") int user_id, @RequestParam("post_id") int post_id) {
+        List<PostLike> all = likeRepository.findAll();
+        for (PostLike like : all) {
+            if (like.getUser().getId()==user_id && like.getPost().getId()==post_id){
+                likeRepository.deleteById(like.getId());
+            }
+        }
+
+        return "redirect:/homePage";
+    }
+
+
     @PostMapping("/addPost")
     public String addAdvertise(@ModelAttribute Post post, @RequestParam("user_id") int id,
 

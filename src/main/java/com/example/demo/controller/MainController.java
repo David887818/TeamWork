@@ -56,6 +56,11 @@ public class MainController {
         for (Post post : postList) {
             post.setComments(commentRepository.findAllByPostId(post.getId()));
             post.setLikes(likeRepository.findAllByPostId(post.getId()));
+            for (PostLike like : post.getLikes()) {
+                if (user.getId()==like.getUser().getId()){
+                    post.setListStatus(ListStatus.TRUE);
+                }
+            }
         }
         modelMap.addAttribute("posts", postList);
         List<User> userList = userRepository.findAll();
