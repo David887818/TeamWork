@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.model.Post;
 import com.example.demo.model.PostLike;
 import com.example.demo.model.User;
+import com.example.demo.repository.CommentRepository;
 import com.example.demo.repository.PostLikeRepository;
 import com.example.demo.repository.PostRepository;
 import com.example.demo.repository.UserRepository;
@@ -35,17 +36,18 @@ public class PostController {
     UserRepository userRepository;
     @Autowired
     PostLikeRepository likeRepository;
-
+    @Autowired
+    CommentRepository commentRepository;
     @Value("${webSite.pic.url}")
     private String adPicDir;
 
     @PostMapping("/addLike")
     public String addLike(@RequestParam("user_id") int user_id, @RequestParam("post_id") int post_id) {
-                PostLike likes = PostLike.builder()
-                        .post(postRepository.getOne(post_id))
-                        .user(userRepository.getOne(user_id))
-                        .build();
-                likeRepository.save(likes);
+        PostLike likes = PostLike.builder()
+                .post(postRepository.getOne(post_id))
+                .user(userRepository.getOne(user_id))
+                .build();
+        likeRepository.save(likes);
         return "redirect:/homePage";
     }
 
@@ -53,11 +55,17 @@ public class PostController {
     public String disLike(@RequestParam("user_id") int user_id, @RequestParam("post_id") int post_id) {
         List<PostLike> all = likeRepository.findAll();
         for (PostLike like : all) {
-            if (like.getUser().getId()==user_id && like.getPost().getId()==post_id){
+            if (like.getUser().getId() == user_id && like.getPost().getId() == post_id) {
                 likeRepository.deleteById(like.getId());
             }
         }
 
+        return "redirect:/homePage";
+    }
+
+    @PostMapping("/deleteComment")
+    public String deleteComment(@RequestParam("comment_id") int comment_id) {
+        commentRepository.deleteById(comment_id);
         return "redirect:/homePage";
     }
 

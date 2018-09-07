@@ -215,7 +215,7 @@
                     <hr/>
                 </div>
                 <div class="panel w-100 mt-2 ">
-                    <div class="d-flex  align-items-center mt-3" th:each="commentts : ${post.comments}">
+                    <div class="d-flex borderBottom mt-2 align-items-center" th:each="commentts : ${post.comments}">
                         <div th:if="${commentts.user.pic_url != null}">
                             <div style="display: flex"><img style="width:50px; height: 50px; border-radius: 50%"
                                                             th:src="@{'/user/adImage?'(pic_url=${commentts.user.pic_url})}">
@@ -225,7 +225,16 @@
                             <div style="display: flex"><img style="width:50px; height: 50px; border-radius: 50%"
                                                             src="/user.png"></div>
                         </div>
-                        <div class="ml-3" th:text="${commentts.comment}"></div>
+                        <div class="d-flex w-100 align-items-center justify-content-between">
+                            <div class="ml-3" th:text="${commentts.comment}"></div>
+                            <div th:if="${commentts.user.id==us.id}">
+                                <form action="/post/deleteComment" method="post">
+                                    <input type="hidden" th:value="${commentts.id}" name="comment_id">
+                                    <input type="submit" class="commentDelete btn btn-link" value="Delete">
+                                </form>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
                 <form class="d-flex clickForm" action="/addComment" method="post" style="margin-top: 10px">
