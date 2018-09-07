@@ -191,7 +191,8 @@
                 <div class="postComment d-flex">
                     <div th:if="${post.listStatus.name()!='TRUE'}"
                          class="w-50 d-flex align-items-center justify-content-center">
-                        <form action="/post/addLike" method="post">
+                        <form class="d-flex align-items-center justify-content-center" action="/post/addLike"
+                              method="post">
                             <i class="far iGreen fa-thumbs-up"></i>
                             <input type="submit" class="btn iGreen btn-link" value="Like">
                             <input type="hidden" name="user_id" th:value="${us.id}">
@@ -200,7 +201,8 @@
                     </div>
                     <div th:if="${post.listStatus.name()=='TRUE'}"
                          class="w-50 d-flex align-items-center justify-content-center">
-                        <form action="/post/disLike" method="post">
+                        <form class="d-flex align-items-center justify-content-center" action="/post/disLike"
+                              method="post">
                             <i class="far iBlue fa-thumbs-up"></i>
                             <input type="submit" class="btn iBlue  btn-link" value="Dislike">
                             <input type="hidden" name="user_id" th:value="${us.id}">
@@ -216,14 +218,12 @@
                 </div>
                 <div class="panel w-100 mt-2 ">
                     <div class="d-flex borderBottom mt-2 align-items-center" th:each="commentts : ${post.comments}">
-                        <div th:if="${commentts.user.pic_url != null}">
-                            <div style="display: flex"><img style="width:50px; height: 50px; border-radius: 50%"
-                                                            th:src="@{'/user/adImage?'(pic_url=${commentts.user.pic_url})}">
-                            </div>
+                        <div th:if="${commentts.user.getPic_url() != null}">
+                            <img class="userPicMessage"
+                                 th:src="@{'/post/userImage?'(picUrl=${commentts.user.getPic_url()})}">
                         </div>
-                        <div th:if="${commentts.user.pic_url == null}">
-                            <div style="display: flex"><img style="width:50px; height: 50px; border-radius: 50%"
-                                                            src="/user.png"></div>
+                        <div th:if="${commentts.user.getPic_url() == null}">
+                            <img class="userPicMessage" src="/user.png">
                         </div>
                         <div class="d-flex w-100 align-items-center justify-content-between">
                             <div class="ml-3" th:text="${commentts.comment}"></div>
@@ -245,23 +245,33 @@
                     <input type="submit" class="btn btn-outline-success" value="Add">
                 </form>
             </div>
-            <div class="borderMessage sideNavThree">
-                <div>
-                    <div class="d-flex messagePosition iconHover">
-                        <ul class="d-flex m-2">
-                            <li class="d-flex"><img class="userPicMessage" src="/user.png"><span
-                                    class="ml-3 mt-1">User</span>
-                                <span class="ml-2 mt-1">User</span></li>
-                        </ul>
-                    </div>
-                </div>
-                <div>
-
-                </div>
-            </div>
-
         </div>
         <div class=" bg-light borderRounded naveTwo border col-md-4 ml-2">33333333</div>
     </div>
+</div>
+<div class="borderMessage sideNavThree">
+    <div>
+        <div th:each="users : ${user}" class="d-flex  iconHover">
+            <ul class="d-flex m-2">
+                <li class="d-flex">
+                    <div th:if="${users.pic_url != null}">
+                        <img class="userPicMessage"
+                             th:src="@{'/post/userImage?'(picUrl=${users.pic_url})}">
+                    </div>
+                    <div th:if="${users.pic_url == null}">
+                        <img class="userPicMessage " src="/user.png">
+                    </div>
+
+
+                    <span th:text="${users.name}" class="ml-3 mt-1">User</span>
+                    <span th:text="${users.surname}" class="ml-2 mt-1">User</span></li>
+            </ul>
+        </div>
+    </div>
+    <div>
+
+    </div>
+</div>
+
 </body>
 </html>

@@ -59,6 +59,9 @@ public class MainController {
             for (PostLike like : post.getLikes()) {
                 if (user.getId()==like.getUser().getId()){
                     post.setListStatus(ListStatus.TRUE);
+                }else {
+                    post.setListStatus(ListStatus.FALSE);
+
                 }
             }
         }
