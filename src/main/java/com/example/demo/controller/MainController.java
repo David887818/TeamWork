@@ -1,10 +1,8 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Comment;
-import com.example.demo.model.Post;
-import com.example.demo.model.User;
-import com.example.demo.model.UserType;
+import com.example.demo.model.*;
 import com.example.demo.repository.CommentRepository;
+import com.example.demo.repository.PostLikeRepository;
 import com.example.demo.repository.PostRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.CurrentUser;
@@ -35,6 +33,8 @@ public class MainController {
     @Autowired
     CommentRepository commentRepository;
 
+    @Autowired
+    PostLikeRepository likeRepository;
     @GetMapping("/")
     public String mainPage() {
         return "index";
@@ -55,6 +55,7 @@ public class MainController {
         List<Post> postList = postRepository.findAll();
         for (Post post : postList) {
             post.setComments(commentRepository.findAllByPostId(post.getId()));
+            post.setLikes(likeRepository.findAllByPostId(post.getId()));
         }
         modelMap.addAttribute("posts", postList);
         List<User> userList = userRepository.findAll();

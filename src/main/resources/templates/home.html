@@ -17,6 +17,18 @@
           integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <title>GreenFB</title>
 </head>
+<script>
+
+    $(document).ready(function(){
+        $(".click").click(function(){
+            $(".panel").slideToggle("slow");
+        });
+
+        $(".clickForm").click(function(){
+            $(".panel").slideDown();
+        });
+    });
+</script>
 <body>
 <div class="navBar">
     <div class="navBarMin  d-flex">
@@ -168,15 +180,21 @@
                     <img class="w-100" th:src="@{'/post/userImage?'(picUrl=${post.getPic_url()})}">
                 </div>
                 <div class="postLike mt-2">
-                    <a href="/"><i class="ml-3 fas fa-thumbs-up"></i><span class="ml-1">152</span></a>
+
+                    <a href="/"><i class="ml-3 fas fa-thumbs-up"></i><span class="ml-1" th:text="${post.likes.size()}"></span></a>
+
                 </div>
                 <div class="d-flex postHr justify-content-center">
                     <hr/>
                 </div>
                 <div class="postComment d-flex">
-                    <a class="w-50 m-1"><i class="far iGreen fa-thumbs-up"></i><span
-                            class="ml-1 ">Like</span></a>
-                    <a class="w-50 m-1"><i class="far iGreen fa-comments"></i><span class="ml-1 ">Comment</span></a>
+                    <form class="w-50 d-flex align-items-center justify-content-center" action="/post/addLike" method="post">
+                        <i class="far iGreen fa-thumbs-up"></i>
+                        <input type="submit" class="btn iGreen btn-link" value="Like">
+                        <input type="hidden" name="user_id" th:value="${us.id}">
+                        <input type="hidden" name="post_id" th:value="${post.id}">
+                    </form>
+                    <a class="w-50 click m-1"><i class="far iGreen fa-comments"></i><span class="ml-1 iGreen ">Comment</span></a>
                 </div>
                 <div class="d-flex postHr justify-content-center">
                     <hr/>
@@ -192,7 +210,7 @@
                         <div class="ml-3" th:text="${commentts.comment}"></div>
                     </div>
                 </div>
-                <form class="d-flex" action="/addComment" method="post" style="margin-top: 10px">
+                <form class="d-flex clickForm" action="/addComment" method="post" style="margin-top: 10px">
                     <input class="w-100 btn btn-outline-success" type="text" name="comment"
                            placeholder="Write Comment">
                     <input type="hidden" name="post_id" th:value="${post.id}"/>

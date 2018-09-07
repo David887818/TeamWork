@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.List;
 
 @Data
@@ -32,6 +31,6 @@ public class Post {
     @OneToMany
     private List<Comment> comments;
     @OneToMany
-    private List<Like> likes;
+    private List<PostLike> likes;
 
 }

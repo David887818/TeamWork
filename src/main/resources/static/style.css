@@ -348,6 +348,10 @@ a:hover {
     font-size: 20px;
     color: #42b24b;
 }
+.iBlue {
+    font-size: 20px;
+    color: blue;
+}
 
 .iRed {
     font-size: 20px;
@@ -413,6 +417,8 @@ li {
 }
 
 .panel {
+    display: none;
+    min-height: 1vh;
     height: 15vh;
     overflow: auto;
     padding: 70px;
@@ -471,6 +477,10 @@ li {
 }
 
 .postComment a:hover {
+    background-color: rgba(66, 178, 75, 0.25);
+
+}
+.postComment form:hover {
     background-color: rgba(66, 178, 75, 0.25);
 
 }
