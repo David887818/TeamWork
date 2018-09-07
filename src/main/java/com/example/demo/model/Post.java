@@ -18,28 +18,20 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
     @Column
     private String name;
-
     @Column
     private String description;
-
     @Column(name = "created_date")
     private String date;
-
     @Column
     private String pic_url;
-
     @ManyToOne
     private User user;
-
     @OneToMany
     private List<Comment> comments;
-
     @OneToMany
     private List<PostLike> likes;
-
     @Enumerated(EnumType.STRING)
     private ListStatus listStatus;
 

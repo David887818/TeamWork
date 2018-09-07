@@ -6,6 +6,7 @@ import com.example.demo.repository.UserRepository;
 import com.example.demo.service.CurrentUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,8 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+
+
     @Value("${webSite.pic.url}")
     private String adPicDir;
 
@@ -46,8 +49,8 @@ public class UserController {
         return IOUtils.toByteArray(in);
     }
 
-    @GetMapping("/addImage")
-    public String addImages(@RequestParam("image") MultipartFile multipartFile, UserDetails userDetails) {
+    @PostMapping("/addImage")
+    public String addImages(@AuthenticationPrincipal UserDetails userDetails,@RequestParam("image")MultipartFile multipartFile) {
         File dir = new File(adPicDir);
         if (!dir.exists()) {
             dir.mkdirs();
@@ -61,7 +64,8 @@ public class UserController {
         }
         User user = ((CurrentUser) userDetails).getUser();
         user.setPic_url(picName);
+        userRepository.save(user);
 
-        return "redirect:/homePage";
+        return "redirect:/userPage";
     }
 }

@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.ListStatus;
 import com.example.demo.model.Post;
 import com.example.demo.model.PostLike;
 import com.example.demo.model.User;
@@ -7,12 +8,9 @@ import com.example.demo.repository.CommentRepository;
 import com.example.demo.repository.PostLikeRepository;
 import com.example.demo.repository.PostRepository;
 import com.example.demo.repository.UserRepository;
-import com.example.demo.service.CurrentUser;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -38,6 +36,7 @@ public class PostController {
     PostLikeRepository likeRepository;
     @Autowired
     CommentRepository commentRepository;
+
     @Value("${webSite.pic.url}")
     private String adPicDir;
 
@@ -59,20 +58,12 @@ public class PostController {
                 likeRepository.deleteById(like.getId());
             }
         }
-
-        return "redirect:/homePage";
-    }
-
-    @PostMapping("/deleteComment")
-    public String deleteComment(@RequestParam("comment_id") int comment_id) {
-        commentRepository.deleteById(comment_id);
         return "redirect:/homePage";
     }
 
 
     @PostMapping("/addPost")
     public String addAdvertise(@ModelAttribute Post post, @RequestParam("user_id") int id,
-
                                @RequestParam("image") MultipartFile multipartFile) {
         File dir = new File(adPicDir);
         if (!dir.exists()) {
@@ -87,7 +78,14 @@ public class PostController {
         post.setUser(userRepository.getOne(id));
         post.setPic_url(picName);
         post.setDate(sdf.format(new java.util.Date()));
+        post.setListStatus(ListStatus.FALSE);
         postRepository.save(post);
+        return "redirect:/homePage";
+    }
+
+    @PostMapping("/deleteComment")
+    public String deleteComment(@RequestParam("comment_id") int comment_id) {
+        commentRepository.deleteById(comment_id);
         return "redirect:/homePage";
     }
 

@@ -19,11 +19,9 @@ import java.util.List;
 
 @Controller
 public class MainController {
-
     private User user;
     private List<Comment> commentList;
-
-
+    private List<Post> postList;
     @Autowired
     PostRepository postRepository;
 
@@ -35,13 +33,17 @@ public class MainController {
 
     @Autowired
     PostLikeRepository likeRepository;
+
     @GetMapping("/")
     public String mainPage() {
         return "index";
     }
 
     @GetMapping("/userPage")
-    public String homePage() {
+    public String homePage(ModelMap modelMap) {
+        modelMap.addAttribute("us", user);
+        modelMap.addAttribute("posts", postList);
+        modelMap.addAttribute("comments", commentList);
         return "userPage";
     }
 
@@ -52,7 +54,7 @@ public class MainController {
 
     @GetMapping("/homePage")
     public String mainPageUser(ModelMap modelMap) {
-        List<Post> postList = postRepository.findAll();
+         postList = postRepository.findAll();
         for (Post post : postList) {
             post.setComments(commentRepository.findAllByPostId(post.getId()));
             post.setLikes(likeRepository.findAllByPostId(post.getId()));
@@ -61,7 +63,6 @@ public class MainController {
                     post.setListStatus(ListStatus.TRUE);
                 }else {
                     post.setListStatus(ListStatus.FALSE);
-
                 }
             }
         }

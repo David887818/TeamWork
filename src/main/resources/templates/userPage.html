@@ -6,6 +6,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
@@ -17,6 +18,79 @@
           integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <title>GreenFB</title>
 </head>
+<style>
+    .container {
+        padding: 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+    }
+
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        padding-top: 60px;
+    }
+
+    /* Modal Content/Box */
+    .modal-content {
+        background-color: #fefefe;
+        margin: 5% auto 15% auto;
+        border: 1px solid #888;
+        width: 20%;
+    }
+
+    .close {
+        position: absolute;
+        right: 25px;
+        top: 0;
+        color: #000;
+        font-size: 35px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: red;
+        cursor: pointer;
+    }
+
+    /* Add Zoom Animation */
+    .animate {
+        -webkit-animation: animatezoom 0.6s;
+        animation: animatezoom 0.6s
+    }
+
+    @-webkit-keyframes animatezoom {
+        from {-webkit-transform: scale(0)}
+        to {-webkit-transform: scale(1)}
+    }
+
+    @keyframes animatezoom {
+        from {transform: scale(0)}
+        to {transform: scale(1)}
+    }
+
+    /* Change styles for span and cancel button on extra small screens */
+    @media screen and (max-width: 300px) {
+        span.psw {
+            display: block;
+            float: none;
+        }
+        .cancelbtn {
+            width: 100%;
+        }
+    }
+</style>
 <body>
 <div class="navBar">
     <div class="navBarMin  d-flex">
@@ -31,9 +105,14 @@
         </div>
         <div class="w-50 ml-4 d-flex ">
             <ul class="d-flex mt-2 barIcons">
-                <div class="iconHover">
+                <div class="iconHover" th:if="${us.pic_url != null}">
+                    <li><a href="/"><img class="userPicBar m-1 border border-light" th:src="@{'/post/userImage?'(picUrl=${us.getPic_url()})}" alt=""> <span
+                            class=" iconFontBar" th:text="${us.name + ' ' + us.surname}"></span></a>
+                    </li>
+                </div>
+                <div class="iconHover" th:if="${us.pic_url == null}">
                     <li><a href="/"><img class="userPicBar m-1 border border-light" src="/user.png" alt=""> <span
-                            class=" iconFontBar">user</span></a>
+                            class=" iconFontBar" th:text="${us.name + ' ' + us.surname}"></span></a>
                     </li>
                 </div>
                 <div class="iconHover">
@@ -62,8 +141,27 @@
     <div class="userProfile">
         <div>
             <div class="backgroundImg d-flex align-items-end">
-                <div class="profileBar "></div>
-                <div  class="profilePic "></div>
+                <div class="profileBar"></div>
+                <div th:if="${us.pic_url == null}" style="display:flex;align-items: center;justify-content: center">
+                    <img class="profilePic" src="/user.png">
+                    <div>
+                        <button onclick="document.getElementById('id01').style.display='block'" class="addImageO">Choose File</button>
+                    </div>
+                        <div id="id01" class="modal">
+                    <form class="modal-content animate d-flex" action="/user/addImage" enctype="multipart/form-data" method="post">
+                            <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+
+                            <input  type="file" name="image" class="btn btn-success w-100">
+                        <div class="container" style="background-color:#f1f1f1">
+                            <button type="button" onclick="document.getElementById('id01').style.display='none'" class="btn btn-danger">Cancel</button>
+                            <input class="btn btn-info" onclick="document.getElementById('id01').style.display='none'" type="submit" value="Add"/>
+                        </div>
+                    </form>
+                        </div>
+                </div>
+                <div th:if="${us.pic_url != null}">
+                    <img class="profilePic"  th:src="@{'/post/userImage?'(picUrl=${us.getPic_url()})}">
+                </div>
                 <div class="profileToolBar ">
                     <ul class="d-flex ml-5">
                         <li><a href="/">Information</a></li>
@@ -83,7 +181,7 @@
                             class="fas iGreen fa-pencil-alt"></i><span class="ml-2 mb-2">Compose Post</span></div>
                     <div class="d-flex addTitle">
                         <div class="d-flex justify-content-center align-items-center w-25">
-                            <div >
+                            <div>
                                 <img class="titlePic border-50" src="/user.png">
                             </div>
 
@@ -103,17 +201,17 @@
                 </div>
             </form>
 
-            <div class="post mt-2  bg-light" >
+            <div class="post mt-2  bg-light">
                 <div class="postUser m-2 d-flex justify-content-between">
 
-                    <div >
+                    <div>
                         <a href="#"><img src="/user.png"> <span class="iconFontBar">User User</span> </a>
                     </div>
-                    <p class="dateFont" ><i class="far iGreen fa-clock">2018.21.21</i></p>
+                    <p class="dateFont"><i class="far iGreen fa-clock">2018.21.21</i></p>
 
                 </div>
                 <div class="postTitle m-2">
-                    <span >name</span>
+                    <span>name</span>
                 </div>
                 <div class="postPic mt-2 w-100">
                     <img class="w-100" src="/099etSefEv-.png">
@@ -156,7 +254,15 @@
 
     </div>
 </div>
+<script>
+    var modal = document.getElementById('id01');
 
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
 </body>
 
 </html>

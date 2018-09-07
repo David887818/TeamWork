@@ -180,16 +180,14 @@
                     <img class="w-100" th:src="@{'/post/userImage?'(picUrl=${post.getPic_url()})}">
                 </div>
                 <div class="postLike mt-2">
-
                     <a href="/"><i class="ml-3 fas fa-thumbs-up"></i><span class="ml-1"
                                                                            th:text="${post.likes.size()}"></span></a>
-
                 </div>
                 <div class="d-flex postHr justify-content-center">
                     <hr/>
                 </div>
                 <div class="postComment d-flex">
-                    <div th:if="${post.listStatus.name()!='TRUE'}"
+                    <div th:if="${post.listStatus.name() != 'TRUE'}"
                          class="w-50 d-flex align-items-center justify-content-center">
                         <form class="d-flex align-items-center justify-content-center" action="/post/addLike"
                               method="post">
@@ -199,7 +197,7 @@
                             <input type="hidden" name="post_id" th:value="${post.id}">
                         </form>
                     </div>
-                    <div th:if="${post.listStatus.name()=='TRUE'}"
+                    <div th:if="${post.listStatus.name() == 'TRUE'}"
                          class="w-50 d-flex align-items-center justify-content-center">
                         <form class="d-flex align-items-center justify-content-center" action="/post/disLike"
                               method="post">
@@ -217,19 +215,19 @@
                     <hr/>
                 </div>
                 <div class="panel w-100 mt-2 ">
-                    <div class="d-flex borderBottom mt-2 align-items-center" th:each="commentts : ${post.comments}">
-                        <div th:if="${commentts.user.getPic_url() != null}">
+                    <div class="d-flex borderBottom mt-2 align-items-center" th:each="comment : ${post.comments}">
+                        <div th:if="${comment.user.getPic_url() != null}">
                             <img class="userPicMessage"
-                                 th:src="@{'/post/userImage?'(picUrl=${commentts.user.getPic_url()})}">
+                                 th:src="@{'/post/userImage?'(picUrl=${comment.user.getPic_url()})}">
                         </div>
-                        <div th:if="${commentts.user.getPic_url() == null}">
+                        <div th:if="${comment.user.getPic_url() == null}">
                             <img class="userPicMessage" src="/user.png">
                         </div>
                         <div class="d-flex w-100 align-items-center justify-content-between">
-                            <div class="ml-3" th:text="${commentts.comment}"></div>
-                            <div th:if="${commentts.user.id==us.id}">
+                            <div class="ml-3" th:text="${comment.comment}"></div>
+                            <div th:if="${comment.user.id==us.id}">
                                 <form action="/post/deleteComment" method="post">
-                                    <input type="hidden" th:value="${commentts.id}" name="comment_id">
+                                    <input type="hidden" th:value="${comment.id}" name="comment_id">
                                     <input type="submit" class="commentDelete btn btn-link" value="Delete">
                                 </form>
                             </div>
