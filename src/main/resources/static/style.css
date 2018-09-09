@@ -441,12 +441,6 @@ li {
     border-top: solid 1px rgba(14, 95, 16, 0.1);
     height: 50px;
 }
-.addImageO {
-    border-top: solid 1px rgba(14, 95, 16, 0.1);
-    height: 50px;
-    width: 80px;
-
-}
 
 .barIcons li::after {
     content: "  |";

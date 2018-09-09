@@ -16,9 +16,12 @@
     <link rel="stylesheet" href="/style.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
           integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-    <title ></title>
+    <title></title>
 </head>
 <style>
+    .addPic{
+        position: absolute;
+    }
     .container {
         padding: 16px;
         display: flex;
@@ -139,8 +142,8 @@
                 <div class="profileBar"></div>
                 <div th:if="${us.pic_url == null}" style="display:flex;align-items: center;justify-content: center">
                     <img class="profilePic" src="/user.png">
-                    <div>
-                        <button onclick="document.getElementById('id01').style.display='block'" class="addImageO">Choose File</button>
+                    <div class="addPic">
+                        <button onclick="document.getElementById('id01').style.display='block'" class="btn btn-outline-success iWhite">Choose File</button>
                     </div>
                         <div id="id01" class="modal">
                     <form class="modal-content animate d-flex" action="/user/addImage" enctype="multipart/form-data" method="post">
@@ -250,7 +253,7 @@
     </div>
 </div>
 <script>
-    var modal = document.getElementById('id01');
+    var modal = document.getElementById('idF01');
 
     window.onclick = function(event) {
         if (event.target == modal) {
