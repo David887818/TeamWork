@@ -39,8 +39,24 @@ public class MainController {
         return "index";
     }
 
+
     @GetMapping("/userPage")
     public String homePage(ModelMap modelMap) {
+        postList = postRepository.findAll();
+        for (Post post : postList) {
+            post.setComments(commentRepository.findAllByPostId(post.getId()));
+            post.setLikes(likeRepository.findAllByPostId(post.getId()));
+            for (PostLike like : post.getLikes()) {
+                if (user.getId() == like.getUser().getId()) {
+                    post.setListStatus(ListStatus.TRUE);
+                } else {
+                    post.setListStatus(ListStatus.FALSE);
+                }
+            }
+            List<Post> postList = postRepository.findAllByUserId(user.getId());
+            modelMap.addAttribute("userPost", postList);
+
+        }
         modelMap.addAttribute("us", user);
         modelMap.addAttribute("posts", postList);
         modelMap.addAttribute("comments", commentList);
@@ -54,14 +70,14 @@ public class MainController {
 
     @GetMapping("/homePage")
     public String mainPageUser(ModelMap modelMap) {
-         postList = postRepository.findAll();
+        postList = postRepository.findAll();
         for (Post post : postList) {
             post.setComments(commentRepository.findAllByPostId(post.getId()));
             post.setLikes(likeRepository.findAllByPostId(post.getId()));
             for (PostLike like : post.getLikes()) {
-                if (user.getId()==like.getUser().getId()){
+                if (user.getId() == like.getUser().getId()) {
                     post.setListStatus(ListStatus.TRUE);
-                }else {
+                } else {
                     post.setListStatus(ListStatus.FALSE);
                 }
             }

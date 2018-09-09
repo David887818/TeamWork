@@ -19,7 +19,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -81,6 +80,27 @@ public class PostController {
         post.setListStatus(ListStatus.FALSE);
         postRepository.save(post);
         return "redirect:/homePage";
+    }
+
+    @PostMapping("/addPostFromUserPage")
+    public String addAdvertiseFromUserPage(@ModelAttribute Post post, @RequestParam("user_id") int id,
+                               @RequestParam("image") MultipartFile multipartFile) {
+        File dir = new File(adPicDir);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        String picName = System.currentTimeMillis() + "_" + multipartFile.getOriginalFilename();
+        try {
+            multipartFile.transferTo(new File(dir, picName));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        post.setUser(userRepository.getOne(id));
+        post.setPic_url(picName);
+        post.setDate(sdf.format(new java.util.Date()));
+        post.setListStatus(ListStatus.FALSE);
+        postRepository.save(post);
+        return "redirect:/userPage";
     }
 
     @PostMapping("/deleteComment")

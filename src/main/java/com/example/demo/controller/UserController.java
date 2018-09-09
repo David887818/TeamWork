@@ -37,27 +37,20 @@ public class UserController {
 
     @PostMapping("/add")
     public String add(@ModelAttribute User user, ModelMap modelMap) {
-        List<User> all = userRepository.findAll();
-        boolean userData =false;
-        for (User user1 : all) {
-            if (user.getEmail().equals(user1.getEmail())){
-                userData=true;
-                break;
-            }
-        }
-
-        if (true){
-            modelMap.addAttribute("errMessage","user already registered");
-            return "index";
-        }else {
-            user.setUserType(UserType.USER);
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-            userRepository.save(user);
-            modelMap.addAttribute("reg","You have registered");
+        User user1 = userRepository.findUserByEmail(user.getEmail());
+        String errMessage = "";
+        if (user1 != null) {
+            errMessage += "Error";
+            modelMap.addAttribute("errMessage", errMessage);
             return "index";
         }
+        errMessage += "Success";
+        user.setUserType(UserType.USER);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
+        modelMap.addAttribute("errMessage", errMessage);
+        return "index";
     }
-
 
 
     @GetMapping(value = "/adImage")
@@ -68,7 +61,8 @@ public class UserController {
     }
 
     @PostMapping("/addImage")
-    public String addImages(@AuthenticationPrincipal UserDetails userDetails, @RequestParam("image") MultipartFile multipartFile) {
+    public String addProfileImage(@AuthenticationPrincipal UserDetails
+                                          userDetails, @RequestParam("image") MultipartFile multipartFile) {
         File dir = new File(adPicDir);
         if (!dir.exists()) {
             dir.mkdirs();
@@ -82,6 +76,26 @@ public class UserController {
         }
         User user = ((CurrentUser) userDetails).getUser();
         user.setPic_url(picName);
+        userRepository.save(user);
+        return "redirect:/userPage";
+    }
+
+    @PostMapping("/addImageCover")
+    public String addCoverImage(@AuthenticationPrincipal UserDetails
+                                        userDetails, @RequestParam("img") MultipartFile multipartFile) {
+        File dir = new File(adPicDir);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        String picName = System.currentTimeMillis() + "_" + multipartFile.getOriginalFilename();
+        try {
+            multipartFile.transferTo(new File(dir, picName));
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+        User user = ((CurrentUser) userDetails).getUser();
+        user.setPic_url_cover(picName);
         userRepository.save(user);
 
         return "redirect:/userPage";

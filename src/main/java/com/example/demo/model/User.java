@@ -1,6 +1,5 @@
 package com.example.demo.model;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,6 +31,9 @@ public class User {
     @Column
     @Enumerated(EnumType.STRING)
     private Gender gender;
-    @Column(name = "pic_url")
+    @Column
     private String pic_url;
+    @Column
+    private String pic_url_cover;
 }
+

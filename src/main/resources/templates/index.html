@@ -52,13 +52,14 @@
                     <div class="regFont">Create a New Account</div>
                     <div class="regFontSmall">It’s free and always will be.</div>
                 </div>
-                <div class="mt-4" th:if="${reg!=null}">
-                    <span class="iGreen" th:text="${'You have registered !!!'}"></span>
+                <div class="mt-4" th:if="${errMessage == 'Success'}">
+                    <span class="iGreen" th:text="'Success: are successfully registered'"></span>
                 </div>
-                <div class="mt-4" th:if="${errMessage!=null}">
-                    <span class="iRed" th:text="'user already registered!'"></span>
+                <div class="mt-4" th:if="${errMessage == 'Error'}">
+                    <span class="iRed" th:text="'Error: User has already registered!'"></span>
                 </div>
                 <form class="d-flex mt-2 mb-4 flex-column" action="/user/add" method="post" enctype="multipart/form-data">
+
                     <div class="d-flex justify-content-between">
                         <input placeholder="Name" class="  inputFont border border-success rounded " type="text"
                                name="name"/>

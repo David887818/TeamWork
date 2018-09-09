@@ -18,12 +18,10 @@
     <title th:text="${us.name + ' '+ us.surname}"></title>
 </head>
 <script>
-
     $(document).ready(function () {
         $(".click").click(function () {
             $(".panel").slideToggle("slow");
         });
-
         $(".clickForm").click(function () {
             $(".panel").slideDown();
         });
@@ -83,7 +81,6 @@
     <div class=" sideNav">
         <div>
             <ul>
-
                 <div class="iconHover">
                     <div th:if="${us.pic_url != null}">
                         <li><a href="/userPage"><img class="userPic m-1"
