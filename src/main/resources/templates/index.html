@@ -11,12 +11,12 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Jua|Varela+Round" rel="stylesheet">
     <link rel="stylesheet" href="/style.css">
-    <title>GreenFB</title>
+    <title>GreenBook</title>
     </head>
 <body>
 <div class="logBar ">
     <div class="menuBar d-flex justify-content-between">
-        <div ><p class="GFBIcon">GreenFB</p></div>
+        <div ><p class="GFBIcon">GreenBook</p></div>
         <div >
             <form th:action="@{/}"  method="post">
                 <div class="d-flex justify-content-between">
@@ -52,7 +52,13 @@
                     <div class="regFont">Create a New Account</div>
                     <div class="regFontSmall">It’s free and always will be.</div>
                 </div>
-                <form class="d-flex mt-5 mb-4 flex-column" action="/user/add" method="post" enctype="multipart/form-data">
+                <div class="mt-4" th:if="${reg!=null}">
+                    <span class="iGreen" th:text="${'You have registered !!!'}"></span>
+                </div>
+                <div class="mt-4" th:if="${errMessage!=null}">
+                    <span class="iRed" th:text="'user already registered!'"></span>
+                </div>
+                <form class="d-flex mt-2 mb-4 flex-column" action="/user/add" method="post" enctype="multipart/form-data">
                     <div class="d-flex justify-content-between">
                         <input placeholder="Name" class="  inputFont border border-success rounded " type="text"
                                name="name"/>
