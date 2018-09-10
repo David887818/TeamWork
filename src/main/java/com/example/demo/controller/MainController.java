@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -20,6 +21,7 @@ import java.util.List;
 @Controller
 public class MainController {
     private User user;
+    private User friendUser;
     private List<Comment> commentList;
     private List<Post> postList;
     @Autowired
@@ -39,6 +41,11 @@ public class MainController {
         return "index";
     }
 
+   @GetMapping("/friendsPage/{id}")
+   public String findFriendPage(@PathVariable("id") int id){
+        friendUser = userRepository.findUserById(id);
+        return "redirect:/friend1Page";
+   }
 
     @GetMapping("/userPage")
     public String homePage(ModelMap modelMap) {
@@ -55,12 +62,40 @@ public class MainController {
             }
             List<Post> postList = postRepository.findAllByUserId(user.getId());
             modelMap.addAttribute("userPost", postList);
-
         }
+        List<User> userList = userRepository.findAll();
+        modelMap.addAttribute("user", userList);
         modelMap.addAttribute("us", user);
         modelMap.addAttribute("posts", postList);
         modelMap.addAttribute("comments", commentList);
         return "userPage";
+    }
+
+    @GetMapping("/friend1Page")
+    public String friendPage(ModelMap modelMap) {
+        postList = postRepository.findAllByUserId(friendUser.getId());
+        for (Post post : postList) {
+            post.setComments(commentRepository.findAllByPostId(post.getId()));
+            post.setLikes(likeRepository.findAllByPostId(post.getId()));
+            for (PostLike like : post.getLikes()) {
+                if (user.getId() == like.getUser().getId()) {
+                    post.setListStatus(ListStatus.TRUE);
+                } else {
+                    post.setListStatus(ListStatus.FALSE);
+                }
+            }
+            modelMap.addAttribute("friendPost", postList);
+            List<Post> postListOne = postRepository.findAllByFriendId(friendUser.getId());
+            modelMap.addAttribute("userFriendPost", postListOne);
+
+        }
+        List<User> userList = userRepository.findAll();
+        modelMap.addAttribute("user", userList);
+        modelMap.addAttribute("us", user);
+        modelMap.addAttribute("friend",friendUser);
+        modelMap.addAttribute("posts", postList);
+        modelMap.addAttribute("comments", commentList);
+        return "friendPage";
     }
 
     @GetMapping("/indexPage")

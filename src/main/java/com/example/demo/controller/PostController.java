@@ -103,6 +103,28 @@ public class PostController {
         return "redirect:/userPage";
     }
 
+    @PostMapping("/addPostFromFriendPage")
+    public String addAdvertiseFromFriendPage(@ModelAttribute Post post, @RequestParam("user_id") int id,@RequestParam("friend_id") int f_id,
+                                           @RequestParam("image") MultipartFile multipartFile) {
+        File dir = new File(adPicDir);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        String picName = System.currentTimeMillis() + "_" + multipartFile.getOriginalFilename();
+        try {
+            multipartFile.transferTo(new File(dir, picName));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        post.setUser(userRepository.getOne(id));
+        post.setFriend(userRepository.getOne(f_id));
+        post.setPic_url(picName);
+        post.setDate(sdf.format(new java.util.Date()));
+        post.setListStatus(ListStatus.FALSE);
+        postRepository.save(post);
+        return "redirect:/friend1Page";
+    }
+
     @PostMapping("/deleteComment")
     public String deleteComment(@RequestParam("comment_id") int comment_id) {
         commentRepository.deleteById(comment_id);
