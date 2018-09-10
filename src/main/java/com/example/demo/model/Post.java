@@ -34,5 +34,7 @@ public class Post {
     private List<PostLike> likes;
     @Enumerated(EnumType.STRING)
     private ListStatus listStatus;
+    @ManyToOne
+    private User friend;
 
 }
