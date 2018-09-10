@@ -7,12 +7,45 @@
 body {
     background-color: rgba(110, 255, 32, 0.05);
 }
+.dropbtn:hover, .dropbtn:focus {
+    background-color: rgba(84, 185, 68, 0.6);
+}
 
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: rgba(110, 255, 47, 0.2);
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown a:hover {
+    border: solid 1px rgba(14, 95, 16, 0.6);
+}
+
+.show {
+    display: block;
+    position: fixed;
+}
 .postLike:hover {
     text-decoration: underline;
 }
 
-.post hr {
+.post hr    {
     width: 90%;
 }
 
@@ -37,9 +70,7 @@ body {
 }
 
 .naveOne {
-    height: 15vh;
-    overflow: auto;
-    padding-bottom: 100vh;
+    position: static;
 }
 
 .sideNavThree {
@@ -126,14 +157,11 @@ body {
 }
 
 .sideNavTwo {
-    position: fixed;
     top: 50px;
     width: 820px;
-    min-width: 820px;
-    left: 23%;
+    margin-left: 23%;
     overflow: hidden;
-    z-index: 1;
-    height: 100%;
+
 }
 
 .w-85{
@@ -142,6 +170,10 @@ body {
 }
 
 .profilePic{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url("user.png");
     width: 150px;
     height: 150px;
     position: static;
@@ -155,7 +187,92 @@ body {
     height: 50px;
     background-color: #0e5f1063;
 }
+.addPic {
+    position: absolute;
+    color: black;
+}
 
+.container {
+    padding: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #e0ffdcb0;
+    margin: 5% auto 15% auto;
+    width: 300px;
+    border: green 1px;
+    height: 450px;
+    overflow: auto;
+}
+.likeHr{
+     width: 100%!important;
+     margin-top: 0!important;
+     margin-bottom: 0!important;
+     border: 0;
+     border-top: 1px solid rgba(0,0,0,.1);
+}
+.close {
+    position: absolute;
+    right: 25px;
+    top: 0;
+    color: #000;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: red;
+    cursor: pointer;
+}
+
+.animate {
+    -webkit-animation: animatezoom 0.6s;
+    animation: animatezoom 0.6s
+}
+
+@-webkit-keyframes animatezoom {
+    from {
+        -webkit-transform: scale(0)
+    }
+    to {
+        -webkit-transform: scale(1)
+    }
+}
+
+@keyframes animatezoom {
+    from {
+        transform: scale(0)
+    }
+    to {
+        transform: scale(1)
+    }
+}
+
+@media screen and (max-width: 300px) {
+    span.psw {
+        display: block;
+        float: none;
+    }
+}
 .profileBar{
     height: 50px;
     width: 50px;
@@ -214,6 +331,7 @@ body {
     /*background-image: url("/keyt-apton-10000x4840-keyt-apton-17362.jpg");*/
 }
 .naveTwo {
+    position: static;
     height: 400px;
     min-height: 350px;
     max-height: 450px;
@@ -371,6 +489,10 @@ a:hover {
 .iBlue {
     font-size: 20px;
     color: blue;
+}
+.iBlack {
+    font-size: 20px;
+    color: #000000;
 }
 
 .iRed {

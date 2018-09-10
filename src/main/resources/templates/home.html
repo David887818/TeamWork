@@ -18,15 +18,9 @@
     <title th:text="${us.name + ' '+ us.surname}"></title>
 </head>
 <script>
-    $(document).ready(function () {
-        $(".click").click(function () {
-            $(".panel").slideToggle("slow");
-        });
-        $(".clickForm").click(function () {
-            $(".panel").slideDown();
-        });
-    });
+
 </script>
+
 <body>
 <div class="navBar">
     <div class="navBarMin  d-flex">
@@ -64,14 +58,22 @@
                 <div class="iconHover">
                     <li class="ml-2"><a href="/"><i class="fab fa-facebook-messenger iWhite"> </i></a></li>
                 </div>
-                <div class="iconHover">
-                    <li class="ml-2"><a href="/"><i class="far fa-bell iWhite"></i></a></li>
+                <div class="ml-2 mt-1 iconHover">
+                    <div class="dropdown">
+                        <i onclick="myFunction()" class="fas iWhite dropbtn fa-caret-down"></i>
+
+                        <div id="myDropdown" class="dropdown-content">
+                            <a href="#home">Home</a>
+                            <a href="#about">About</a>
+                            <a href="/logout">logout</a>
+                        </div>
+                    </div>
                 </div>
 
             </ul>
             <ul class="mt-1 ">
                 <div class="iconHover">
-                    <li class="ml-2"><a href="/"><i class="fas fa-sort-down   iWhite"></i></a></li>
+                    <li class="ml-2"><a href="/"></a></li>
                 </div>
             </ul>
         </div>
@@ -157,6 +159,7 @@
                 </div>
             </form>
 
+
             <div class="post mt-2 borderRounded border bg-light" th:if="${posts !=null}" th:each="post : ${posts}">
                 <div class="postUser m-2 d-flex justify-content-between">
                     <div th:if="${post.user.pic_url != null}">
@@ -177,8 +180,28 @@
                     <img class="w-100" th:src="@{'/post/userImage?'(picUrl=${post.getPic_url()})}">
                 </div>
                 <div class="postLike mt-2">
-                    <a href="/"><i class="ml-3 fas fa-thumbs-up"></i><span class="ml-1"
-                                                                           th:text="${post.likes.size()}"></span></a>
+
+                    <a href="#" id="myBtn"><i class="ml-3 fas fa-thumbs-up"></i><span class="ml-1"
+                                                                                      th:text="${post.likes.size()}"></span></a>
+
+                    <div id="myModal" class="modal">
+
+                        <!-- Modal content -->
+                        <div class="modal-content">
+                            <span class="close">&times;</span>
+                            <p class="m-3" th:text="${post.likes.size()+'  likes'}"></p>
+                            <div th:each="likes : ${post.likes}">
+                                <div class="d-flex  align-items-center m-3">
+                                    <img th:src="@{'/post/userImage?'(picUrl=${likes.user.getPic_url()})}"
+                                         class="userPicMessage">
+                                    <span th:text="${likes.user.name+' '+likes.user.surname}"
+                                          class="iconFont ml-3"></span>
+                                </div>
+                                <hr class="likeHr"/>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
                 <div class="d-flex postHr justify-content-center">
                     <hr/>
@@ -240,6 +263,7 @@
                     <input type="submit" class="btn btn-outline-success" value="Add">
                 </form>
             </div>
+
         </div>
         <div class=" bg-light borderRounded naveTwo border col-md-4 ml-2">33333333</div>
     </div>
@@ -267,6 +291,8 @@
 
     </div>
 </div>
+<script src="/min.js">
 
+</script>
 </body>
 </html>
