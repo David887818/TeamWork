@@ -34,41 +34,67 @@
         <div class="w-50 ml-4 d-flex ">
             <ul class="d-flex mt-2 barIcons">
                 <div class="iconHover" th:if="${us.pic_url != null}">
-                    <li><a href="/"><img class="userPicBar m-1 border border-light"
+                    <li><a href="/userPage"><img class="userPicBar m-1 border border-light"
                                          th:src="@{'/post/userImage?'(picUrl=${us.pic_url})}" alt=""> <span
                             class=" iconFontBar" th:text="${us.name + ' ' + us.surname}"></span></a>
                     </li>
                 </div>
                 <div class="iconHover" th:if="${us.pic_url == null}">
-                    <li><a href="/"><img class="userPicBar m-1 border border-light" src="/user.png" alt=""> <span
+                    <li><a href="/userPage"><img class="userPicBar m-1 border border-light" src="/user.png" alt=""> <span
                             class=" iconFontBar" th:text="${us.name + ' ' + us.surname}"></span></a>
                     </li>
                 </div>
                 <div class="iconHover">
                     <li class="ml-2"><a href="/homePage"><span class="iconFontBar">General</span></a></li>
                 </div>
-                <div class="iconHover">
-                    <li class="ml-2"><a href="/"><i class="fas fa-user-friends iWhite"></i></i></a></li>
+                <div class="">
+                    <li class="ml-2">
+                        <div class="dropdown4">
+                            <i onclick="myFunction4()" class=" dropbtn4 fab fa-facebook-messenger iWhite"></i>
+                            <div id="myDropdown4" class="dropdown-content4">
+                                <a href="#home">Home</a>
+                                <a href="#about">About</a>
+                                <a href="/logout">logout</a>
+                            </div>
+                        </div>
                 </div>
-                <div class="iconHover">
-                    <li class="ml-2"><a href="/"><i class="fab fa-facebook-messenger iWhite"> </i></a></li>
+                <div class="">
+                    <li class="ml-2">
+                        <div class="dropdown3">
+                            <i onclick="myFunction3()" class=" dropbtn3 fas fa-user-friends iWhite"></i>
+                            <div id="myDropdown3" class="dropdown-content3">
+                                <a href="#home">Home</a>
+                                <a href="#about">About</a>
+                                <a href="/logout">logout</a>
+                            </div>
+                        </div>
                 </div>
-                <div class="iconHover">
-                    <li class="ml-2"><a href="/"><i class="far fa-bell iWhite"></i></a></li>
+                <div class="">
+                    <li class="ml-2">
+                        <div class="dropdown2">
+                            <i onclick="myFunction2()" class=" dropbtn2  far fa-bell iWhite"></i>
+
+                            <div id="myDropdown2" class="dropdown-content2">
+                                <a href="#home">Home</a>
+                                <a href="#about">About</a>
+                                <a href="/logout">logout</a>
+                            </div>
+                        </div>
+                    </li>
                 </div>
 
             </ul>
-            <div class="ml-2 mt-1 iconHover">
-            <div class="dropdown">
-                <i onclick="myFunction()" class="fas iWhite dropbtn fa-caret-down"></i>
+            <div class="ml-2 mt-1 ">
+                <div class="dropdown">
+                    <i onclick="myFunction()" class="fas iWhite dropbtn fa-caret-down"></i>
 
-                <div id="myDropdown" class="dropdown-content">
-                    <a href="#home">Home</a>
-                    <a href="#about">About</a>
-                    <a href="/logout">logout</a>
+                    <div id="myDropdown" class="dropdown-content">
+                        <a href="#home">Home</a>
+                        <a href="/setting">Setting</a>
+                        <a href="/logout">logout</a>
+                    </div>
                 </div>
             </div>
-        </div>
         </div>
     </div>
 </div>
@@ -78,20 +104,21 @@
         <div th:if="${us.pic_url_cover == null}">
             <div class="addPic">
                 <button onclick="document.getElementById('id03').style.display='block'"
-                        class="btn btn-outline-success iBlack">Choose Cover Photo
+                        class="btn btn-outline-success m-3 iBlack">Choose Cover Photo
                 </button>
             </div>
             <div class="backgroundImg d-flex align-items-end">
 
                 <div id="id03" class="modal">
-                    <form class="modal-content animate d-flex justify-content-center align-items-center" action="/user/addImageCover"
+                    <form class="modal-content animate d-flex justify-content-center align-items-center"
+                          action="/user/addImageCover"
                           enctype="multipart/form-data"
                           method="post">
                             <span onclick="document.getElementById('id03').style.display='none'" class="close"
                                   title="Close Modal">&times;</span>
 
                         <input type="file" name="img" class="btn btn-outline-success mt-3 w-75">
-                        <div class="container" >
+                        <div class="container">
                             <button type="button" onclick="document.getElementById('id03').style.display='none'"
                                     class="btn btn-danger">Cancel
                             </button>
@@ -112,13 +139,14 @@
                     </div>
 
                     <div id="id01" class="modal">
-                        <form class="modal-content animate d-flex justify-content-center align-items-center" action="/user/addImage" enctype="multipart/form-data"
+                        <form class="modal-content animate d-flex justify-content-center align-items-center"
+                              action="/user/addImage" enctype="multipart/form-data"
                               method="post">
                             <span onclick="document.getElementById('id01').style.display='none'" class="close"
                                   title="Close Modal">&times;</span>
 
                             <input type="file" name="image" class="btn btn-outline-success mt-3 w-75">
-                            <div class="container" >
+                            <div class="container">
                                 <button type="button" onclick="document.getElementById('id01').style.display='none'"
                                         class="btn btn-danger">Cancel
                                 </button>
@@ -152,17 +180,18 @@
                     <img class="profilePic" src="/user.png">
                     <div class="addPic">
                         <button onclick="document.getElementById('id02').style.display='block'"
-                                class="btn btn-outline-success iBlack">Choose Cover Photo
+                                class="btn btn-outline-success m-3 iBlack">Choose Cover Photo
                         </button>
                     </div>
                     <div id="id02" class="modal">
-                        <form class="modal-content animate d-flex justify-content-center align-items-center" action="/user/addImage" enctype="multipart/form-data"
+                        <form class="modal-content animate d-flex justify-content-center align-items-center"
+                              action="/user/addImage" enctype="multipart/form-data"
                               method="post">
                             <span onclick="document.getElementById('id02').style.display='none'" class="close"
                                   title="Close Modal">&times;</span>
 
                             <input type="file" name="image" class="btn mt-3 btn-outline-success w-75">
-                            <div class="container" >
+                            <div class="container">
                                 <button type="button" onclick="document.getElementById('id02').style.display='none'"
                                         class="btn btn-danger">Cancel
                                 </button>

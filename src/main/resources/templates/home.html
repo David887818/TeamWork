@@ -35,50 +35,72 @@
         </div>
         <div class="w-50 ml-4 d-flex ">
             <ul class="d-flex mt-2 barIcons">
-
-                <div class="iconHover">
-                    <div th:if="${us.pic_url != null}">
-                        <li><a href="/userPage"><img class="userPicBar m-1 border border-light"
-                                                     th:src="@{'/post/userImage?'(picUrl=${us.getPic_url()})}"> <span
-                                th:text="${us.name} + ' ' + ${us.surname}" class=" iconFontBar"></span></a>
-                        </li>
-                    </div>
-                    <div th:if="${us.pic_url == null}">
-                        <li><a href="/userPage"><img class="userPicBar m-1 border border-light" src="/user.png">
-                            <span th:text="${us.name} + ' ' + ${us.surname}" class=" iconFontBar"></span></a>
-                        </li>
-                    </div>
+                <div class="iconHover" th:if="${us.pic_url != null}">
+                    <li><a href="/userPage"><img class="userPicBar m-1 border border-light"
+                                         th:src="@{'/post/userImage?'(picUrl=${us.pic_url})}" alt=""> <span
+                            class=" iconFontBar" th:text="${us.name + ' ' + us.surname}"></span></a>
+                    </li>
+                </div>
+                <div class="iconHover" th:if="${us.pic_url == null}">
+                    <li><a href="/userPage"><img class="userPicBar m-1 border border-light" src="/user.png" alt=""> <span
+                            class=" iconFontBar" th:text="${us.name + ' ' + us.surname}"></span></a>
+                    </li>
                 </div>
                 <div class="iconHover">
-                    <li class="ml-2"><a href="/homePage"><span class="iconFontBar">Home</span></a></li>
+                    <li class="ml-2"><a href="/homePage"><span class="iconFontBar">General</span></a></li>
                 </div>
-                <div class="iconHover">
-                    <li class="ml-2"><a href="/"><i class="fas fa-user-friends iWhite"></i></i></a></li>
-                </div>
-                <div class="iconHover">
-                    <li class="ml-2"><a href="/"><i class="fab fa-facebook-messenger iWhite"> </i></a></li>
-                </div>
-                <div class="ml-2 mt-1 iconHover">
-                    <div class="dropdown">
-                        <i onclick="myFunction()" class="fas iWhite dropbtn fa-caret-down"></i>
-
-                        <div id="myDropdown" class="dropdown-content">
-                            <a href="#home">Home</a>
-                            <a href="#about">About</a>
-                            <a href="/logout">logout</a>
+                <div class="">
+                    <li class="ml-2">
+                        <div class="dropdown4">
+                            <i onclick="myFunction4()" class=" dropbtn4 fab fa-facebook-messenger iWhite"></i>
+                            <div id="myDropdown4" class="dropdown-content4">
+                                <a href="#home">Home</a>
+                                <a href="#about">About</a>
+                                <a href="/logout">logout</a>
+                            </div>
                         </div>
-                    </div>
+                </div>
+                <div class="">
+                    <li class="ml-2">
+                        <div class="dropdown3">
+                            <i onclick="myFunction3()" class=" dropbtn3 fas fa-user-friends iWhite"></i>
+                            <div id="myDropdown3" class="dropdown-content3">
+                                <a href="#home">Home</a>
+                                <a href="#about">About</a>
+                                <a href="/logout">logout</a>
+                            </div>
+                        </div>
+                </div>
+                <div class="">
+                    <li class="ml-2">
+                        <div class="dropdown2">
+                            <i onclick="myFunction2()" class=" dropbtn2  far fa-bell iWhite"></i>
+
+                            <div id="myDropdown2" class="dropdown-content2">
+                                <a href="#home">Home</a>
+                                <a href="">About</a>
+                                <a href="/logout">logout</a>
+                            </div>
+                        </div>
+                    </li>
                 </div>
 
             </ul>
-            <ul class="mt-1 ">
-                <div class="iconHover">
-                    <li class="ml-2"><a href="/"></a></li>
+            <div class="ml-2 mt-1 ">
+                <div class="dropdown">
+                    <i onclick="myFunction()" class="fas iWhite dropbtn fa-caret-down"></i>
+
+                    <div id="myDropdown" class="dropdown-content">
+                        <a href="#home">Home</a>
+                        <a href="/setting">Setting</a>
+                        <a href="/logout">logout</a>
+                    </div>
                 </div>
-            </ul>
+            </div>
         </div>
     </div>
 </div>
+
 <div class="d-flex">
     <div class=" sideNav">
         <div>
