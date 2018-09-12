@@ -14,7 +14,8 @@ import java.util.List;
 @Builder
 @Entity
 @Table(name = "post")
-public class Post {
+public class Post implements Comparable<Post>
+{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -37,4 +38,8 @@ public class Post {
     @ManyToOne
     private User friend;
 
+        @Override
+    public int compareTo(Post o) {
+        return date.compareTo(o.date);
+    }
 }
