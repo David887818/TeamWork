@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.sql.Date;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -61,12 +64,13 @@ public class MainController {
                 }
             }
             List<Post> postList = postRepository.findAllByUserId(user.getId());
+//                    postList.sort(Comparator.comparing(Post::getDate));
             modelMap.addAttribute("userPost", postList);
         }
         List<User> userList = userRepository.findAll();
         modelMap.addAttribute("user", userList);
         modelMap.addAttribute("us", user);
-        modelMap.addAttribute("posts", postList);
+        modelMap.addAttribute("posts",postList);
         modelMap.addAttribute("comments", commentList);
         return "userPage";
     }
