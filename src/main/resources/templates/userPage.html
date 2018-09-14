@@ -207,12 +207,16 @@
                          th:style="'background:url(' + @{'/post/userImage?'(picUrl=${us.pic_url})} + ');background-repeat: no-repeat;background-size: cover;'">
                     </div>
                 </div>
-                <div class="profileToolBar ">
+                <div class="profileToolBar d-flex ">
                     <ul class="d-flex ml-5">
                         <li><a href="/">Information</a></li>
                         <li><a href="/">Photos</a></li>
                         <li><a href="/">Friends</a></li>
                     </ul>
+
+                    <div class="ml-5 iBlue">
+                        <a href="#">+ Add Friend</a>
+                    </div>
                 </div>
 
             </div>

@@ -16,9 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.sql.Date;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -52,7 +49,7 @@ public class MainController {
 
     @GetMapping("/userPage")
     public String homePage(ModelMap modelMap) {
-        postList = postRepository.findAll();
+        postList = postRepository.findAllByOrderByDateDesc();
         for (Post post : postList) {
             post.setComments(commentRepository.findAllByPostId(post.getId()));
             post.setLikes(likeRepository.findAllByPostId(post.getId()));
@@ -64,7 +61,6 @@ public class MainController {
                 }
             }
             List<Post> postList = postRepository.findAllByUserId(user.getId());
-//                    postList.sort(Comparator.comparing(Post::getDate));
             modelMap.addAttribute("userPost", postList);
         }
         List<User> userList = userRepository.findAll();
@@ -109,7 +105,7 @@ public class MainController {
 
     @GetMapping("/homePage")
     public String mainPageUser(ModelMap modelMap) {
-        postList = postRepository.findAll();
+        postList = postRepository.findAllByOrderByDateDesc();
         for (Post post : postList) {
             post.setComments(commentRepository.findAllByPostId(post.getId()));
             post.setLikes(likeRepository.findAllByPostId(post.getId()));

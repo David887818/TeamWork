@@ -16,10 +16,11 @@ import javax.persistence.*;
 @Table(name = "friend")
 public class Friend {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
+    @GeneratedValue
     private int id;
-    @Column
-    private int toUser;
-    @Column
-    private int fromUser;
+    @Column(name = "user_id")
+    private int userId;
+    @Column(name = "friend_id")
+    private int friendId;
 }
