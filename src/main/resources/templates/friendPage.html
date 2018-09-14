@@ -184,13 +184,15 @@
                 <div th:if="${friend.pic_url != null}">
                     <img class="profilePic" th:src="@{'/post/userImage?'(picUrl=${friend.pic_url})}">
                 </div>
-                <div class="profileToolBar ">
+                <div class="profileToolBar d-flex">
                     <ul class="d-flex ml-5">
                         <li><a href="/">Information</a></li>
                         <li><a href="/">Photos</a></li>
                         <li><a href="/">Friends</a></li>
-                        <li><input type="submit" value="Add Friend" class="btn btn-primary"></li>
                     </ul>
+                </div>
+                <div class="ml-5 iBlue">
+                    <a href="#">+ Add Friend</a>
                 </div>
             </div>
         </div>
@@ -204,13 +206,16 @@
                 <div th:if="${us.pic_url != null}">
                     <img class="profilePic" th:src="@{'/post/userImage?'(picUrl=${friend.pic_url})}">
                 </div>
-                <div class="profileToolBar ">
+                <div class="profileToolBar d-flex">
                     <ul class="d-flex ml-5">
                         <li><a href="/">Information</a></li>
                         <li><a href="/">Photos</a></li>
                         <li><a href="/">Friends</a></li>
-                        <li><input type="submit" value="Add Friend" class="btn btn-primary"></li>
+
                     </ul>
+                </div>
+                <div class="ml-5 iBlue">
+                    <a href="#">+ Add Friend</a>
                 </div>
             </div>
         </div>
