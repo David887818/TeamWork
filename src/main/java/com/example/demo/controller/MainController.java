@@ -13,13 +13,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.LinkedList;
 import java.util.List;
 
 @Controller
 public class MainController {
     private User user;
     private User friendUser;
+    private User messageUser;
     private List<Comment> commentList;
     private List<Post> postList;
     @Autowired
@@ -69,9 +69,22 @@ public class MainController {
         return "userPage";
     }
 
+
+    @GetMapping("/message/{id}")
+    public String findMessagePage(@PathVariable("id") int id,ModelMap modelMap,@AuthenticationPrincipal UserDetails userDetails) {
+        messageUser = userRepository.findUserById (id);
+        user = ((CurrentUser) userDetails).getUser();
+        List<User> userList = userRepository.findAll();
+        modelMap.addAttribute ("users", userList);
+        modelMap.addAttribute ("user", user);
+        modelMap.addAttribute ("messageUser", messageUser);
+        return "messagePage";
+    }
+
     @GetMapping("/friend1Page")
     public String friendPage(ModelMap modelMap) {
         postList = postRepository.findAllByUserId (friendUser.getId ());
+        postList = postRepository.findAllByOrderByDateDesc();
         for (Post post : postList) {
             post.setComments (commentRepository.findAllByPostId (post.getId ()));
             post.setLikes (likeRepository.findAllByPostId (post.getId ()));
