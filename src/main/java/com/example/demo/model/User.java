@@ -30,7 +30,6 @@ public class User {
     private UserType userType;
     @Column(name = "status_online")
     @Enumerated(EnumType.STRING)
-
     private UserStatus userStatus;
     @Enumerated(EnumType.STRING)
     @Column(name = "status_active")

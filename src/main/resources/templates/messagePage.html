@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
     <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Jua|Varela+Round" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../static/styleMessage.css">
+    <link href="https://fonts.googleapis.com/css?family=Jua|Varela+Round" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/styleMessage.css"/>
     <title>Message</title>
 </head>
 <body>
@@ -22,10 +22,10 @@
                 <div class="heading d-flex justify-content-between">
                     <div class="d-flex heading-avatar">
                         <a href="/userPage">
-                            <div class="heading-avatar-icon">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png">
-                                <a class="iBlack">User user </a>
-                            </div>
+                        <div class="heading-avatar-icon d-flex">
+                            <img th:src="@{'/post/userImage?'(picUrl=${user.pic_url})}">
+                            <a class="iBlack" th:text="${user.name + ' ' + user.surname} "></a>
+                        </div>
                         </a>
                     </div>
 
@@ -98,11 +98,12 @@
 
                     <div class="col-sm-2 col-md-1 col-xs-3  heading-avatar">
                         <div class="heading-avatar-icon">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar6.png">
+                            <img th:src="@{'/post/userImage?'(picUrl=${messageUser.pic_url})}">
+
                         </div>
                     </div>
                     <div class="col-sm-8 col-xs-7 heading-name">
-                        <p class="heading-name-meta">John Doe
+                        <p class="heading-name-meta" th:text="${messageUser.name +' '+ messageUser.surname}">
                         </p>
                         <span class="heading-online">Online</span>
                     </div>
