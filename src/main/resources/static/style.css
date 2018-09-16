@@ -37,6 +37,7 @@ body {
     overflow: auto;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
+
 }
 
 .dropdown-content a {
@@ -379,7 +380,7 @@ body {
 
 .sideNavThree {
     position: fixed;
-    top: 50px;
+    top: 43px;
     height: 100%;
     width: 14%;
     left: 86%;
