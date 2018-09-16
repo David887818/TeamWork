@@ -18,6 +18,7 @@ public class Post implements Comparable<Post>
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
     private int id;
     @Column
     private String name;

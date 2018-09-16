@@ -16,6 +16,7 @@ import javax.persistence.*;
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
     private int id;
     @Column
     private String comment;
@@ -23,4 +24,5 @@ public class Comment {
     private User user;
     @ManyToOne
     private Post post;
+
 }

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Friend Profile Message</title>
+</head>
+<body>
+<a href="/user?otherUserId=${friendIdForMessage.id}">
+    <img src="/getPic?filename=${friendIdForMessage.picture}"/>
+</a>
+<p th:text="${friendIdForMessage.name}+ ${friendIdForMessage.surname}"></p>
+</body>
+</html>

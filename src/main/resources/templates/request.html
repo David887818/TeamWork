@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Request</title>
+</head>
+<body>
+<form modelAttribute="friendRequests">
+    <ul>
+        <div th:each="otherUser: ${friendRequests}">
+
+            <div th:if="${otherUser.userStatus.toString()=='ONLINE'}">
+
+                <li>
+                    <div>
+
+                        <div>
+                            <a href="/user?otherUserId=${otherUser.id}">
+                                <img src="/getPic?filename=${otherUser.picture}">
+                                <p th:text="${otherUser.name}+${otherUser.surname}"></p>
+                            </a>
+                            <a href="#" style="float: left" class="action-button shadow animate blue"
+                               onclick="acceptRequest(${otherUser.id})">Accept</a>
+                            <a href="#" style="float: right" class="action-button shadow animate blue"
+                               onclick="rejectRequest(${otherUser.id})"> Reject</a>
+                        </div>
+                    </div>
+                </li>
+            </div>
+            <div th:if="${otherUser.userStatus.toString()=='OFFLINE'}">
+
+                <li>
+                    <div>
+                        <div>
+                            <a href="/user?otherUserId=${otherUser.id}">
+                                <img src="/getPic?filename=${otherUser.picture}">
+                                <p th:text="${otherUser.name} +${otherUser.surname}"></p>
+                            </a>
+                            <a href="#" style="float: left" class="action-button shadow animate blue"
+                               onclick="acceptRequest(${otherUser.id})">Accept</a>
+                            <a href="#" style="float: right" class="action-button shadow animate blue"
+                               onclick="rejectRequest(${otherUser.id})"> Reject</a>
+                            <!--</a>-->
+                            <!--<a href="#" style="float: left" class="action-button shadow animate blue"-->
+                            <!--th:onclick="'acceptRequest(' + ${otherUser.id} + ')'">Accept</a>-->
+                            <!--<a href="#" style="float: right" class="action-button shadow animate blue"-->
+                            <!--th:onclick="'rejectRequest(' + ${otherUser.id} + ')'"> Reject</a>-->
+                        </div>
+                    </div>
+                </li>
+            </div>
+        </div>
+    </ul>
+</form>
+<script>
+    function acceptRequest(id) {
+        // var userId = $("#userId").attr("content");
+        jQuery.ajax({
+            url: "/acceptRequest?friendId=" + id /*userId*/,
+            success: function (result) {
+                $("#contacts").html(result);
+            }
+        });
+    }
+
+    function rejectRequest(id) {
+        getRequests();
+        jQuery.ajax({
+            url: "/rejectRequest?friendId=" + id,
+            success: function (result) {
+                $("#contacts").html(result);
+            }
+        });
+    }
+</script>
+</body>
+</html>

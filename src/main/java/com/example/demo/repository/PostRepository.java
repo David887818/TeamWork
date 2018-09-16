@@ -9,4 +9,6 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     List<Post> findAllByUserId(int id);
     List<Post> findAllByFriendId(int id);
     List<Post> findAllByOrderByDateDesc();
+
+
 }

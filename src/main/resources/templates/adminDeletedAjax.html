@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Deleted Ajax</title>
+</head>
+<body>
+<div th:each="deletedUser: ${deleted}">
+    <div th:if="${deletedUser.userStatus.toString()=='OFFLINE'}">
+        <a href="/user?otherUserId=${deletedUser.id}">
+            <div>
+                <img src="/getPic?filename=${deletedUser.picture}">
+                <div>
+                    <p
+                            ${deletedUser.name} ${deletedUser.surname}>
+                </div>
+                <a href="/activateUser?deletedUserId=${deletedUser.id}">
+                    <input type="submit" value="Activate">
+                </a>
+                </p>
+            </div>
+        </a>
+    </div>
+</div>
+</body>
+</html>

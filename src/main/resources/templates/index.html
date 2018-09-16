@@ -12,13 +12,13 @@
     <link href="https://fonts.googleapis.com/css?family=Jua|Varela+Round" rel="stylesheet">
     <link rel="stylesheet" href="/style.css">
     <title>GreenBook</title>
-    </head>
+</head>
 <body>
 <div class="logBar ">
     <div class="menuBar d-flex justify-content-between">
-        <div ><p class="GFBIcon">GreenBook</p></div>
-        <div >
-            <form th:action="@{/}"  method="post">
+        <div><p class="GFBIcon">GreenBook</p></div>
+        <div>
+            <form th:action="@{/}" method="post">
                 <div class="d-flex justify-content-between">
                     <div class="d-flex flex-column">
                         <label class="emailFont ml-2">Email or Phone</label>
@@ -49,6 +49,8 @@
             </div>
             <div class="w-50">
                 <div class="mt-5">
+                    <form action="/register" modelAttribute="userRegister" method="post" enctype="multipart/form-data">
+
                     <div class="regFont">Create a New Account</div>
                     <div class="regFontSmall">It’s free and always will be.</div>
                 </div>
@@ -58,7 +60,8 @@
                 <div class="mt-4" th:if="${errMessage == 'Error'}">
                     <span class="iRed" th:text="'Error: User has already registered!'"></span>
                 </div>
-                <form class="d-flex mt-2 mb-4 flex-column" action="/user/add" method="post" enctype="multipart/form-data">
+                <form class="d-flex mt-2 mb-4 flex-column" action="/user/add" method="post"
+                      enctype="multipart/form-data">
 
                     <div class="d-flex justify-content-between">
                         <input placeholder="Name" class="  inputFont border border-success rounded " type="text"
@@ -82,14 +85,21 @@
                         <label class="mt-2 ml-2">Female</label>
                     </div>
                     <div class=" w-75">
-                        <p class="emailFont mt-2">By clicking Sign Up, you agree to our Terms, Data Policy and Cookies Policy.
+                        <p class="emailFont mt-2">By clicking Sign Up, you agree to our Terms, Data Policy and Cookies
+                            Policy.
                             You may receive SMS Notifications from us and can opt out any time.</p></div>
-                    <input type="submit" value="Sign Up" class="inputFont w-50 btn btn-success  border border-succes rounded ">
+                    <input type="submit" value="Sign Up"
+                           class="inputFont w-50 btn btn-success  border border-succes rounded ">
                 </form>
             </div>
         </div>
     </div>
 </div>
+<script>
 
+    document.getElementById("vEmail").value = "${vEmail}"
+    document.getElementById("vPassword").value = "${vPassword}"
+
+</script>
 </body>
 </html>

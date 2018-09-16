@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+</head>
+<body>
+
+<a href="/admin"> </a>
+
+<a onclick="getDeletedUser()">Deleted Users</a>
+
+<div>
+    <input type="text" placeholder="Search contacts..." oninput="searchAjax(this)"/>
+</div>
+<script>
+    function getDeletedUser() {
+        jQuery.ajax({
+            url: "/getDeletedUser",
+            type: "GET",
+            success: function (result) {
+                $(".deleted").html(result);
+            }
+        });
+    }
+
+    function searchAjax(text1) {
+        jQuery.ajax({
+            url: "/searchUser?userNameForSearch=" + text1.value,
+            success: function (result) {
+                $(".searchBox").html(result);
+            }
+        });
+    }
+</script>
+</body>
+</html>

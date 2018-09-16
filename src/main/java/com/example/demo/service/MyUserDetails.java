@@ -16,13 +16,11 @@ public class MyUserDetails implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User byEmail = userRepository.findUserByEmail(email);
+        User byEmail = userRepository.findUserByEmail (email);
         if (byEmail == null) {
-            throw new UsernameNotFoundException(String.format("Username with %s does not exists",email));
+            throw new UsernameNotFoundException (String.format ("Username with %s does not exists", email));
         }
-        return new CurrentUser(byEmail);
+        return new CurrentUser (byEmail);
     }
-
-    
 
 }

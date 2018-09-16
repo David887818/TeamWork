@@ -1,8 +1,6 @@
 package com.example.demo;
 
-import com.example.demo.model.Gender;
-import com.example.demo.model.User;
-import com.example.demo.model.UserType;
+import com.example.demo.model.*;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -21,28 +19,30 @@ public class DemoApplication implements CommandLineRunner {
     PasswordEncoder passwordEncoder;
 
     public static void main(String[] args) {
-        SpringApplication.run(DemoApplication.class, args);
+        SpringApplication.run (DemoApplication.class, args);
     }
 
     @Override
     public void run(String... args) throws Exception {
-        User user = userRepository.findUserByEmail("admin@mail.com");
+        User user = userRepository.findUserByEmail ("admin@mail.com");
         if (user == null) {
-            User admin = User.builder()
-                    .email("admin@mail.com")
-                    .name("admin")
-                    .surname("admin")
-                    .password(passwordEncoder.encode("admin"))
-                    .userType(UserType.ADMIN)
-                    .gender(Gender.MALE)
-                    .build();
-            userRepository.save(admin);
+            User admin = User.builder ()
+                    .email ("admin@mail.com")
+                    .name ("admin")
+                    .surname ("admin")
+                    .password (passwordEncoder.encode ("admin"))
+                    .userType (UserType.ADMIN)
+                    .activeStatus (ActiveStatus.DELETED)
+                    .userStatus (UserStatus.OFFLINE)
+                    .gender (Gender.MALE)
+                    .build ();
+            userRepository.save (admin);
         }
 
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder ();
     }
 }
