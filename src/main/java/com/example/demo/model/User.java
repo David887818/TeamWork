@@ -35,7 +35,6 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(name = "status_active")
     private ActiveStatus activeStatus;
-
     @Column
     @Enumerated(EnumType.STRING)
     private Gender gender;
@@ -44,7 +43,5 @@ public class User {
     @Column
     private String pic_url_cover;
 
-    @Column
-    boolean verify;
 }
 
