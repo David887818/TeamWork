@@ -68,7 +68,25 @@ body {
     transition: left 0.3s ease;
 
 }
+.userPicMessage {
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+}
+.height{
+    height: auto !important;
+}
 
+.iconHover {
+    list-style: none;
+    text-decoration: none;
+}
+
+.iconHover:hover {
+    list-style: none;
+    text-decoration: none;
+    background-color: rgba(14, 95, 16, 0.29);
+}
 .heading {
     padding: 10px 16px 10px 15px;
     margin: 0;
@@ -252,8 +270,9 @@ body {
     color: #42b24b;
 }
 .iBlue {
-    font-size: 20px;
-    color: blue;
+    font-size: 15px;
+    color: #1c3909;
+    font-family: 'Varela Round', sans-serif;
 }
 .iBlack {
     font-size: 15px;
@@ -263,14 +282,20 @@ a:hover {
     list-style: none;
     text-decoration: none;
 }
-
+.small {
+    font-family: 'Varela Round', sans-serif;
+    font-size: 16px;
+    border: #00800061 1px solid;
+}
 
 .iRed {
+    font-family: 'Varela Round', sans-serif;
     font-size: 20px;
     color: #b2392b;
 }
 
 .iWhite {
+    font-family: 'Varela Round', sans-serif;
     font-size: 20px;
     color: #ffffff;
 }

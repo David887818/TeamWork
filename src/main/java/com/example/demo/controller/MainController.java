@@ -1,10 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.*;
-import com.example.demo.repository.CommentRepository;
-import com.example.demo.repository.PostLikeRepository;
-import com.example.demo.repository.PostRepository;
-import com.example.demo.repository.UserRepository;
+import com.example.demo.repository.*;
 import com.example.demo.service.CurrentUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -22,6 +19,7 @@ public class MainController {
     private User messageUser;
     private List<Comment> commentList;
     private List<Post> postList;
+
     @Autowired
     PostRepository postRepository;
 
@@ -34,6 +32,9 @@ public class MainController {
     @Autowired
     PostLikeRepository likeRepository;
 
+    @Autowired
+    UserMessageRepository userMessageRepository;
+
     @GetMapping("/")
     public String mainPage() {
         return "index";
@@ -41,71 +42,74 @@ public class MainController {
 
     @GetMapping("/friendsPage/{id}")
     public String findFriendPage(@PathVariable("id") int id) {
-        friendUser = userRepository.findUserById (id);
+        friendUser = userRepository.findUserById(id);
         return "redirect:/friend1Page";
     }
 
     @GetMapping("/userPage")
     public String homePage(ModelMap modelMap) {
-        postList = postRepository.findAllByOrderByDateDesc ();
+        postList = postRepository.findAllByOrderByDateDesc();
         for (Post post : postList) {
-            post.setComments (commentRepository.findAllByPostId (post.getId ()));
-            post.setLikes (likeRepository.findAllByPostId (post.getId ()));
-            for (PostLike like : post.getLikes ()) {
-                if (user.getId () == like.getUser ().getId ()) {
-                    post.setListStatus (ListStatus.TRUE);
+            post.setComments(commentRepository.findAllByPostId(post.getId()));
+            post.setLikes(likeRepository.findAllByPostId(post.getId()));
+            for (PostLike like : post.getLikes()) {
+                if (user.getId() == like.getUser().getId()) {
+                    post.setListStatus(ListStatus.TRUE);
                 } else {
-                    post.setListStatus (ListStatus.FALSE);
+                    post.setListStatus(ListStatus.FALSE);
                 }
             }
-            List<Post> postList = postRepository.findAllByUserId (user.getId ());
-            modelMap.addAttribute ("userPost", postList);
+            List<Post> postList = postRepository.findAllByUserId(user.getId());
+            modelMap.addAttribute("userPost", postList);
         }
-        List<User> userList = userRepository.findAll ();
-        modelMap.addAttribute ("user", userList);
-        modelMap.addAttribute ("us", user);
-        modelMap.addAttribute ("posts", postList);
-        modelMap.addAttribute ("comments", commentList);
+
+        List<User> userList = userRepository.findAll();
+        modelMap.addAttribute("user", userList);
+        modelMap.addAttribute("us", user);
+        modelMap.addAttribute("posts", postList);
+        modelMap.addAttribute("comments", commentList);
         return "userPage";
     }
 
 
     @GetMapping("/message/{id}")
-    public String findMessagePage(@PathVariable("id") int id,ModelMap modelMap,@AuthenticationPrincipal UserDetails userDetails) {
-        messageUser = userRepository.findUserById (id);
+    public String findMessagePage(@PathVariable("id") int id, ModelMap modelMap, @AuthenticationPrincipal UserDetails userDetails) {
+        messageUser = userRepository.findUserById(id);
         user = ((CurrentUser) userDetails).getUser();
         List<User> userList = userRepository.findAll();
-        modelMap.addAttribute ("users", userList);
-        modelMap.addAttribute ("user", user);
-        modelMap.addAttribute ("messageUser", messageUser);
+        List<UsersMessage> userMessages= userMessageRepository.getUserMessages(user.getId());
+        modelMap.addAttribute("userMessages", userMessages);
+        modelMap.addAttribute("users", userList);
+        modelMap.addAttribute("user", user);
+        modelMap.addAttribute("messageUser", messageUser);
         return "messagePage";
     }
 
     @GetMapping("/friend1Page")
     public String friendPage(ModelMap modelMap) {
-        postList = postRepository.findAllByUserId (friendUser.getId ());
+        postList = postRepository.findAllByUserId(friendUser.getId());
         postList = postRepository.findAllByOrderByDateDesc();
         for (Post post : postList) {
-            post.setComments (commentRepository.findAllByPostId (post.getId ()));
-            post.setLikes (likeRepository.findAllByPostId (post.getId ()));
-            for (PostLike like : post.getLikes ()) {
-                if (user.getId () == like.getUser ().getId ()) {
-                    post.setListStatus (ListStatus.TRUE);
+            post.setComments(commentRepository.findAllByPostId(post.getId()));
+            post.setLikes(likeRepository.findAllByPostId(post.getId()));
+            for (PostLike like : post.getLikes()) {
+                if (user.getId() == like.getUser().getId()) {
+                    post.setListStatus(ListStatus.TRUE);
                 } else {
-                    post.setListStatus (ListStatus.FALSE);
+                    post.setListStatus(ListStatus.FALSE);
                 }
             }
-            modelMap.addAttribute ("friendPost", postList);
-            List<Post> postListOne = postRepository.findAllByFriendId (friendUser.getId ());
-            modelMap.addAttribute ("userFriendPost", postListOne);
+            modelMap.addAttribute("friendPost", postList);
+            List<Post> postListOne = postRepository.findAllByFriendId(friendUser.getId());
+            modelMap.addAttribute("userFriendPost", postListOne);
 
         }
-        List<User> userList = userRepository.findAll ();
-        modelMap.addAttribute ("user", userList);
-        modelMap.addAttribute ("us", user);
-        modelMap.addAttribute ("friend", friendUser);
-        modelMap.addAttribute ("posts", postList);
-        modelMap.addAttribute ("comments", commentList);
+        List<User> userList = userRepository.findAll();
+        modelMap.addAttribute("user", userList);
+        modelMap.addAttribute("us", user);
+        modelMap.addAttribute("friend", friendUser);
+        modelMap.addAttribute("posts", postList);
+        modelMap.addAttribute("comments", commentList);
         return "friendPage";
     }
 
@@ -116,31 +120,34 @@ public class MainController {
 
     @GetMapping("/homePage")
     public String mainPageUser(ModelMap modelMap) {
-        postList = postRepository.findAllByOrderByDateDesc ();
+        postList = postRepository.findAllByOrderByDateDesc();
         for (Post post : postList) {
-            post.setComments (commentRepository.findAllByPostId (post.getId ()));
-            post.setLikes (likeRepository.findAllByPostId (post.getId ()));
-            for (PostLike like : post.getLikes ()) {
-                if (user.getId () == like.getUser ().getId ()) {
-                    post.setListStatus (ListStatus.TRUE);
+            post.setComments(commentRepository.findAllByPostId(post.getId()));
+            post.setLikes(likeRepository.findAllByPostId(post.getId()));
+            for (PostLike like : post.getLikes()) {
+                if (user.getId() == like.getUser().getId()) {
+                    post.setListStatus(ListStatus.TRUE);
                 } else {
-                    post.setListStatus (ListStatus.FALSE);
+                    post.setListStatus(ListStatus.FALSE);
                 }
             }
         }
-        modelMap.addAttribute ("posts", postList);
-        List<User> userList = userRepository.findAll ();
-        modelMap.addAttribute ("user", userList);
-        modelMap.addAttribute ("us", user);
-        modelMap.addAttribute ("comments", commentList);
+
+        List<User> userList = userRepository.findAll();
+        List<UsersMessage> userMessages= userMessageRepository.getUserMessages(user.getId());
+        modelMap.addAttribute("posts", postList);
+        modelMap.addAttribute("userMessages", userMessages);
+        modelMap.addAttribute("user", userList);
+        modelMap.addAttribute("us", user);
+        modelMap.addAttribute("comments", commentList);
         return "home";
     }
 
     @PostMapping("/loginUser")
     public String loginUser(@AuthenticationPrincipal UserDetails userDetails, ModelMap modelMap) {
-        user = ((CurrentUser) userDetails).getUser ();
-        if (user.getUserType () == UserType.USER) {
-            modelMap.addAttribute ("user", user);
+        user = ((CurrentUser) userDetails).getUser();
+        if (user.getUserType() == UserType.USER) {
+            modelMap.addAttribute("user", user);
             return "redirect:/homePage";
         }
         return "redirect:/indexPage";
@@ -148,13 +155,13 @@ public class MainController {
 
     @PostMapping("/addComment")
     public String addComment(@RequestParam String comment, @RequestParam("post_id") int postId, @RequestParam("user_id") int userId) {
-        Comment commment = Comment.builder ()
-                .comment (comment)
-                .post (postRepository.getOne (postId))
-                .user (userRepository.getOne (userId))
-                .build ();
-        commentRepository.save (commment);
-        commentList = commentRepository.findAllByPostId (postId);
+        Comment commment = Comment.builder()
+                .comment(comment)
+                .post(postRepository.getOne(postId))
+                .user(userRepository.getOne(userId))
+                .build();
+        commentRepository.save(commment);
+        commentList = commentRepository.findAllByPostId(postId);
         return "redirect:/homePage";
     }
 }

@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -14,7 +16,7 @@ import javax.persistence.*;
 public class Message {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private int id;
     @Column

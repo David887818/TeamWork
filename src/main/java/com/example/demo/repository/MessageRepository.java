@@ -16,4 +16,5 @@ public interface MessageRepository extends JpaRepository<Message, Integer> {
 
     @Query(value = "select message from Message message where to_id=:toId")
     List<Message> customGetMessagesByToId(@Param("toId") int toId);
+
 }

@@ -55,31 +55,35 @@
                         <div class="dropdown4">
                             <i onclick="myFunction4()" class=" dropbtn4 fab fa-facebook-messenger iWhite"></i>
                             <div id="myDropdown4" class="dropdown-content4">
-                                <div th:each="users : ${user}">
-                                    <a th:href="@{'/message/'+${users.id}}">
-                                        <div>
-                                            <div class="d-flex  iconHover">
-                                                <ul class="d-flex m-2">
-                                                    <li class="d-flex">
-                                                        <div th:if="${users.pic_url != null}">
-                                                            <img class="userPicMessage"
-                                                                 th:src="@{'/post/userImage?'(picUrl=${users.pic_url})}">
-                                                        </div>
-                                                        <div th:if="${users.pic_url == null}">
-                                                            <img class="userPicMessage " src="/user.png">
-                                                        </div>
+                                <div th:if="${userMessages!=null}">
+                                    <div th:each="users : ${userMessages}">
+                                        <a th:href="@{'/message/'+${users.to.id}}">
+                                            <div>
+                                                <div class="d-flex  iconHover">
+                                                    <ul class="d-flex m-2">
+                                                        <li class="d-flex">
+                                                            <div th:if="${users.to.pic_url != null}">
+                                                                <img class="userPicMessage"
+                                                                     th:src="@{'/post/userImage?'(picUrl=${users.to.pic_url})}">
+                                                            </div>
+                                                            <div th:if="${users.to.pic_url == null}">
+                                                                <img class="userPicMessage " src="/user.png">
+                                                            </div>
 
 
-                                                        <span th:text="${users.name}" class="ml-3 mt-1">User</span>
-                                                        <span th:text="${users.surname}" class="ml-2 mt-1">User</span>
-                                                    </li>
-                                                </ul>
+                                                            <span th:text="${users.to.name}" class="ml-3 mt-1">User</span>
+                                                            <span th:text="${users.to.surname}" class="ml-2 mt-1">User</span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
                                             </div>
-
-                                        </div>
-                                    </a>
+                                        </a>
+                                    </div>
                                 </div>
-
+                                <div th:if="${userMessages==null}">
+                                    <span class="iBlack">No Messages</span>
+                                </div>
                             </div>
                         </div>
                 </div>

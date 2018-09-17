@@ -1,8 +1,6 @@
 package com.example.demo.model;
 
-
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,16 +9,16 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Entity
-@Table(name = "friend")
-public class Friend {
+@Table(name = "userMessage")
+public class UsersMessage {
     @Id
-    @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
     private int id;
-    @Column(name = "user_id")
-    private int userId;
-    @Column(name = "friend_id")
-    private int friendId;
+    @ManyToOne
+    private User from;
+    @ManyToOne
+    private User to;
+
 }
