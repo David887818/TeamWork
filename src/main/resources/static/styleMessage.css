@@ -4,7 +4,7 @@ body,
 div,
 span {
     height: 100%;
-    width: 100%;
+    /*width: 100%;*/
     overflow: hidden;
     padding: 0;
     margin: 0;
@@ -268,6 +268,21 @@ body {
 .iGreen {
     font-size: 20px;
     color: #42b24b;
+}
+.G {
+    margin: 5px;
+    width: 30px;
+    height: 30px;
+    background-color: white;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.G i {
+    color: #42b24b;
+    font-size: 25px;
 }
 .iBlue {
     font-size: 15px;

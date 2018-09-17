@@ -21,14 +21,16 @@
         <div class="col-sm-4 side">
             <div class="side-one">
                 <div class="heading d-flex justify-content-between">
-                    <div class="d-flex heading-avatar ">
-                        <a href="/userPage">
+                    <div class="G"><a href="/homePage"><i class="fab fa-gofore"></i></a></div>
+
+                    <a href="/userPage">  <div class="d-flex ml-3 heading-avatar ">
+
                             <div class="heading-avatar-icon d-flex align-items-center">
                                 <img th:src="@{'/post/userImage?'(picUrl=${user.pic_url})}">
-                                <a class="iBlue ml-3" th:text="${user.name + ' ' + user.surname} "></a>
+                                <p class="iBlue mt-3 ml-3" th:text="${user.name + ' ' + user.surname} "></p>
                             </div>
-                        </a>
-                    </div>
+
+                    </div> </a>
 
                     <div class="heading-compose  pull-right">
                         <i class="fa fa-comments fa-2x  pull-right ml-5"></i>
@@ -81,7 +83,7 @@
                 </div>
 
                 <div class="row compose-sideBar">
-                    <div th:each="users : ${users}">
+                    <div class="height" th:each="users : ${users}">
                         <a th:href="@{'/message/'+${users.id}}">
                             <div class="height">
                                 <div class="d-flex height iconHover">
