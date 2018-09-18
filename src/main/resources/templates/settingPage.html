@@ -253,7 +253,6 @@
                     <form id="setEmail1" class=" mb-2 w-50" action="/setEmail" method="post">
                         <input placeholder="Input Email" type="email" name="email"
                                class="btn mt-1 w-100 btn-outline-success">
-                        <input type="hidden" name="user_id" th:value="${us.id}" class="btn btn-outline-success">
                         <br>
                         <input type="submit" value="Change" class="btn w-100 mt-1 btn-success">
                     </form>
@@ -270,7 +269,6 @@
                     <form id="setPass1" class=" mb-2 w-50" action="/setPass" method="post">
                         <input placeholder="Input Old Password" type="password" name="old_password"
                                class="btn mt-1 w-100 btn-outline-success">
-                        <input type="hidden" name="user_id" th:value="${us.id}" class="btn btn-outline-success">
                         <input placeholder="Input New Password" type="password" name="password"
                                class="btn mt-1 w-100 btn-outline-success">
                         <br>
@@ -286,10 +284,9 @@
                     </div>
                 </div>
                 <div class="d-flex border-bottom mt-2 justify-content-center">
-                    <form id="setPic1" class=" mb-2 w-50" action="/setPic" method="post">
+                    <form id="setPic1" class=" mb-2 w-50" action="/setPic" method="post" enctype="multipart/form-data">
                         <input  type="file" name="pic"
                                class="btn mt-1 w-100 btn-outline-success">
-                        <input type="hidden" name="user_id" th:value="${us.id}" class="btn btn-outline-success">
                         <br>
                         <input type="submit" value="Change" class="btn w-100 mt-1 btn-success">
                     </form>
@@ -305,7 +302,6 @@
                 <div class="d-flex border-bottom mt-2 justify-content-center">
                     <form id="setCovPic1" class=" mb-2 w-50" action="/setCovPic" method="post">
                         <input  type="file" name="cover_pic" class="btn mt-1 w-100 btn-outline-success">
-                        <input type="hidden" name="user_id" th:value="${us.id}" class="btn btn-outline-success">
                         <br>
                         <input type="submit" value="Change" class="btn w-100 mt-1 btn-success">
                     </form>

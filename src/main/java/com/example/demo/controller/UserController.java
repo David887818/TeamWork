@@ -34,7 +34,6 @@ import java.util.List;
 public class UserController {
     @Autowired
     private PasswordEncoder passwordEncoder;
-
     @Autowired
     private UserRepository userRepository;
     @Autowired
