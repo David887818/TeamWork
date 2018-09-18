@@ -37,7 +37,7 @@ public class PostController {
     @Autowired
     CommentRepository commentRepository;
 
-    @Value("${webSite.pic.url}")
+    @Value(value = "${TeamWork.post.pic.url}")
     private String adPicDir;
 
     @PostMapping("/addLike")

@@ -172,7 +172,7 @@
 
 
         <div th:if="${us.pic_url_cover != null}">
-            <div th:style="'background:url(' + @{'/post/userImage?'(picUrl=${us.pic_url_cover})} + ');background-repeat: no-repeat;background-size: cover;'"
+            <div th:style="'background:url(' +  @{'/post/userImage?'(picUrl=${us.pic_url_cover})} + ');background-repeat: no-repeat;background-size: cover;'"
                  class="backgroundImgExists d-flex align-items-end">
 
                 <div class="profileBar"></div>
@@ -231,7 +231,7 @@
                             <div class="d-flex justify-content-center align-items-center w-25">
                                 <div th:if="${us.pic_url != null}">
                                     <img class="titlePic border-50"
-                                         th:src="@{'/post/userImage?'(picUrl=${us.pic_url})}">
+                                         th:src="@{'/post/userImage?'(picUrl=${us.getPic_url()})}">
                                 </div>
                                 <div th:if="${us.pic_url == null}">
                                     <img class="titlePic border-50" src="/user.png">
@@ -250,7 +250,7 @@
                         </div>
                     </div>
                 </form>
-                <div th:if="${userPost.isEmpty()}">
+                <div th:if="${posts == null}">
                     </br>
                     <h2 style="text-align: center">You have not any posts yet.
                         you can add it just now </h2>
@@ -350,15 +350,22 @@
 
 <div class="borderMessage sideNavThree">
     <div>
-        <div class="d-flex messagePosition iconHover">
-            <ul class="d-flex m-2">
-                <li class="d-flex"><img class="userPicMessage" src="/user.png"><span class="ml-3 mt-1">User</span>
-                    <span class="ml-2 mt-1">User</span></li>
-            </ul>
+        <div th:each="users : ${user}" class="d-flex  iconHover">
+            <a th:href="@{|/friendsPage/${users.id}|}">
+                <ul class="d-flex m-2">
+                    <li class="d-flex">
+                        <div th:if="${users.pic_url != null}">
+                            <img class="userPicMessage"
+                                 th:src="@{'/post/userImage?'(picUrl=${users.pic_url})}">
+                        </div>
+                        <div th:if="${users.pic_url == null}">
+                            <img class="userPicMessage " src="/user.png">
+                        </div>
+                        <span th:text="${users.name}" class="ml-3 mt-1">User</span>
+                        <span th:text="${users.surname}" class="ml-2 mt-1">User</span></li>
+                </ul>
+            </a>
         </div>
-    </div>
-    <div>
-
     </div>
 </div>
 <script src="/min.js"></script>

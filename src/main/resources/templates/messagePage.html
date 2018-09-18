@@ -36,7 +36,7 @@
                         <i class="fa fa-comments fa-2x  pull-right ml-5"></i>
                     </div>
                 </div>
-                <div class="row sideBar">
+                <div id="chat" class="row sideBar">
                     <div th:if="${userMessages!=null}">
                         <div class="height" th:each="users : ${userMessages}">
                             <a th:href="@{'/message/'+${users.to.id}}">
@@ -164,12 +164,18 @@
             $(".side-two").css({
                 "left": "0"
             });
+            $("#chat").css({
+                "display": "none"
+            })
         });
 
         $(".newMessage-back").click(function () {
             $(".side-two").css({
                 "left": "-100%"
             });
+            $("#chat").css({
+                "display": "block"
+            })
         });
     })
 </script>

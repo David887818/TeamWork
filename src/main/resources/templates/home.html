@@ -37,7 +37,7 @@
             <ul class="d-flex mt-2 barIcons">
                 <div class="iconHover" th:if="${us.pic_url != null}">
                     <li><a href="/userPage"><img class="userPicBar m-1 border border-light"
-                                                 th:src="@{'/post/userImage?'(picUrl=${us.pic_url})}" alt=""> <span
+                                                 th:src="@{'/post/userImage?'(picUrl=${us.getPic_url()})}" alt=""> <span
                             class=" iconFontBar" th:text="${us.name + ' ' + us.surname}"></span></a>
                     </li>
                 </div>
@@ -64,15 +64,17 @@
                                                         <li class="d-flex">
                                                             <div th:if="${users.to.pic_url != null}">
                                                                 <img class="userPicMessage"
-                                                                     th:src="@{'/post/userImage?'(picUrl=${users.to.pic_url})}">
+                                                                     th:src="@{'/post/userImage?'(picUrl=${users.to.getPic_url()})}">
                                                             </div>
                                                             <div th:if="${users.to.pic_url == null}">
                                                                 <img class="userPicMessage " src="/user.png">
                                                             </div>
 
 
-                                                            <span th:text="${users.to.name}" class="ml-3 mt-1">User</span>
-                                                            <span th:text="${users.to.surname}" class="ml-2 mt-1">User</span>
+                                                            <span th:text="${users.to.name}"
+                                                                  class="ml-3 mt-1">User</span>
+                                                            <span th:text="${users.to.surname}"
+                                                                  class="ml-2 mt-1">User</span>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -82,7 +84,7 @@
                                     </div>
                                 </div>
                                 <div th:if="${userMessages==null}">
-                                    <span class="iBlack">No Messages</span>
+                                    <p class="iBlack">No Messages</p>
                                 </div>
                             </div>
                         </div>
@@ -318,8 +320,9 @@
     </div>
 </div>
 <div class="borderMessage sideNavThree">
-    <div>
-        <div th:each="users : ${user}" class="d-flex  iconHover">
+    <div th:each="users : ${user}" class="d-flex  iconHover">
+
+        <a th:href="@{'/friendsPage/' +${users.getId()}}">
             <ul class="d-flex m-2">
                 <li class="d-flex">
                     <div th:if="${users.pic_url != null}">
@@ -329,16 +332,15 @@
                     <div th:if="${users.pic_url == null}">
                         <img class="userPicMessage " src="/user.png">
                     </div>
-
-
-                    <span th:text="${users.name}" class="ml-3 mt-1">User</span>
-                    <span th:text="${users.surname}" class="ml-2 mt-1">User</span></li>
+                    <span th:text="${users.name}" class="ml-3 mt-1"></span>
+                    <span th:text="${users.surname}" class="ml-2 mt-1"></span></li>
             </ul>
-        </div>
+        </a>
     </div>
-    <div>
+</div>
+<div>
 
-    </div>
+</div>
 </div>
 <script src="/min.js">
 

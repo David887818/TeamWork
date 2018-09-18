@@ -42,7 +42,7 @@ public class UserController {
     @Autowired
     private RequestRepository requestRepository;
 
-    @Value("${webSite.pic.url}")
+    @Value(value = "${TeamWork.post.pic.url}")
     private String adPicDir;
 
 

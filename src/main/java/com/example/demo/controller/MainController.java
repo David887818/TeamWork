@@ -62,8 +62,13 @@ public class MainController {
             List<Post> postList = postRepository.findAllByUserId(user.getId());
             modelMap.addAttribute("userPost", postList);
         }
-
         List<User> userList = userRepository.findAll();
+        List<User> cornerList = userRepository.findAll();
+        for (User user1 : cornerList) {
+            if (user1.getId() == user.getId()){
+                userList.remove(user);
+            }
+        }
         modelMap.addAttribute("user", userList);
         modelMap.addAttribute("us", user);
         modelMap.addAttribute("posts", postList);
@@ -87,9 +92,8 @@ public class MainController {
 
     @GetMapping("/friend1Page")
     public String friendPage(ModelMap modelMap) {
-        postList = postRepository.findAllByUserId(friendUser.getId());
-        postList = postRepository.findAllByOrderByDateDesc();
-        for (Post post : postList) {
+        List <Post> postsList = postRepository.findAllByFriendId(friendUser.getId());
+        for (Post post : postsList) {
             post.setComments(commentRepository.findAllByPostId(post.getId()));
             post.setLikes(likeRepository.findAllByPostId(post.getId()));
             for (PostLike like : post.getLikes()) {
@@ -99,16 +103,18 @@ public class MainController {
                     post.setListStatus(ListStatus.FALSE);
                 }
             }
-            modelMap.addAttribute("friendPost", postList);
-            List<Post> postListOne = postRepository.findAllByFriendId(friendUser.getId());
-            modelMap.addAttribute("userFriendPost", postListOne);
-
+            modelMap.addAttribute("posts", postsList);
         }
         List<User> userList = userRepository.findAll();
+        List<User> cornerList = userRepository.findAll();
+        for (User user1 : cornerList) {
+            if (user1.getId() == user.getId()){
+                userList.remove(user);
+            }
+        }
         modelMap.addAttribute("user", userList);
         modelMap.addAttribute("us", user);
         modelMap.addAttribute("friend", friendUser);
-        modelMap.addAttribute("posts", postList);
         modelMap.addAttribute("comments", commentList);
         return "friendPage";
     }
@@ -132,8 +138,13 @@ public class MainController {
                 }
             }
         }
-
         List<User> userList = userRepository.findAll();
+        List<User> cornerList = userRepository.findAll();
+        for (User user1 : cornerList) {
+            if (user1.getId() == user.getId()){
+                userList.remove(user);
+            }
+        }
         List<UsersMessage> userMessages= userMessageRepository.getUserMessages(user.getId());
         modelMap.addAttribute("posts", postList);
         modelMap.addAttribute("userMessages", userMessages);

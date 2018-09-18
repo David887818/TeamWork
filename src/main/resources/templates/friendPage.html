@@ -154,29 +154,6 @@
     <div class="userProfile">
         <div th:if="${friend.pic_url_cover == null}">
             <div class="backgroundImg d-flex align-items-end">
-                <div class="addPic">
-                    <button onclick="document.getElementById('id03').style.display='block'"
-                            class="btn btn-outline-success iWhite">Choose File
-                    </button>
-                </div>
-                <div id="id03" class="modal">
-                    <form class="modal-content animate d-flex" action="/user/addImageCover"
-                          enctype="multipart/form-data"
-                          method="post">
-                            <span onclick="document.getElementById('id03').style.display='none'" class="close"
-                                  title="Close Modal">&times;</span>
-
-                        <input type="file" name="img" class="btn btn-success w-100">
-                        <div class="container" style="background-color:#f1f1f1">
-                            <button type="button" onclick="document.getElementById('id03').style.display='none'"
-                                    class="btn btn-danger">Cancel
-                            </button>
-                            <input class="btn btn-info"
-                                   onclick="document.getElementById('id03').style.display='none'" type="submit"
-                                   value="Add"/>
-                        </div>
-                    </form>
-                </div>
                 <div class="profileBar"></div>
                 <div th:if="${friend.pic_url == null}" style="display:flex;align-items: center;justify-content: center">
                     <img class="profilePic" src="/user.png">
@@ -190,20 +167,21 @@
                         <li><a href="/">Photos</a></li>
                         <li><a href="/">Friends</a></li>
                     </ul>
-                </div>
-                <div class="ml-5 iBlue">
-                    <a href="#">+ Add Friend</a>
+
+                    <div class="ml-5 iBlue">
+                        <a href="#">+ Add Friend</a>
+                    </div>
                 </div>
             </div>
         </div>
         <div th:if="${friend.pic_url_cover != null}">
-            <div class="backgroundImgExists d-flex align-items-end">
-                <!--<img  th:src="@{'/post/userImage?'(picUrl=${us.pic_url_cover})}">-->
+            <div th:style="'background:url(' +  @{'/post/userImage?'(picUrl=${friend.pic_url_cover})} + ');background-repeat: no-repeat;background-size: cover;'"
+                 class="backgroundImgExists d-flex align-items-end">
                 <div class="profileBar"></div>
                 <div th:if="${friend.pic_url == null}" style="display:flex;align-items: center;justify-content: center">
                     <img class="profilePic" src="/user.png">
                 </div>
-                <div th:if="${us.pic_url != null}">
+                <div th:if="${friend.pic_url != null}">
                     <img class="profilePic" th:src="@{'/post/userImage?'(picUrl=${friend.pic_url})}">
                 </div>
                 <div class="profileToolBar d-flex">
@@ -240,8 +218,7 @@
                         </div>
                         <div class="d-flex justify-content-center align-items-center w-75">
                             <input type="hidden" name="friend_id" th:value="${friend.id}"/>
-                            <textarea class="bg-light" name="name" rows="2" cols="40"
-                                      th:placeholder="'Write anything to' + ' ' + ${friend.name}">
+                            <textarea class="bg-light" name="name" rows="2" cols="40">
 
                         </textarea>
                         </div>
@@ -253,12 +230,12 @@
                     </div>
                 </div>
             </form>
-            <div th:if="${friendPost.isEmpty()}">
+            <div th:if="${posts == null}">
                 </br>
-                <h2 style="text-align: center">You have not any posts yet.
-                    you can add it just now </h2>
+                <h3 style="text-align: center">Friend have not any posts yet.
+                    you can add it just now </h3>
             </div>
-            <div class="post mt-2 borderRounded border bg-light" th:each="post : ${userFriendPost}">
+            <div class="post mt-2 borderRounded border bg-light" th:each="post : ${posts}">
                 <div class="postUser m-2 d-flex justify-content-between">
                     <div th:if="${post.user.pic_url != null}">
                         <h4 th:text="${post.user.name + ' ' + 'Tagged ' + ' ' + friend.name}"></h4>
@@ -268,7 +245,7 @@
                         </a>
                     </div>
                     <div th:if="${post.user.pic_url == null}">
-                        <h4 th:text="${'You Tagged ' + ' ' + friend.name}"></h4>
+                        <h4 th:text="${'You Tagged ' + ' ' + post.friend.name}"></h4>
                         <a href="#"><img src="/user.png"> <span
                                 th:text="${post.user.name}+${post.user.surname} " class="iconFontBar"></span> </a>
                     </div>
@@ -346,95 +323,9 @@
                 </form>
             </div>
 
-            <div class="post mt-2 borderRounded border bg-light" th:each="post : ${friendPost}">
-                <div class="postUser m-2 d-flex justify-content-between">
-                    <div th:if="${post.user.pic_url != null}">
-                        <a href="#"><img th:src="@{'/post/userImage?'(picUrl=${post.user.pic_url})}">
-                            <span
-                                    th:text="${post.user.name + ' ' +  post.user.surname} " class="iconFontBar"></span>
-                        </a>
-                    </div>
-                    <div th:if="${post.user.pic_url == null}">
-                        <a href="#"><img src="/user.png"> <span
-                                th:text="${post.user.name}+${post.user.surname} " class="iconFontBar"></span> </a>
-                    </div>
-                    <p class="dateFont" th:text="'Date'+ ' '+ ${post.date}"><i class="far iGreen fa-clock"></i></p>
-
-                </div>
-                <div class="postTitle m-2">
-                    <span th:text="${post.name}"></span>
-                </div>
-                <div class="postPic mt-2 w-100">
-                    <img class="w-100" th:src="@{'/post/userImage?'(picUrl=${post.getPic_url()})}">
-                </div>
-                <div class="postLike mt-2">
-                    <a href="/"><i class="ml-3 fas fa-thumbs-up"></i><span class="ml-1"
-                                                                           th:text="${post.likes.size()}"></span></a>
-                </div>
-                <div class="d-flex postHr justify-content-center">
-                    <hr/>
-                </div>
-                <div class="postComment d-flex">
-                    <div th:if="${post.listStatus.name() != 'TRUE'}"
-                         class="w-50 d-flex align-items-center justify-content-center">
-                        <form class="d-flex align-items-center justify-content-center" action="/post/addLike"
-                              method="post">
-                            <i class="far iGreen fa-thumbs-up"></i>
-                            <input type="submit" class="btn iGreen btn-link" value="Like">
-                            <input type="hidden" name="user_id" th:value="${us.id}">
-                            <input type="hidden" name="post_id" th:value="${post.id}">
-                        </form>
-                    </div>
-                    <div th:if="${post.listStatus.name() == 'TRUE'}"
-                         class="w-50 d-flex align-items-center justify-content-center">
-                        <form class="d-flex align-items-center justify-content-center" action="/post/disLike"
-                              method="post">
-                            <i class="far iBlue fa-thumbs-up"></i>
-                            <input type="submit" class="btn iBlue  btn-link" value="Dislike">
-                            <input type="hidden" name="user_id" th:value="${us.id}">
-                            <input type="hidden" name="post_id" th:value="${post.id}">
-                        </form>
-                    </div>
-
-                    <a class="w-50 click m-1"><i class="far iGreen fa-comments"></i><span
-                            class="ml-1 iGreen ">Comment</span></a>
-                </div>
-                <div class="d-flex postHr justify-content-center">
-                    <hr/>
-                </div>
-                <div class="panel w-100 mt-2 ">
-                    <div class="d-flex borderBottom mt-2 align-items-center" th:each="comment : ${post.comments}">
-                        <div th:if="${comment.user.pic_url != null}">
-                            <img class="userPicMessage"
-                                 th:src="@{'/post/userImage?'(picUrl=${comment.user.getPic_url()})}">
-                        </div>
-                        <div th:if="${comment.user.pic_url == null}">
-                            <img class="userPicMessage" src="/user.png">
-                        </div>
-                        <div class="d-flex w-100 align-items-center justify-content-between">
-                            <div class="ml-3" th:text="${comment.comment}"></div>
-                            <div th:if="${comment.user.id==us.id}">
-                                <form action="/post/deleteComment" method="post">
-                                    <input type="hidden" th:value="${comment.id}" name="comment_id">
-                                    <input type="submit" class="commentDelete btn btn-link" value="Delete">
-                                </form>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <form class="d-flex clickForm" action="/addComment" method="post" style="margin-top: 10px">
-                    <input class="w-100 btn btn-outline-success" type="text" name="comment"
-                           placeholder="Write Comment">
-                    <input type="hidden" name="post_id" th:value="${post.id}"/>
-                    <input type="hidden" name="user_id" th:value="${us.id}">
-                    <input type="submit" class="btn btn-outline-success" value="Add">
-                </form>
-            </div>
         </div>
     </div>
 </div>
-
 
 <div class="d-flex userPost"></div>
 
@@ -456,9 +347,6 @@
                 </ul>
             </a>
         </div>
-    </div>
-    <div>
-
     </div>
 </div>
 </body>
