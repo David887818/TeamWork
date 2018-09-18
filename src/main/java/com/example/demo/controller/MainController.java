@@ -4,12 +4,16 @@ import com.example.demo.model.*;
 import com.example.demo.repository.*;
 import com.example.demo.service.CurrentUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -19,7 +23,7 @@ public class MainController {
     private User messageUser;
     private List<Comment> commentList;
     private List<Post> postList;
-
+    private List<UserPhotos> photos;
     @Autowired
     PostRepository postRepository;
 
@@ -34,6 +38,11 @@ public class MainController {
 
     @Autowired
     UserMessageRepository userMessageRepository;
+    @Autowired
+    UserPhotosRepository photosRepository;
+
+    @Value(value = "${TeamWork.post.pic.url}")
+    private String adPicDir;
 
     @GetMapping("/")
     public String mainPage() {
@@ -65,7 +74,7 @@ public class MainController {
         List<User> userList = userRepository.findAll();
         List<User> cornerList = userRepository.findAll();
         for (User user1 : cornerList) {
-            if (user1.getId() == user.getId()){
+            if (user1.getId() == user.getId()) {
                 userList.remove(user);
             }
         }
@@ -81,11 +90,11 @@ public class MainController {
         List<User> userList = userRepository.findAll();
         List<User> cornerList = userRepository.findAll();
         for (User user1 : cornerList) {
-            if (user1.getId() == user.getId()){
+            if (user1.getId() == user.getId()) {
                 userList.remove(user);
             }
         }
-        List<UsersMessage> userMessages= userMessageRepository.getUserMessages(user.getId());
+        List<UsersMessage> userMessages = userMessageRepository.getUserMessages(user.getId());
         modelMap.addAttribute("userMessages", userMessages);
         modelMap.addAttribute("user", userList);
         modelMap.addAttribute("us", user);
@@ -94,23 +103,46 @@ public class MainController {
 
 
     @GetMapping("/userPhotos/{id}")
-    public String userPhotos(ModelMap modelMap,@PathVariable("id") int id,@AuthenticationPrincipal UserDetails userDetails) {
-        User one = userRepository.getOne(id);
+    public String userPhotos(@PathVariable("id") int id, ModelMap modelMap, @AuthenticationPrincipal UserDetails userDetails) {
         user = ((CurrentUser) userDetails).getUser();
+        photos = photosRepository.findAllByUserId(id);
         List<User> userList = userRepository.findAll();
-        List<UsersMessage> userMessages= userMessageRepository.getUserMessages(user.getId());
+        List<UsersMessage> userMessages = userMessageRepository.getUserMessages(user.getId());
         modelMap.addAttribute("userMessages", userMessages);
         modelMap.addAttribute("user", userList);
-        modelMap.addAttribute("photos", one);
+        modelMap.addAttribute("photos", photos);
         modelMap.addAttribute("us", user);
         return "userPhotos";
     }
+
+    @PostMapping("/addUserPhotos")
+    public String addUserPhotos(@AuthenticationPrincipal UserDetails
+                                        userDetails,@RequestParam("user_id")int id, @RequestParam("image") MultipartFile multipartFile) {
+        File dir = new File(adPicDir);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        String picName = System.currentTimeMillis() + "_" + multipartFile.getOriginalFilename();
+        try {
+            multipartFile.transferTo(new File(dir, picName));
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+        UserPhotos photos=UserPhotos.builder()
+                .user(userRepository.getOne(id))
+                .pic_url(picName)
+                .build();
+        photosRepository.save(photos);
+        return "redirect:/userPhotos/"+id;
+    }
+
     @GetMapping("/userFriends/{id}")
-    public String userFriends(ModelMap modelMap,@PathVariable("id") int id,@AuthenticationPrincipal UserDetails userDetails) {
+    public String userFriends(ModelMap modelMap, @PathVariable("id") int id, @AuthenticationPrincipal UserDetails userDetails) {
         User one = userRepository.getOne(id);
         user = ((CurrentUser) userDetails).getUser();
         List<User> userList = userRepository.findAll();
-        List<UsersMessage> userMessages= userMessageRepository.getUserMessages(user.getId());
+        List<UsersMessage> userMessages = userMessageRepository.getUserMessages(user.getId());
         modelMap.addAttribute("userMessages", userMessages);
         modelMap.addAttribute("user", userList);
         modelMap.addAttribute("photos", one);
@@ -123,7 +155,7 @@ public class MainController {
         messageUser = userRepository.findUserById(id);
         user = ((CurrentUser) userDetails).getUser();
         List<User> userList = userRepository.findAll();
-        List<UsersMessage> userMessages= userMessageRepository.getUserMessages(user.getId());
+        List<UsersMessage> userMessages = userMessageRepository.getUserMessages(user.getId());
         modelMap.addAttribute("userMessages", userMessages);
         modelMap.addAttribute("users", userList);
         modelMap.addAttribute("user", user);
@@ -133,7 +165,7 @@ public class MainController {
 
     @GetMapping("/friend1Page")
     public String friendPage(ModelMap modelMap) {
-        List <Post> postsList = postRepository.findAllByFriendId(friendUser.getId());
+        List<Post> postsList = postRepository.findAllByFriendId(friendUser.getId());
         for (Post post : postsList) {
             post.setComments(commentRepository.findAllByPostId(post.getId()));
             post.setLikes(likeRepository.findAllByPostId(post.getId()));
@@ -149,7 +181,7 @@ public class MainController {
         List<User> userList = userRepository.findAll();
         List<User> cornerList = userRepository.findAll();
         for (User user1 : cornerList) {
-            if (user1.getId() == user.getId()){
+            if (user1.getId() == user.getId()) {
                 userList.remove(user);
             }
         }
@@ -182,11 +214,11 @@ public class MainController {
         List<User> userList = userRepository.findAll();
         List<User> cornerList = userRepository.findAll();
         for (User user1 : cornerList) {
-            if (user1.getId() == user.getId()){
+            if (user1.getId() == user.getId()) {
                 userList.remove(user);
             }
         }
-        List<UsersMessage> userMessages= userMessageRepository.getUserMessages(user.getId());
+        List<UsersMessage> userMessages = userMessageRepository.getUserMessages(user.getId());
         modelMap.addAttribute("posts", postList);
         modelMap.addAttribute("userMessages", userMessages);
         modelMap.addAttribute("user", userList);

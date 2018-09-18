@@ -17,6 +17,8 @@ public class UserPhotos {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @ManyToOne
+    private User user;
     @Column
     private String pic_url;
 }

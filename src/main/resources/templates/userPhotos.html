@@ -250,57 +250,19 @@
         <div class="userPost bg-light">
             <div class="tc"><span class="GFBFont  mt-2">Add Photos</span></div>
             <div class="mt-4">
-                <form action="addUserPhotos" method="post">
+                <form action="/addUserPhotos" method="post" enctype="multipart/form-data">
                     <input type="file" name="image" class="btn btn-success">
+                    <input type="hidden" th:value="${us.id}" name="user_id" class="btn btn-success">
                     <input type="submit" value="Add Picture" class="btn btn-success">
                 </form>
             </div>
             <div class="tc"><span class="GFBFont  mt-2">Photos</span></div>
-            <div>
-                <div class="m-2 border border-success userPhotos"
-                     th:style="'background:url(' +  @{'/post/userImage?'(picUrl=${us.pic_url_cover})} + ');background-repeat: no-repeat;background-size: cover;'"></div>
-                <div class="m-2 border border-success userPhotos"
-                     th:style="'background:url(' +  @{'/post/userImage?'(picUrl=${us.pic_url_cover})} + ');background-repeat: no-repeat;background-size: cover;'"></div>
-                <div class="m-2 border border-success userPhotos"
-                     th:style="'background:url(' +  @{'/post/userImage?'(picUrl=${us.pic_url_cover})} + ');background-repeat: no-repeat;background-size: cover;'"></div>
-                <div class="m-2 border border-success userPhotos"
-                     th:style="'background:url(' +  @{'/post/userImage?'(picUrl=${us.pic_url_cover})} + ');background-repeat: no-repeat;background-size: cover;'"></div>
-                <div class="m-2 border border-success userPhotos"
-                     th:style="'background:url(' +  @{'/post/userImage?'(picUrl=${us.pic_url_cover})} + ');background-repeat: no-repeat;background-size: cover;'"></div>
-                <div class="m-2 border border-success userPhotos"
-                     th:style="'background:url(' +  @{'/post/userImage?'(picUrl=${us.pic_url_cover})} + ');background-repeat: no-repeat;background-size: cover;'"></div>
-                <div class="m-2 border border-success userPhotos"
-                     th:style="'background:url(' +  @{'/post/userImage?'(picUrl=${us.pic_url_cover})} + ');background-repeat: no-repeat;background-size: cover;'"></div>
-                <div class="m-2 border border-success userPhotos"
-                     th:style="'background:url(' +  @{'/post/userImage?'(picUrl=${us.pic_url_cover})} + ');background-repeat: no-repeat;background-size: cover;'"></div>
-                <div class="m-2 border border-success userPhotos"
-                     th:style="'background:url(' +  @{'/post/userImage?'(picUrl=${us.pic_url_cover})} + ');background-repeat: no-repeat;background-size: cover;'"></div>
-                <div class="m-2 border border-success userPhotos"
-                     th:style="'background:url(' +  @{'/post/userImage?'(picUrl=${us.pic_url_cover})} + ');background-repeat: no-repeat;background-size: cover;'"></div>
-                <div class="m-2 border border-success userPhotos"
-                     th:style="'background:url(' +  @{'/post/userImage?'(picUrl=${us.pic_url_cover})} + ');background-repeat: no-repeat;background-size: cover;'"></div>
-                <div class="m-2 border border-success userPhotos"
-                     th:style="'background:url(' +  @{'/post/userImage?'(picUrl=${us.pic_url_cover})} + ');background-repeat: no-repeat;background-size: cover;'"></div>
-                <div class="m-2 border border-success userPhotos"
-                     th:style="'background:url(' +  @{'/post/userImage?'(picUrl=${us.pic_url_cover})} + ');background-repeat: no-repeat;background-size: cover;'"></div>
-                <div class="m-2 border border-success userPhotos"
-                     th:style="'background:url(' +  @{'/post/userImage?'(picUrl=${us.pic_url_cover})} + ');background-repeat: no-repeat;background-size: cover;'"></div>
-                <div class="m-2 border border-success userPhotos"
-                     th:style="'background:url(' +  @{'/post/userImage?'(picUrl=${us.pic_url_cover})} + ');background-repeat: no-repeat;background-size: cover;'"></div>
-                <div class="m-2 border border-success userPhotos"
-                     th:style="'background:url(' +  @{'/post/userImage?'(picUrl=${us.pic_url_cover})} + ');background-repeat: no-repeat;background-size: cover;'"></div>
-                <div class="m-2 border border-success userPhotos"
-                     th:style="'background:url(' +  @{'/post/userImage?'(picUrl=${us.pic_url_cover})} + ');background-repeat: no-repeat;background-size: cover;'"></div>
-                <div class="m-2 border border-success userPhotos"
-                     th:style="'background:url(' +  @{'/post/userImage?'(picUrl=${us.pic_url_cover})} + ');background-repeat: no-repeat;background-size: cover;'"></div>
-                <div class="m-2 border border-success userPhotos"
-                     th:style="'background:url(' +  @{'/post/userImage?'(picUrl=${us.pic_url_cover})} + ');background-repeat: no-repeat;background-size: cover;'"></div>
-                <div class="m-2 border border-success userPhotos"
-                     th:style="'background:url(' +  @{'/post/userImage?'(picUrl=${us.pic_url_cover})} + ');background-repeat: no-repeat;background-size: cover;'"></div>
-                <div class="m-2 border border-success userPhotos"
-                     th:style="'background:url(' +  @{'/post/userImage?'(picUrl=${us.pic_url_cover})} + ');background-repeat: no-repeat;background-size: cover;'"></div>
-                <div class="m-2 border border-success userPhotos"
-                     th:style="'background:url(' +  @{'/post/userImage?'(picUrl=${us.pic_url_cover})} + ');background-repeat: no-repeat;background-size: cover;'"></div>
+            <div th:if="${photos!=null}">
+                <div th:each="photo : ${photos}" class="m-2 border border-success userPhotos"
+                     th:style="'background:url(' +  @{'/post/userImage?'(picUrl=${photo.pic_url})} + ');background-repeat: no-repeat;background-size: cover;'"></div>
+            </div>
+            <div th:if="${photos==null}">
+                <p class="GFBFont">No Photos</p>
             </div>
         </div>
     </div>
