@@ -76,6 +76,47 @@ public class MainController {
         return "userPage";
     }
 
+    @GetMapping("/settings")
+    public String settings(ModelMap modelMap) {
+        List<User> userList = userRepository.findAll();
+        List<User> cornerList = userRepository.findAll();
+        for (User user1 : cornerList) {
+            if (user1.getId() == user.getId()){
+                userList.remove(user);
+            }
+        }
+        List<UsersMessage> userMessages= userMessageRepository.getUserMessages(user.getId());
+        modelMap.addAttribute("userMessages", userMessages);
+        modelMap.addAttribute("user", userList);
+        modelMap.addAttribute("us", user);
+        return "settingPage";
+    }
+
+
+    @GetMapping("/userPhotos/{id}")
+    public String userPhotos(ModelMap modelMap,@PathVariable("id") int id,@AuthenticationPrincipal UserDetails userDetails) {
+        User one = userRepository.getOne(id);
+        user = ((CurrentUser) userDetails).getUser();
+        List<User> userList = userRepository.findAll();
+        List<UsersMessage> userMessages= userMessageRepository.getUserMessages(user.getId());
+        modelMap.addAttribute("userMessages", userMessages);
+        modelMap.addAttribute("user", userList);
+        modelMap.addAttribute("photos", one);
+        modelMap.addAttribute("us", user);
+        return "userPhotos";
+    }
+    @GetMapping("/userFriends/{id}")
+    public String userFriends(ModelMap modelMap,@PathVariable("id") int id,@AuthenticationPrincipal UserDetails userDetails) {
+        User one = userRepository.getOne(id);
+        user = ((CurrentUser) userDetails).getUser();
+        List<User> userList = userRepository.findAll();
+        List<UsersMessage> userMessages= userMessageRepository.getUserMessages(user.getId());
+        modelMap.addAttribute("userMessages", userMessages);
+        modelMap.addAttribute("user", userList);
+        modelMap.addAttribute("photos", one);
+        modelMap.addAttribute("us", user);
+        return "userFriends";
+    }
 
     @GetMapping("/message/{id}")
     public String findMessagePage(@PathVariable("id") int id, ModelMap modelMap, @AuthenticationPrincipal UserDetails userDetails) {

@@ -5,7 +5,7 @@
 }
 
 body {
-    background-color: rgba(110, 255, 32, 0.05);
+    background-color: rgba(110, 255, 32, 0.11);
 }
 .dropbtn:hover, .dropbtn:focus ,.dropbtn2:hover, .dropbtn2:focus,.dropbtn3:hover, .dropbtn3:focus,.dropbtn4:hover, .dropbtn4:focus {
     background-color: rgba(110, 255, 47, 0.29);
@@ -71,6 +71,10 @@ body {
 .post hr    {
     width: 90%;
 }
+.settingsFont{
+    font-size: 25px;
+    font-family: 'Jua', sans-serif;
+}
 
 .naveOne::-webkit-scrollbar {
     width: 0;
@@ -115,7 +119,15 @@ body {
 
 .userData{
     min-height: 100px;
-    max-height: 500px;
+    max-height: 300px;
+}
+.userPhotos{
+    width: 147px;
+    height: 147px;
+    float: left;
+}
+.tc{
+    text-align: center;
 }
 
 .boldLight {
@@ -419,6 +431,10 @@ body {
     margin: 0 auto;
     width: 980px;
 }
+#setName1,#setEmail1,#setCovPic1,#setPic1,#setPass1 {
+    display: none;
+}
+
 
 .inputFont {
     font-family: 'Varela Round', sans-serif;

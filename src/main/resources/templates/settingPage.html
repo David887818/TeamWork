@@ -17,6 +17,53 @@
           integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <title th:text="${us.name + ' '+ us.surname}"></title>
 </head>
+<script>
+    $(document).ready(function () {
+        $("#setName").click(function () {
+            $("#setName1").toggle();
+            $("#setCovPic1").css({"display":"none"});
+            $("#setPic1").css({"display":"none"});
+            $("#setEmail1").css({"display":"none"});
+            $("#setPass1").css({"display":"none"});
+        });
+    });
+    $(document).ready(function () {
+        $("#setPass").click(function () {
+            $("#setPass1").toggle();
+            $("#setCovPic1").css({"display":"none"});
+            $("#setName1").css({"display":"none"});
+            $("#setPic1").css({"display":"none"});
+            $("#setEmail1").css({"display":"none"});
+        });
+    });
+    $(document).ready(function () {
+        $("#setEmail").click(function () {
+            $("#setEmail1").toggle();
+            $("#setCovPic1").css({"display":"none"});
+            $("#setPic1").css({"display":"none"});
+            $("#setName1").css({"display":"none"});
+            $("#setPass1").css({"display":"none"});
+        });
+    });
+    $(document).ready(function () {
+        $("#setPic").click(function () {
+            $("#setPic1").toggle();
+            $("#setCovPic1").css({"display":"none"});
+            $("#setEmail1").css({"display":"none"});
+            $("#setName1").css({"display":"none"});
+            $("#setPass1").css({"display":"none"});
+        });
+    });
+    $(document).ready(function () {
+        $("#setCovPic").click(function () {
+            $("#setCovPic1").toggle();
+            $("#setPic1").css({"display":"none"});
+            $("#setEmail1").css({"display":"none"});
+            $("#setName1").css({"display":"none"});
+            $("#setPass1").css({"display":"none"});
+        });
+    });
+</script>
 <body>
 <div class="navBar">
     <div class="navBarMin  d-flex">
@@ -173,147 +220,114 @@
             </ul>
         </div>
     </div>
-
-    <div class="d-flex sideNavTwo">
-        <div class=" naveOne  col-md-7">
-            <form action="/post/addPost" method="post" enctype="multipart/form-data">
-                <div class="addPost mt-2 borderRounded border bg-light">
-                    <div class="description mt-2 d-flex justify-content-center w-100"><i
-                            class="fas iGreen fa-pencil-alt"></i><span class="ml-2 mb-2">Compose Post</span></div>
-                    <div class="d-flex addTitle">
-                        <div class="d-flex justify-content-center align-items-center w-25">
-                            <div th:if="${us.pic_url != null}">
-                                <img class="titlePic border-50"
-                                     th:src="@{'/post/userImage?'(picUrl=${us.getPic_url()})}">
-                            </div>
-                            <div th:if="${us.pic_url == null}">
-                                <img class="titlePic border-50" src="/user.png">
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-center align-items-center w-75">
-                        <textarea class="bg-light" name="name" rows="2" cols="40">
-
-                        </textarea>
-                        </div>
-                    </div>
-                    <div class="addImage d-flex mt-2">
-                        <input type="hidden" name="user_id" th:value="${us.id}">
-                        <input type="file" name="image" class="btn m-1 btn-success w-50">
-                        <input type="submit" value="Add" class="btn m-1 btn-outline-success w-50">
-                    </div>
-
-                </div>
-            </form>
-
-
-            <div class="post mt-2 borderRounded border bg-light" th:if="${posts !=null}" th:each="post : ${posts}">
-                <div class="postUser m-2 d-flex justify-content-between">
-                    <div th:if="${post.user.pic_url != null}">
-                        <a href="#"><img th:src="@{'/post/userImage?'(picUrl=${post.user.getPic_url()})}"> <span
-                                th:text="${post.user.name}+${post.user.surname} " class="iconFontBar"></span> </a>
-                    </div>
-                    <div th:if="${post.user.pic_url == null}">
-                        <a href="#"><img src="/user.png"> <span
-                                th:text="${post.user.name}+${post.user.surname} " class="iconFontBar"></span> </a>
-                    </div>
-                    <p class="dateFont" th:text="'Date'+ ' '+ ${post.date}"><i class="far iGreen fa-clock"></i></p>
-
-                </div>
-                <div class="postTitle m-2">
-                    <span th:text="${post.name}"></span>
-                </div>
-                <div class="postPic mt-2 w-100">
-                    <img class="w-100" th:src="@{'/post/userImage?'(picUrl=${post.getPic_url()})}">
-                </div>
-                <div class="postLike mt-2">
-
-                    <a href="#" id="myBtn"><i class="ml-3 fas fa-thumbs-up"></i><span class="ml-1"
-                                                                                      th:text="${post.likes.size()}"></span></a>
-
-                    <div id="myModal" class="modal">
-
-                        <!-- Modal content -->
-                        <div class="modal-content">
-                            <span class="close">&times;</span>
-                            <p class="m-3" th:text="${post.likes.size()+'  likes'}"></p>
-                            <div th:each="likes : ${post.likes}">
-                                <div class="d-flex  align-items-center m-3">
-                                    <img th:src="@{'/post/userImage?'(picUrl=${likes.user.getPic_url()})}"
-                                         class="userPicMessage">
-                                    <span th:text="${likes.user.name+' '+likes.user.surname}"
-                                          class="iconFont ml-3"></span>
-                                </div>
-                                <hr class="likeHr"/>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="d-flex postHr justify-content-center">
-                    <hr/>
-                </div>
-                <div class="postComment d-flex">
-                    <div th:if="${post.listStatus.name() != 'TRUE'}"
-                         class="w-50 d-flex align-items-center justify-content-center">
-                        <form class="d-flex align-items-center justify-content-center" action="/post/addLike"
-                              method="post">
-                            <i class="far iGreen fa-thumbs-up"></i>
-                            <input type="submit" class="btn iGreen btn-link" value="Like">
-                            <input type="hidden" name="user_id" th:value="${us.id}">
-                            <input type="hidden" name="post_id" th:value="${post.id}">
-                        </form>
-                    </div>
-                    <div th:if="${post.listStatus.name() == 'TRUE'}"
-                         class="w-50 d-flex align-items-center justify-content-center">
-                        <form class="d-flex align-items-center justify-content-center" action="/post/disLike"
-                              method="post">
-                            <i class="far iBlue fa-thumbs-up"></i>
-                            <input type="submit" class="btn iBlue  btn-link" value="Dislike">
-                            <input type="hidden" name="user_id" th:value="${us.id}">
-                            <input type="hidden" name="post_id" th:value="${post.id}">
-                        </form>
-                    </div>
-
-                    <a class="w-50 click m-1"><i class="far iGreen fa-comments"></i><span
-                            class="ml-1 iGreen ">Comment</span></a>
-                </div>
-                <div class="d-flex postHr justify-content-center">
-                    <hr/>
-                </div>
-                <div class="panel w-100 mt-2 ">
-                    <div class="d-flex borderBottom mt-2 align-items-center" th:each="comment : ${post.comments}">
-                        <div th:if="${comment.user.getPic_url() != null}">
-                            <img class="userPicMessage"
-                                 th:src="@{'/post/userImage?'(picUrl=${comment.user.getPic_url()})}">
-                        </div>
-                        <div th:if="${comment.user.getPic_url() == null}">
-                            <img class="userPicMessage" src="/user.png">
-                        </div>
-                        <div class="d-flex w-100 align-items-center justify-content-between">
-                            <div class="ml-3" th:text="${comment.comment}"></div>
-                            <div th:if="${comment.user.id==us.id}">
-                                <form action="/post/deleteComment" method="post">
-                                    <input type="hidden" th:value="${comment.id}" name="comment_id">
-                                    <input type="submit" class="commentDelete btn btn-link" value="Delete">
-                                </form>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <form class="d-flex clickForm" action="/addComment" method="post" style="margin-top: 10px">
-                    <input class="w-100 btn btn-outline-success" type="text" name="comment"
-                           placeholder="Write Comment">
-                    <input type="hidden" name="post_id" th:value="${post.id}"/>
-                    <input type="hidden" name="user_id" th:value="${us.id}">
-                    <input type="submit" class="btn btn-outline-success" value="Add">
-                </form>
-            </div>
-
+    <div class=" mt-5 bg-light sideNavTwo">
+        <div>
+            <span class="text-success settingsFont m-3">Settings</span>
         </div>
-        <div class=" bg-light borderRounded naveTwo border col-md-4 ml-2">33333333</div>
+
+        <div class="m-5 w-75">
+            <div class="mt-3">
+                <div class="d-flex justify-content-between">
+                    <span class="iGreen">Name Surname</span>
+                    <div><span th:text="${us.name + ' '+ us.surname}"> </span>
+                        <a id="setName"><i class="far fa-edit iBlack ml-3"></i></a>
+                    </div>
+                </div>
+                <div class="d-flex border-bottom mt-2 justify-content-center">
+                    <form id="setName1" class=" mb-2 w-50" action="/setName" method="post">
+                        <input placeholder="Input Name" type="text" name="name"
+                               class="btn mt-1 w-100 btn-outline-success">
+                        <input placeholder="Input Surname" type="text" name="surname"
+                               class="btn mt-1 w-100 btn-outline-success">
+                        <input type="hidden" name="user_id" th:value="${us.id}" class="btn btn-outline-success">
+                        <input placeholder="Input Password" type="password" name="password"
+                               class="btn mt-1 w-100 btn-outline-success">
+                        <br>
+                        <input type="submit" value="Change" class="btn w-100 mt-1 btn-success">
+                    </form>
+                </div>
+            </div>
+            <div class="mt-3">
+                <div class="d-flex justify-content-between">
+                    <span class="iGreen">Email</span>
+                    <div><span th:text="${us.email}"> </span>
+                        <a id="setEmail"><i class="far fa-edit iBlack ml-3"></i></a>
+                    </div>
+                </div>
+                <div class="d-flex border-bottom mt-2 justify-content-center">
+                    <form id="setEmail1" class=" mb-2 w-50" action="/setEmail" method="post">
+                        <input placeholder="Input Email" type="email" name="email"
+                               class="btn mt-1 w-100 btn-outline-success">
+                        <input type="hidden" name="user_id" th:value="${us.id}" class="btn btn-outline-success">
+                        <input placeholder="Input Password" type="password" name="password"
+                               class="btn mt-1 w-100 btn-outline-success">
+                        <br>
+                        <input type="submit" value="Change" class="btn w-100 mt-1 btn-success">
+                    </form>
+                </div>
+            </div>
+            <div class="mt-3">
+                <div class="d-flex justify-content-between">
+                    <span class="iGreen">Password</span>
+                    <div><span th:text="${us.name + ' '+ us.surname}"> </span>
+                        <a id="setPass"><i class="far fa-edit iBlack ml-3"></i></a>
+                    </div>
+                </div>
+                <div class="d-flex border-bottom mt-2 justify-content-center">
+                    <form id="setPass1" class=" mb-2 w-50" action="/setPass" method="post">
+                        <input placeholder="Input Old Password" type="password" name="old_password"
+                               class="btn mt-1 w-100 btn-outline-success">
+                        <input type="hidden" name="user_id" th:value="${us.id}" class="btn btn-outline-success">
+                        <input placeholder="Input New Password" type="password" name="password"
+                               class="btn mt-1 w-100 btn-outline-success">
+                        <br>
+                        <input type="submit" value="Change" class="btn w-100 mt-1 btn-success">
+                    </form>
+                </div>
+            </div>
+            <div class="mt-3">
+                <div class="d-flex justify-content-between">
+                    <span class="iGreen">Profile Picture</span>
+                    <div><span th:text="${us.name + ' '+ us.surname}"> </span>
+                        <a id="setPic"><i class="far fa-edit iBlack ml-3"></i></a>
+                    </div>
+                </div>
+                <div class="d-flex border-bottom mt-2 justify-content-center">
+                    <form id="setPic1" class=" mb-2 w-50" action="/setPic" method="post">
+                        <input  type="file" name="pic"
+                               class="btn mt-1 w-100 btn-outline-success">
+                        <input type="hidden" name="user_id" th:value="${us.id}" class="btn btn-outline-success">
+                        <input placeholder="Input Password" type="password" name="password"
+                               class="btn mt-1 w-100 btn-outline-success">
+                        <br>
+                        <input type="submit" value="Change" class="btn w-100 mt-1 btn-success">
+                    </form>
+                </div>
+            </div>
+            <div class="mt-3">
+                <div class="d-flex justify-content-between">
+                    <span class="iGreen">Cover Picture</span>
+                    <div><span th:text="${us.name + ' '+ us.surname}"> </span>
+                        <a id="setCovPic"><i class="far fa-edit iBlack ml-3"></i></a>
+                    </div>
+                </div>
+                <div class="d-flex border-bottom mt-2 justify-content-center">
+                    <form id="setCovPic1" class=" mb-2 w-50" action="/setCovPic" method="post">
+                        <input  type="file" name="cover_pic" class="btn mt-1 w-100 btn-outline-success">
+                        <input type="hidden" name="user_id" th:value="${us.id}" class="btn btn-outline-success">
+                        <input placeholder="Input Password" type="password" name="password"
+                               class="btn mt-1 w-100 btn-outline-success">
+                        <br>
+                        <input type="submit" value="Change" class="btn w-100 mt-1 btn-success">
+                    </form>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
+
+
 <div class="borderMessage sideNavThree">
     <div th:each="users : ${user}" class="d-flex  iconHover">
 
@@ -334,6 +348,7 @@
     </div>
 </div>
 <script src="/min.js">
+
 </script>
 </body>
 </html>
