@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Builder
 @Table(name = "request")
 public class Request {
 
@@ -17,8 +19,8 @@ public class Request {
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "from_id")
-    private int fromId;
-    @Column(name = "to_id")
-    private int toId;
+    @ManyToOne
+    private User from;
+    @ManyToOne
+    private User to;
 }

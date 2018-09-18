@@ -40,6 +40,8 @@ public class MainController {
     UserMessageRepository userMessageRepository;
     @Autowired
     UserPhotosRepository photosRepository;
+    @Autowired
+    RequestRepository  requestRepository;
 
     @Value(value = "${TeamWork.post.pic.url}")
     private String adPicDir;
@@ -85,7 +87,16 @@ public class MainController {
         return "userPage";
     }
 
-
+    @GetMapping("/addRequest/{id}")
+    public String addFriend(@PathVariable("id") int id, @AuthenticationPrincipal UserDetails userDetails) {
+        user = ((CurrentUser) userDetails).getUser();
+        Request request = Request.builder()
+                .from(user)
+                .to(userRepository.getOne(id))
+                .build();
+        requestRepository.save(request);
+        return "redirect:/friendsPage/" + id;
+    }
 
     @GetMapping("/userPhotos/{id}")
     public String userPhotos(@PathVariable("id") int id, ModelMap modelMap, @AuthenticationPrincipal UserDetails userDetails) {

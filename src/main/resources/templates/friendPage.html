@@ -146,8 +146,7 @@
                     </ul>
 
                     <div class="ml-5 iBlue">
-                        <a href="#">+ Add Friend</a>
-                    </div>
+                        <a th:href="@{'/addRequest/'+${friend.id}}">+ Add Friend</a>
                 </div>
             </div>
         </div>
@@ -170,7 +169,7 @@
                     </ul>
                 </div>
                 <div class="ml-5 iBlue">
-                    <a href="#">+ Add Friend</a>
+                    <a th:href="@{'/addRequest/'+${friend.id}}">+ Add Friend</a>
                 </div>
             </div>
         </div>
