@@ -201,7 +201,6 @@
                 </div>
             </ul>
         </div>
-
         <div class="mt-3">
             <h4 class="iconFontInteresting">Explore</h4>
             <ul>
@@ -216,7 +215,6 @@
                         class="ml-2 iconFont">Groups</span></a></li>
                 <li class="mt-1"><a class="iconHover" href="/"><i class="fas fa-sun iGreen"> </i> <span
                         class="ml-2 iconFont">Weather</span></a></li>
-
             </ul>
         </div>
     </div>
@@ -224,7 +222,6 @@
         <div>
             <span class="text-success settingsFont m-3">Settings</span>
         </div>
-
         <div class="m-5 w-75">
             <div class="mt-3">
                 <div class="d-flex justify-content-between">
@@ -240,8 +237,6 @@
                         <input placeholder="Input Surname" type="text" name="surname"
                                class="btn mt-1 w-100 btn-outline-success">
                         <input type="hidden" name="user_id" th:value="${us.id}" class="btn btn-outline-success">
-                        <input placeholder="Input Password" type="password" name="password"
-                               class="btn mt-1 w-100 btn-outline-success">
                         <br>
                         <input type="submit" value="Change" class="btn w-100 mt-1 btn-success">
                     </form>
@@ -259,8 +254,6 @@
                         <input placeholder="Input Email" type="email" name="email"
                                class="btn mt-1 w-100 btn-outline-success">
                         <input type="hidden" name="user_id" th:value="${us.id}" class="btn btn-outline-success">
-                        <input placeholder="Input Password" type="password" name="password"
-                               class="btn mt-1 w-100 btn-outline-success">
                         <br>
                         <input type="submit" value="Change" class="btn w-100 mt-1 btn-success">
                     </form>
@@ -297,8 +290,6 @@
                         <input  type="file" name="pic"
                                class="btn mt-1 w-100 btn-outline-success">
                         <input type="hidden" name="user_id" th:value="${us.id}" class="btn btn-outline-success">
-                        <input placeholder="Input Password" type="password" name="password"
-                               class="btn mt-1 w-100 btn-outline-success">
                         <br>
                         <input type="submit" value="Change" class="btn w-100 mt-1 btn-success">
                     </form>
@@ -315,22 +306,16 @@
                     <form id="setCovPic1" class=" mb-2 w-50" action="/setCovPic" method="post">
                         <input  type="file" name="cover_pic" class="btn mt-1 w-100 btn-outline-success">
                         <input type="hidden" name="user_id" th:value="${us.id}" class="btn btn-outline-success">
-                        <input placeholder="Input Password" type="password" name="password"
-                               class="btn mt-1 w-100 btn-outline-success">
                         <br>
                         <input type="submit" value="Change" class="btn w-100 mt-1 btn-success">
                     </form>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
-
-
 <div class="borderMessage sideNavThree">
     <div th:each="users : ${user}" class="d-flex  iconHover">
-
         <a th:href="@{'/friendsPage/' +${users.getId()}}">
             <ul class="d-flex m-2">
                 <li class="d-flex">
@@ -347,8 +332,6 @@
         </a>
     </div>
 </div>
-<script src="/min.js">
-
-</script>
+<script src="/min.js"></script>
 </body>
 </html>

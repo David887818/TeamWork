@@ -85,21 +85,6 @@ public class MainController {
         return "userPage";
     }
 
-    @GetMapping("/settings")
-    public String settings(ModelMap modelMap) {
-        List<User> userList = userRepository.findAll();
-        List<User> cornerList = userRepository.findAll();
-        for (User user1 : cornerList) {
-            if (user1.getId() == user.getId()) {
-                userList.remove(user);
-            }
-        }
-        List<UsersMessage> userMessages = userMessageRepository.getUserMessages(user.getId());
-        modelMap.addAttribute("userMessages", userMessages);
-        modelMap.addAttribute("user", userList);
-        modelMap.addAttribute("us", user);
-        return "settingPage";
-    }
 
 
     @GetMapping("/userPhotos/{id}")
@@ -116,8 +101,7 @@ public class MainController {
     }
 
     @PostMapping("/addUserPhotos")
-    public String addUserPhotos(@AuthenticationPrincipal UserDetails
-                                        userDetails,@RequestParam("user_id")int id, @RequestParam("image") MultipartFile multipartFile) {
+    public String addUserPhotos(@RequestParam("user_id")int id, @RequestParam("image") MultipartFile multipartFile) {
         File dir = new File(adPicDir);
         if (!dir.exists()) {
             dir.mkdirs();
