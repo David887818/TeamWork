@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Result</title>
+</head>
+<body>
+<div>
+    <h3 th:text="${searched.name + ' ' + searched.surname}"></h3>
+</div>
+<div class="borderMessage sideNavThree">
+    <div class="d-flex  iconHover">
+        <a th:href="@{'/friendsPage/' +${searched.id}}">
+            <ul class="d-flex m-2">
+                <li class="d-flex">
+                    <div th:if="${searched.pic_url != null}">
+                        <img class="userPicMessage"
+                             th:src="@{'/post/userImage?'(picUrl=${searched.pic_url})}">
+                    </div>
+                    <div th:if="${searched.pic_url == null}">
+                        <img class="userPicMessage " src="/user.png">
+                    </div>
+                    <span th:text="${searched.name}" class="ml-3 iBlack mt-1"></span>
+                    <span th:text="${searched.surname}" class="ml-2 iBlack mt-1"></span></li>
+            </ul>
+        </a>
+    </div>
+</div>
+</body>
+</html>

@@ -14,9 +14,7 @@ import javax.persistence.*;
 @Builder
 @Table(name = "request")
 public class Request {
-
     @Id
-    @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ManyToOne

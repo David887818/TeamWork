@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface FriendRepository extends JpaRepository<Friend, Integer> {
+    List<Friend> findAllByUserId(int id);
 
     @Query(value = "select friend from Friend friend where user_id = :id or  friend_id = :id")
     List<Friend> serchAllFriends(@Param(value = "id") int id);

@@ -53,12 +53,12 @@ public class RequestController {
     public String acceptRequest(@PathVariable("id") int id, @PathVariable("req_id") int req_id, @AuthenticationPrincipal UserDetails userDetails) {
         user = ((CurrentUser) userDetails).getUser();
         Friend friend = Friend.builder()
-                .userId(user.getId())
-                .friendId(id)
+                .user(user)
+                .friend(userRepository.getOne(id))
                 .build();
         Friend friend1 = Friend.builder()
-                .userId(id)
-                .friendId(user.getId())
+                .user(userRepository.getOne(id))
+                .friend(user)
                 .build();
         friendRepository.save(friend);
         friendRepository.save(friend1);

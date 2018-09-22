@@ -23,12 +23,12 @@
     <div class="navBarMin  d-flex">
         <div class="input-group d-flex  w-50">
             <div class="G"><a href="/homePage"><i class="fab fa-gofore"></i></a></div>
-            <input type="text" class="search w-75" placeholder="Search">
-            <div class="input-group-append">
-                <a href="/">
-                    <button class="search" type="button"><i class="fas fa-search"></i></button>
-                </a>
-            </div>
+            <form action="/search" method="get" class="input-group d-flex  w-50">
+                <input type="text" name="text" class="search w-75" placeholder="Search">
+                <div class="input-group-append">
+                    <button class="search" type="submit"><i class="fas fa-search"></i></button>
+                </div>
+            </form>
         </div>
         <div class="w-50 ml-4 d-flex ">
             <ul class="d-flex mt-2 barIcons">
@@ -143,15 +143,15 @@
                         <li><a th:href="@{'/friendsPage/'+${friend.id}}">Information</a></li>
                         <li><a th:href="@{'/userPhotos/'+${friend.id}}">Photos</a></li>
                         <li><a th:href="@{'/userFriends/'+${friend.id}}">Friends</a></li>
-                    </ul>
 
-                    <div th:if="${reqStatus==false}" class="ml-3 mt-2 ">
-                        <a th:href="@{'/addRequest/'+${friend.id}}" ><p class="iGreenFriend">+ Add Friend</p></a>
-                    </div>
 
-                    <div class="ml-3 mt-2 ">
-                        <a th:href="@{'/message/'+${friend.id}}" ><p class="iGreenFriend">Send Message</p></a>
-                    </div>
+                        <div th:if="${reqStatus==false}" class="ml-3 mt-2 ">
+                            <a th:href="@{'/addRequest/'+${friend.id}}"><p class="iGreenFriend">+ Add Friend</p></a>
+                        </div>
+
+                        <div class="ml-3 mt-2 ">
+                            <a th:href="@{'/message/'+${friend.id}}"><p class="iGreenFriend">Send Message</p></a>
+                        </div>
                 </div>
             </div>
         </div>
@@ -174,10 +174,12 @@
                     </ul>
                 </div>
                 <div th:if="${reqStatus==false}" class="ml-3 mt-2">
-                    <a class="friendGreen" th:href="@{'/addRequest/'+${friend.id}}" ><p class="iGreenFriend">+ Add Friend</p></a>
+                    <a class="friendGreen" th:href="@{'/addRequest/'+${friend.id}}"><p class="iGreenFriend">+ Add
+                        Friend</p></a>
                 </div>
                 <div class="ml-3 mt-2">
-                    <a class="friendGreen" th:href="@{'/message/'+${friend.id}}" ><p class="iGreenFriend">Send Message</p></a>
+                    <a class="friendGreen" th:href="@{'/message/'+${friend.id}}"><p class="iGreenFriend">Send
+                        Message</p></a>
                 </div>
             </div>
         </div>
@@ -319,19 +321,19 @@
 
 <div class="borderMessage sideNavThree">
     <div>
-        <div th:each="users : ${user}" class="d-flex  iconHover">
-            <a th:href="@{|/friendsPage/${users.id}|}">
+        <div th:each="friend : ${allFriends}" class="d-flex  iconHover">
+            <a th:href="@{'/friendsPage/' +${friend.friend.id}}">
                 <ul class="d-flex m-2">
                     <li class="d-flex">
-                        <div th:if="${users.pic_url != null}">
+                        <div th:if="${friend.friend.pic_url != null}">
                             <img class="userPicMessage"
-                                 th:src="@{'/post/userImage?'(picUrl=${users.pic_url})}">
+                                 th:src="@{'/post/userImage?'(picUrl=${friend.friend.pic_url})}">
                         </div>
-                        <div th:if="${users.pic_url == null}">
+                        <div th:if="${friend.friend.pic_url == null}">
                             <img class="userPicMessage " src="/user.png">
                         </div>
-                        <span th:text="${users.name}" class="ml-3 iBlack mt-1"></span>
-                        <span th:text="${users.surname}" class="ml-2 iBlack mt-1"></span></li>
+                        <span th:text="${friend.friend.name}" class="ml-3 iBlack mt-1"></span>
+                        <span th:text="${friend.friend.surname}" class="ml-2 iBlack mt-1"></span></li>
                 </ul>
             </a>
         </div>
@@ -339,6 +341,5 @@
 </div>
 </body>
 <script src="/min.js">
-
 </script>
 </html>
