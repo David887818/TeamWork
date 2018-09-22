@@ -32,8 +32,6 @@ public class DemoApplication implements CommandLineRunner {
                     .surname ("admin")
                     .password (passwordEncoder.encode ("admin"))
                     .userType (UserType.ADMIN)
-                    .activeStatus (ActiveStatus.DELETED)
-                    .userStatus (UserStatus.OFFLINE)
                     .gender (Gender.MALE)
                     .build ();
             userRepository.save (admin);
