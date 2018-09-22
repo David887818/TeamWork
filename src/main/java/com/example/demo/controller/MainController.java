@@ -24,24 +24,23 @@ public class MainController {
     private List<Comment> commentList;
     private List<Post> postList;
     private List<UserPhotos> photos;
+
     @Autowired
     PostRepository postRepository;
-
     @Autowired
     UserRepository userRepository;
-
     @Autowired
     CommentRepository commentRepository;
-
     @Autowired
     PostLikeRepository likeRepository;
-
     @Autowired
     UserMessageRepository userMessageRepository;
     @Autowired
     UserPhotosRepository photosRepository;
     @Autowired
-    RequestRepository  requestRepository;
+    RequestRepository requestRepository;
+    @Autowired
+    FriendRepository friendRepository;
 
     @Value(value = "${TeamWork.post.pic.url}")
     private String adPicDir;
@@ -87,16 +86,6 @@ public class MainController {
         return "userPage";
     }
 
-    @GetMapping("/addRequest/{id}")
-    public String addFriend(@PathVariable("id") int id, @AuthenticationPrincipal UserDetails userDetails) {
-        user = ((CurrentUser) userDetails).getUser();
-        Request request = Request.builder()
-                .from(user)
-                .to(userRepository.getOne(id))
-                .build();
-        requestRepository.save(request);
-        return "redirect:/friendsPage/" + id;
-    }
 
     @GetMapping("/userPhotos/{id}")
     public String userPhotos(@PathVariable("id") int id, ModelMap modelMap, @AuthenticationPrincipal UserDetails userDetails) {
@@ -112,7 +101,7 @@ public class MainController {
     }
 
     @PostMapping("/addUserPhotos")
-    public String addUserPhotos(@RequestParam("user_id")int id, @RequestParam("image") MultipartFile multipartFile) {
+    public String addUserPhotos(@RequestParam("user_id") int id, @RequestParam("image") MultipartFile multipartFile) {
         File dir = new File(adPicDir);
         if (!dir.exists()) {
             dir.mkdirs();
@@ -124,12 +113,12 @@ public class MainController {
             e.printStackTrace();
 
         }
-        UserPhotos photos=UserPhotos.builder()
+        UserPhotos photos = UserPhotos.builder()
                 .user(userRepository.getOne(id))
                 .pic_url(picName)
                 .build();
         photosRepository.save(photos);
-        return "redirect:/userPhotos/"+id;
+        return "redirect:/userPhotos/" + id;
     }
 
     @GetMapping("/userFriends/{id}")
@@ -147,19 +136,28 @@ public class MainController {
 
     @GetMapping("/message/{id}")
     public String findMessagePage(@PathVariable("id") int id, ModelMap modelMap, @AuthenticationPrincipal UserDetails userDetails) {
-        messageUser = userRepository.findUserById(id);
+        if (id != 0) {
+            messageUser = userRepository.findUserById(id);
+            modelMap.addAttribute("messageUser", messageUser);
+        }
         user = ((CurrentUser) userDetails).getUser();
         List<User> userList = userRepository.findAll();
         List<UsersMessage> userMessages = userMessageRepository.getUserMessages(user.getId());
         modelMap.addAttribute("userMessages", userMessages);
         modelMap.addAttribute("users", userList);
         modelMap.addAttribute("user", user);
-        modelMap.addAttribute("messageUser", messageUser);
         return "messagePage";
     }
+    @GetMapping("/messagePage")
+    public String messagePage(@AuthenticationPrincipal UserDetails userDetails) {
+        user = ((CurrentUser) userDetails).getUser();
+    return "redirect:/message/"+user.getId();
+    }
 
-    @GetMapping("/friend1Page")
+
+        @GetMapping("/friend1Page")
     public String friendPage(ModelMap modelMap) {
+        boolean requestStatus = false;
         List<Post> postsList = postRepository.findAllByFriendId(friendUser.getId());
         for (Post post : postsList) {
             post.setComments(commentRepository.findAllByPostId(post.getId()));
@@ -180,6 +178,22 @@ public class MainController {
                 userList.remove(user);
             }
         }
+
+        List<Friend> all1 = friendRepository.findAll();
+        for (Friend friend : all1) {
+            if (friend.getUserId() == user.getId() & friend.getFriendId() == friendUser.getId()) {
+                requestStatus = true;
+            }
+        }
+        List<Request> all = requestRepository.findAll();
+        for (Request request : all) {
+            if (request.getTo().getId() == friendUser.getId()) {
+                requestStatus = true;
+            }
+        }
+        List<UsersMessage> userMessages = userMessageRepository.getUserMessages(user.getId());
+        modelMap.addAttribute("userMessages", userMessages);
+        modelMap.addAttribute("reqStatus", requestStatus);
         modelMap.addAttribute("user", userList);
         modelMap.addAttribute("us", user);
         modelMap.addAttribute("friend", friendUser);
@@ -213,7 +227,9 @@ public class MainController {
                 userList.remove(user);
             }
         }
+        List<Request> requests = requestRepository.findAllByToId(user.getId());
         List<UsersMessage> userMessages = userMessageRepository.getUserMessages(user.getId());
+        modelMap.addAttribute("requests", requests);
         modelMap.addAttribute("posts", postList);
         modelMap.addAttribute("userMessages", userMessages);
         modelMap.addAttribute("user", userList);
