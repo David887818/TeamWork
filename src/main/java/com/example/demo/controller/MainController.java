@@ -229,9 +229,13 @@ public class MainController {
                 userList.remove(user);
             }
         }
+
         List<Request> requests = requestRepository.findAllByToId(user.getId());
+
         List<UsersMessage> userMessages = userMessageRepository.getUserMessages(user.getId());
+
         List<Notification> notifications = notificationRepository.findAllByToId(user.getId());
+
         modelMap.addAttribute("notifications", notifications);
         modelMap.addAttribute("requests", requests);
         modelMap.addAttribute("posts", postList);
