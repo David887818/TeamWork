@@ -1,13 +1,7 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.ListStatus;
-import com.example.demo.model.Post;
-import com.example.demo.model.PostLike;
-import com.example.demo.model.User;
-import com.example.demo.repository.CommentRepository;
-import com.example.demo.repository.PostLikeRepository;
-import com.example.demo.repository.PostRepository;
-import com.example.demo.repository.UserRepository;
+import com.example.demo.model.*;
+import com.example.demo.repository.*;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,7 +29,8 @@ public class PostController {
     PostLikeRepository likeRepository;
     @Autowired
     CommentRepository commentRepository;
-
+    @Autowired
+    NotificationRepository notificationRepository;
     @Value(value = "${TeamWork.post.pic.url}")
     private String adPicDir;
 
@@ -46,6 +41,12 @@ public class PostController {
                 .user(userRepository.getOne(user_id))
                 .build();
         likeRepository.save(likes);
+        Notification notification=Notification.builder()
+                .notStatus(NotificationStatus.LIKE)
+                .from(userRepository.getOne(user_id))
+                .to(postRepository.getOne(post_id).getUser())
+                .build();
+        notificationRepository.save(notification);
         return "redirect:/homePage";
     }
 
@@ -84,7 +85,7 @@ public class PostController {
 
     @PostMapping("/addPostFromUserPage")
     public String addAdvertiseFromUserPage(@ModelAttribute Post post, @RequestParam("user_id") int id,
-                               @RequestParam("image") MultipartFile multipartFile) {
+                                           @RequestParam("image") MultipartFile multipartFile) {
         File dir = new File(adPicDir);
         if (!dir.exists()) {
             dir.mkdirs();
@@ -104,8 +105,8 @@ public class PostController {
     }
 
     @PostMapping("/addPostFromFriendPage")
-    public String addAdvertiseFromFriendPage(@ModelAttribute Post post, @RequestParam("user_id") int id,@RequestParam("friend_id") int f_id,
-                                           @RequestParam("image") MultipartFile multipartFile) {
+    public String addAdvertiseFromFriendPage(@ModelAttribute Post post, @RequestParam("user_id") int id, @RequestParam("friend_id") int f_id,
+                                             @RequestParam("image") MultipartFile multipartFile) {
         File dir = new File(adPicDir);
         if (!dir.exists()) {
             dir.mkdirs();

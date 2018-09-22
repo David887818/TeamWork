@@ -41,6 +41,8 @@ public class MainController {
     RequestRepository requestRepository;
     @Autowired
     FriendRepository friendRepository;
+    @Autowired
+    NotificationRepository notificationRepository;
 
     @Value(value = "${TeamWork.post.pic.url}")
     private String adPicDir;
@@ -229,6 +231,8 @@ public class MainController {
         }
         List<Request> requests = requestRepository.findAllByToId(user.getId());
         List<UsersMessage> userMessages = userMessageRepository.getUserMessages(user.getId());
+        List<Notification> notifications = notificationRepository.findAllByToId(user.getId());
+        modelMap.addAttribute("notifications", notifications);
         modelMap.addAttribute("requests", requests);
         modelMap.addAttribute("posts", postList);
         modelMap.addAttribute("userMessages", userMessages);
@@ -257,6 +261,12 @@ public class MainController {
                 .build();
         commentRepository.save(commment);
         commentList = commentRepository.findAllByPostId(postId);
+        Notification notification=Notification.builder()
+                .notStatus(NotificationStatus.COMMENT)
+                .from(userRepository.getOne(userId))
+                .to(postRepository.getOne(postId).getUser())
+                .build();
+        notificationRepository.save(notification);
         return "redirect:/homePage";
     }
 }
