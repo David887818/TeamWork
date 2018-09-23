@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 
 @Data
 @NoArgsConstructor
@@ -18,17 +20,20 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column
+    @NotEmpty(message = "name can not be empty")
     private String name;
     @Column
     private String surname;
     @Column
+    @Email(message = "please input valid email")
+    @NotEmpty(message = "email can not be empty")
     private String email;
     @Column
+    @NotEmpty(message = "password can not be empty")
     private String password;
     @Column(name = "user_type")
     @Enumerated(EnumType.STRING)
     private UserType userType;
-
     @Column
     @Enumerated(EnumType.STRING)
     private Gender gender;
@@ -36,8 +41,10 @@ public class User {
     private String pic_url;
     @Column
     private String pic_url_cover;
+    @Enumerated(EnumType.STRING)
+    private UserVerify userVerify;
     @Column
-    boolean verify;
+    private String token;
 
 }
 

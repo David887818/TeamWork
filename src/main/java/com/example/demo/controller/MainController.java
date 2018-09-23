@@ -1,12 +1,9 @@
 package com.example.demo.controller;
 
-import com.example.demo.jwt.JwtTokenUtil;
-import com.example.demo.mail.EmailServiceImpl;
 import com.example.demo.model.*;
 import com.example.demo.repository.*;
 import com.example.demo.service.CurrentUser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -49,17 +46,11 @@ public class MainController {
     FriendRepository friendRepository;
     @Autowired
     NotificationRepository notificationRepository;
-    @Qualifier("userDetailsService1")
     @Autowired
     UserDetailsService userDetailsService;
     @Autowired
     PasswordEncoder passwordEncoder;
-    @Autowired
-    EmailServiceImpl emailService;
-    @Autowired
-    JwtTokenUtil jwtTokenUtil;
-    @Value("${our.url}")
-    String ourUrl;
+
 
     @Value(value = "${TeamWork.post.pic.url}")
     private String adPicDir;
@@ -286,20 +277,22 @@ public class MainController {
         return "redirect:/indexPage";
     }
 
-    @GetMapping("/verification")
-    public String getVerification(@RequestParam("token") String token, ModelMap modelMap) {
-        try {
-            User userByEmail = userRepository.findUserByEmail (jwtTokenUtil.getUsernameFromToken (token));
-            userByEmail.setVerify (true);
-            String pass = userByEmail.getPassword ();
-            userByEmail.setPassword (passwordEncoder.encode (userByEmail.getPassword ()));
-            userRepository.save (userByEmail);
-            modelMap.addAttribute ("vEmail", userByEmail.getEmail ());
-            modelMap.addAttribute ("userRegister", new User ());
-            modelMap.addAttribute ("vPassword", pass);
-            return "index";
-        } catch (Exception e) {
-            return "redirect:http://www.designernews.co/404";
+
+    @RequestMapping(value = "/verify", method = RequestMethod.GET)
+    public String verify(@RequestParam("token") String token, @RequestParam("email") String email) {
+        User oneByEmail = userRepository.findUserByEmail (email);
+        if (oneByEmail != null) {
+            if (oneByEmail.getToken () != null && oneByEmail.getToken ().equals (token)) {
+                oneByEmail.setToken (null);
+                oneByEmail.setUserVerify (UserVerify.TRUE);
+                userRepository.save (oneByEmail);
+            }
         }
+        return "redirect:/";
+    }
+
+    @RequestMapping(value = "/verifyError", method = RequestMethod.GET)
+    public String verifyError() {
+        return "verifyError";
     }
 }
