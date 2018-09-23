@@ -142,16 +142,25 @@ public class MainController {
     }
 
     @GetMapping("/search")
-    public String search(@RequestParam("text") String string,ModelMap modelMap){
+    public String search(@RequestParam("text") String string, ModelMap modelMap) {
         List<User> users = userRepository.findAll();
         String[] split = string.split(" ");
         for (User user : users) {
-            if (split[0].equals(user.getName()) && split[1].equals(user.getSurname())) {
-                modelMap.addAttribute("searched",user);
+            if (split[0].equals(user.getName())) {
+                modelMap.addAttribute("searched", user);
+                List<Friend> allFriends = friendRepository.findAllByUserId(user.getId());
+                List<Request> requests = requestRepository.findAllByToId(user.getId());
+                List<Notification> notifications = notificationRepository.findAllByToId(user.getId());
+                List<UsersMessage> userMessages = userMessageRepository.getUserMessages(user.getId());
+                modelMap.addAttribute("userMessages", userMessages);
+                modelMap.addAttribute("notifications", notifications);
+                modelMap.addAttribute("requests", requests);
+                modelMap.addAttribute("friends", allFriends);
+                modelMap.addAttribute("comments", commentList);
                 return "searchResult";
             }
         }
-        return "redirect:/home";
+        return "redirect:/homePage";
     }
 
 }

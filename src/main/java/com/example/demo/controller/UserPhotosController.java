@@ -60,8 +60,7 @@ public class UserPhotosController {
         List<Notification> notifications = notificationRepository.findAllByToId(user.getId());
         modelMap.addAttribute("notifications", notifications);
         modelMap.addAttribute("userMessages", userMessages);
-        modelMap.addAttribute("allFriends", allFriends);
-        modelMap.addAttribute("user", userList);
+        modelMap.addAttribute("user", allFriends);
         modelMap.addAttribute("photos", photos);
         modelMap.addAttribute("us", one);
         return "userPhotos";

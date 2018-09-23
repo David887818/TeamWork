@@ -176,14 +176,6 @@
 
         </div>
         <div class="userPost bg-light">
-            <div class="tc"><span class="GFBFont  mt-2">Add Photos</span></div>
-            <div class="mt-4">
-                <form action="/addUserPhotos" method="post" enctype="multipart/form-data">
-                    <input type="file" name="image" class="btn btn-success">
-                    <input type="hidden" th:value="${us.id}" name="user_id" class="btn btn-success">
-                    <input type="submit" value="Add Picture" class="btn btn-success">
-                </form>
-            </div>
             <div class="tc"><span class="GFBFont  mt-2">Photos</span></div>
             <div th:if="${photos!=null}">
                 <div th:each="photo : ${photos}" class="m-2 border border-success userPhotos"
@@ -198,23 +190,24 @@
 <div class="borderMessage sideNavThree">
     <div>
         <div th:each="users : ${user}" class="d-flex  iconHover">
-            <a th:href="@{|/friendsPage/${users.id}|}">
+            <a th:href="@{|/friendsPage/${users.friend.id}|}">
                 <ul class="d-flex m-2">
                     <li class="d-flex">
-                        <div th:if="${users.pic_url != null}">
+                        <div th:if="${users.friend.pic_url != null}">
                             <img class="userPicMessage"
-                                 th:src="@{'/post/userImage?'(picUrl=${users.pic_url})}">
+                                 th:src="@{'/post/userImage?'(picUrl=${users.friend.pic_url})}">
                         </div>
-                        <div th:if="${users.pic_url == null}">
+                        <div th:if="${users.friend.pic_url == null}">
                             <img class="userPicMessage " src="/user.png">
                         </div>
-                        <span th:text="${users.name}" class="ml-3 iBlack mt-1"></span>
-                        <span th:text="${users.surname}" class="ml-2 iBlack mt-1"></span></li>
+                        <span th:text="${users.friend.name}" class="ml-3 iBlack mt-1"></span>
+                        <span th:text="${users.friend.surname}" class="ml-2 iBlack mt-1"></span></li>
                 </ul>
             </a>
         </div>
     </div>
 </div>
+
 <script src="/min.js"></script>
 </body>
 </html>
