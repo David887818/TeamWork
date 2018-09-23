@@ -36,6 +36,8 @@ public class User {
     private String pic_url;
     @Column
     private String pic_url_cover;
+    @Column
+    boolean verify;
 
 }
 
