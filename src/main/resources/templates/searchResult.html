@@ -5,9 +5,160 @@
     <title>Result</title>
 </head>
 <body>
+<div class="navBar">
+    <div class="navBarMin  d-flex">
+        <div class="input-group d-flex  w-50">
+            <div class="G"><a href="/homePage"><i class="fab fa-gofore"></i></a></div>
+            <form action="/search" method="get" class="input-group d-flex  w-50">
+                <input type="text" name="text" class="search w-75" placeholder="Search">
+                <div class="input-group-append">
+                    <button class="search" type="submit"><i class="fas fa-search"></i></button>
+                </div>
+            </form>
+        </div>
+        <div class="w-50 ml-4 d-flex ">
+            <ul class="d-flex mt-2 barIcons">
+                <div class="iconHover" th:if="${us.pic_url != null}">
+                    <li><a href="/userPage"><img class="userPicBar m-1 border border-light"
+                                                 th:src="@{'/post/userImage?'(picUrl=${us.getPic_url()})}" alt=""> <span
+                            class=" iconFontBar" th:text="${us.name + ' ' + us.surname}"></span></a>
+                    </li>
+                </div>
+                <div class="iconHover" th:if="${us.pic_url == null}">
+                    <li><a href="/userPage"><img class="userPicBar m-1 border border-light" src="/user.png" alt="">
+                        <span
+                                class=" iconFontBar" th:text="${us.name + ' ' + us.surname}"></span></a>
+                    </li>
+                </div>
+                <div class="iconHover">
+                    <li class="ml-2"><a href="/homePage"><span class="iconFontBar">General</span></a></li>
+                </div>
+                <div class="">
+                    <li class="ml-2">
+                        <div class="dropdown4">
+                            <i onclick="myFunction4()" class=" dropbtn4 fab fa-facebook-messenger iWhite"></i>
+                            <div id="myDropdown4" class="dropdown-content4">
+                                <div th:if="${userMessages!=null}">
+                                    <div th:each="users : ${userMessages}">
+                                        <a th:href="@{'/message/'+${users.to.id}}">
+                                            <div>
+                                                <div class="d-flex  iconHover">
+                                                    <ul class="d-flex m-2">
+                                                        <li class="d-flex">
+                                                            <div th:if="${users.to.pic_url != null}">
+                                                                <img class="userPicMessage"
+                                                                     th:src="@{'/post/userImage?'(picUrl=${users.to.getPic_url()})}">
+                                                            </div>
+                                                            <div th:if="${users.to.pic_url == null}">
+                                                                <img class="userPicMessage " src="/user.png">
+                                                            </div>
+
+
+                                                            <span th:text="${users.to.name}"
+                                                                  class="ml-3 mt-1">User</span>
+                                                            <span th:text="${users.to.surname}"
+                                                                  class="ml-2 mt-1">User</span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div th:if="${userMessages==null}">
+                                    <p class="iBlack">No Messages</p>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="">
+                    <li class="ml-2">
+                        <div class="dropdown3">
+                            <i onclick="myFunction3()" class=" dropbtn3 fas fa-user-friends iWhite"></i>
+                            <div id="myDropdown3" class="dropdown-content3">
+                                <div th:if="${requests!=null}">
+                                    <div th:each="req : ${requests}">
+                                        <ul class="d-flex m-2 border-bottom border-success">
+                                            <li class="d-flex mb-2">
+                                                <div th:if="${req.from.pic_url != null}">
+                                                    <img class="userPicMessage"
+                                                         th:src="@{'/post/userImage?'(picUrl=${req.from.pic_url})}">
+                                                </div>
+                                                <div th:if="${req.from.pic_url == null}">
+                                                    <img class="userPicMessage " src="/user.png">
+                                                </div>
+                                                <div class="d-flex flex-column">
+                                                    <div class="d-flex">
+                                                        <span th:text="${req.from.name}" class="ml-3 iBlack"></span>
+                                                        <span th:text="${req.from.surname}" class="ml-2 iBlack"></span>
+                                                    </div>
+                                                    <div class="d-flex ml-2">
+                                                        <a th:href="@{'/acceptRequest/'+${req.from.id}+'/'+${req.id}}"><span
+                                                                class="accept">Accept</span></a>
+                                                        <a th:href="@{'/rejectRequest/'+${req.id}}"><span
+                                                                class="reject">Reject</span></a>
+                                                    </div>
+
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div th:if="${requests==null}">
+                                    <p class="iBlack mt-3">No Requests</p>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="">
+                    <li class="ml-2">
+                        <div class="dropdown2">
+                            <i onclick="myFunction2()" class=" dropbtn2  far fa-bell iWhite"></i>
+
+                            <div id="myDropdown2" class="dropdown-content2">
+                                <div th:if="${notifications!=null}">
+                                    <div th:each="notification : ${notifications}">
+                                        <div th:if="${notification.getNotStatus().name()=='LIKE'}">
+                                            <p class="iBlack m-2"><span
+                                                    th:text="${notification.from.name}+' '+${notification.from.surname}"></span>
+                                                Liked your post </p>
+                                        </div>
+                                        <div th:if="${notification.getNotStatus().name()=='COMMENT'}">
+                                            <p class="iBlack m-2"><span
+                                                    th:text="${notification.from.name}+' '+${notification.from.surname}"></span>
+                                                Commented your post</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div th:if="${notifications==null}">
+                                    <p class="iBlack mt-3">No Notifications</p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </div>
+
+            </ul>
+            <div class="ml-2 mt-1 ">
+                <div class="dropdown">
+                    <i onclick="myFunction()" class="fas iWhite dropbtn fa-caret-down"></i>
+
+                    <div id="myDropdown" class="dropdown-content">
+                        <a href="/homePage">Home</a>
+                        <a href="/settings">Settings</a>
+                        <a href="/logout">logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div>
     <h3 th:text="${searched.name + ' ' + searched.surname}"></h3>
 </div>
+
 <div class="borderMessage sideNavThree">
     <div class="d-flex  iconHover">
         <a th:href="@{'/friendsPage/' +${searched.id}}">
