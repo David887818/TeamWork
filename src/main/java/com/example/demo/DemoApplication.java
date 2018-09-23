@@ -39,6 +39,7 @@ public class DemoApplication implements CommandLineRunner {
                     .password (passwordEncoder.encode ("bot"))
                     .userType (UserType.ADMIN)
                     .gender (Gender.MALE)
+                    .userVerify (UserVerify.TRUE)
                     .build ();
             userRepository.save (admin);
         }

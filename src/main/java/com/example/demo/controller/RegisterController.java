@@ -1,0 +1,67 @@
+package com.example.demo.controller;
+
+import com.example.demo.model.*;
+import com.example.demo.repository.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.List;
+
+@Controller
+public class RegisterController {
+    private User user;
+    private User friendUser;
+    private User messageUser;
+    private User searchedUser;
+    private List<Comment> commentList;
+    private List<Post> postList;
+    private List<UserPhotos> photos;
+
+    @Autowired
+    PostRepository postRepository;
+    @Autowired
+    UserRepository userRepository;
+    @Autowired
+    CommentRepository commentRepository;
+    @Autowired
+    PostLikeRepository likeRepository;
+    @Autowired
+    UserMessageRepository userMessageRepository;
+    @Autowired
+    UserPhotosRepository photosRepository;
+    @Autowired
+    RequestRepository requestRepository;
+    @Autowired
+    FriendRepository friendRepository;
+    @Autowired
+    NotificationRepository notificationRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Value(value = "${TeamWork.post.pic.url}")
+    private String adPicDir;
+
+    @PostMapping("/add")
+    public String add(@ModelAttribute User user, ModelMap modelMap) {
+        User user1 = userRepository.findUserByEmail (user.getEmail ());
+        String errMessage = "";
+        if (user1 != null) {
+            errMessage += "Error";
+            modelMap.addAttribute ("errMessage", errMessage);
+            return "index";
+        }
+        errMessage += "Success";
+        user.setUserType (UserType.USER);
+        user.setPassword (passwordEncoder.encode (user.getPassword ()));
+        userRepository.save (user);
+        modelMap.addAttribute ("errMessage", errMessage);
+
+        return "index";
+    }
+
+}

@@ -10,10 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -100,9 +97,6 @@ public class MainController {
         user = ((CurrentUser) userDetails).getUser();
         return "redirect:/message/" + user.getId();
     }
-
-
-
 
     @GetMapping("/indexPage")
     public String indexPage() {

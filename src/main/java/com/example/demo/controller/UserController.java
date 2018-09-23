@@ -38,25 +38,6 @@ public class UserController {
     @Value(value = "${TeamWork.post.pic.url}")
     private String adPicDir;
 
-
-    @PostMapping("/add")
-    public String add(@ModelAttribute User user, ModelMap modelMap) {
-        User user1 = userRepository.findUserByEmail(user.getEmail());
-        String errMessage = "";
-        if (user1 != null) {
-            errMessage += "Error";
-            modelMap.addAttribute("errMessage", errMessage);
-            return "index";
-        }
-        errMessage += "Success";
-        user.setUserType(UserType.USER);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
-        modelMap.addAttribute("errMessage", errMessage);
-
-        return "index";
-    }
-
     @PostMapping("/addImage")
     public String addProfileImage(@AuthenticationPrincipal UserDetails
                                           userDetails, @RequestParam("image") MultipartFile multipartFile) {
