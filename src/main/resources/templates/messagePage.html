@@ -149,13 +149,14 @@
                         </div>
                         <span class="message-time pull-right">
                 Sun
+
               </span>
                     </div>
                 </div>
             </div>
             <div>
                 <form class="messageInput" action="/sendMessage" method="post" id="1111">
-                    <input type="text" class="btn btn-outline-success" id="8888" path="text"
+                    <input type="text" class="btn btn-outline-success" id="8888" name="text"
                            placeholder="Write your message..." name="text"/>
                     <input name="toId" th:value="${user.id}" type="hidden"/>
                     <input type="submit" value="Send">
