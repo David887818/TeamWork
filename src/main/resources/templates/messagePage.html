@@ -23,14 +23,16 @@
                 <div class="heading d-flex justify-content-between">
                     <div class="G"><a href="/homePage"><i class="fab fa-gofore"></i></a></div>
 
-                    <a href="/userPage">  <div class="d-flex ml-3 heading-avatar ">
+                    <a href="/userPage">
+                        <div class="d-flex ml-3 heading-avatar ">
 
                             <div class="heading-avatar-icon d-flex align-items-center">
                                 <img th:src="@{'/post/userImage?'(picUrl=${user.pic_url})}">
                                 <p class="iBlue mt-3 ml-3" th:text="${user.name + ' ' + user.surname} "></p>
                             </div>
 
-                    </div> </a>
+                        </div>
+                    </a>
 
                     <div class="heading-compose  pull-right">
                         <i class="fa fa-comments fa-2x  pull-right ml-5"></i>
@@ -51,8 +53,6 @@
                                                 <div th:if="${users.to.pic_url == null}">
                                                     <img class="userPicMessage " src="/user.png">
                                                 </div>
-
-
                                                 <p th:text="${users.to.name}" class="ml-3 iBlue mt-1">User</p>
                                                 <p th:text="${users.to.surname}" class="ml-2 iBlue mt-1">User</p>
                                             </li>
@@ -97,7 +97,6 @@
                                                 <img class="userPicMessage " src="/user.png">
                                             </div>
 
-
                                             <p th:text="${users.name}" class="ml-3 iBlue mt-1"></p>
                                             <p th:text="${users.surname}" class="ml-2 iBlue mt-1"></p>
                                         </li>
@@ -128,11 +127,11 @@
 
                 </div>
             </a>
-
             <div class="row message-body">
                 <div class="col-sm-12 message-main-receiver">
                     <div class="receiver">
                         <div class="message-text">
+
                             Hi, what are you doing?!
                         </div>
                         <span class="message-time pull-right">
@@ -154,10 +153,24 @@
                     </div>
                 </div>
             </div>
+            <div>
+                <form class="messageInput" action="/sendMessage" method="post" id="1111">
+                    <input type="text" class="btn btn-outline-success" id="8888" path="text"
+                           placeholder="Write your message..." name="text"/>
+                    <input name="toId" th:value="${user.id}" type="hidden"/>
+                    <input type="submit" value="Send">
+
+                </form>
+            </div>
+            <div id="messageAjax">
+
+            </div>
         </div>
     </div>
 </div>
+
 </body>
+
 <script>
     $(function () {
         $(".heading-compose").click(function () {
@@ -178,5 +191,65 @@
             })
         });
     })
+
+    //  see messages the friend
+    function getMessages(id) {
+        currentFriendId = id;
+
+
+        if (x) {
+            clearInterval(x);
+            inter(id);
+            x = setInterval(function () {
+                inter(id)
+            }, 1000);
+        }
+        else {
+            inter(id);
+            x = setInterval(function () {
+                inter(id)
+            }, 1000);
+        }
+        getFriendProfile(id);
+    }
+
+    function inter(id) {
+        $.ajax({
+            url: "/getMessages?id=" + id,
+            success: function (result) {
+                $("#messageAjax").html(result);
+            }
+        })
+    }
+
+
+    //contact-profile in message
+    function getFriendProfile(id) {
+        $.ajax({
+            url: "getFriendProfileMessage?id =" + id,
+            success: function (result) {
+                $(".contact-profile").html(result);
+            }
+        })
+
+    }
+
+    //send message Ajax
+    $("#1111").submit(function (e) {
+        e.preventDefault();
+        var fd = new FormData($("#1111")[0]);
+        $.ajax({
+            url: "/sendMessage",
+            type: "POST",
+            data: fd,
+            cache: false,
+            success: function (result) {
+                $("#messageAjax").html(result);
+            }
+        });
+        document.getElementById("8888").value = "";
+    });
+
 </script>
+
 </html>

@@ -8,6 +8,11 @@ span {
     margin: 0;
     box-sizing: border-box;
 }
+.messageInput{
+    position: fixed;
+    bottom: 10px;
+}
+
 
 body {
 
