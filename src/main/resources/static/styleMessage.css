@@ -384,7 +384,7 @@ a:hover {
 .message {
     padding: 0 !important;
     margin: 0 !important;
-    background: url("static/user.png") no-repeat fixed center;
+    background: url("bot.jpg") no-repeat fixed center;
     background-size: cover;
     overflow-y: auto;
     border: 1px solid #f7f7f7;

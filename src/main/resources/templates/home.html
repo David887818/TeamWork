@@ -33,7 +33,7 @@
             <ul class="d-flex mt-2 barIcons">
                 <div class="iconHover" th:if="${us.pic_url != null}">
                     <li><a href="/userPage"><img class="userPicBar m-1 border border-light"
-                                                 th:src="@{'/post/userImage?'(picUrl=${us.getPic_url()})}" alt=""> <span
+                                                 th:src="@{'/user/userImg?'(picUrl=${us.getPic_url()})}" alt=""> <span
                             class=" iconFontBar" th:text="${us.name + ' ' + us.surname}"></span></a>
                     </li>
                 </div>
@@ -60,7 +60,7 @@
                                                         <li class="d-flex">
                                                             <div th:if="${users.to.pic_url != null}">
                                                                 <img class="userPicMessage"
-                                                                     th:src="@{'/post/userImage?'(picUrl=${users.to.getPic_url()})}">
+                                                                     th:src="@{'/user/userImg'(picUrl=${users.to.getPic_url()})}">
                                                             </div>
                                                             <div th:if="${users.to.pic_url == null}">
                                                                 <img class="userPicMessage " src="/user.png">
@@ -96,7 +96,7 @@
                                             <li class="d-flex mb-2">
                                                 <div th:if="${req.from.pic_url != null}">
                                                     <img class="userPicMessage"
-                                                         th:src="@{'/post/userImage?'(picUrl=${req.from.pic_url})}">
+                                                         th:src="@{'/user/userImg?'(picUrl=${req.from.pic_url})}">
                                                 </div>
                                                 <div th:if="${req.from.pic_url == null}">
                                                     <img class="userPicMessage " src="/user.png">

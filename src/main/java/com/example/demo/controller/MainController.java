@@ -53,11 +53,6 @@ public class MainController {
         return "index";
     }
 
-    @GetMapping("/friendsPage/{id}")
-    public String findFriendPage(@PathVariable("id") int id) {
-        friendUser = userRepository.findUserById(id);
-        return "redirect:/friend1Page";
-    }
 
     @GetMapping("/userPage")
     public String homePage(ModelMap modelMap) {
@@ -76,60 +71,13 @@ public class MainController {
             modelMap.addAttribute("userPost", postList);
         }
         List<Friend> friendList = friendRepository.findAllByUserId(user.getId());
+        List<UsersMessage> userMessages = userMessageRepository.getUserMessages(user.getId());
+        modelMap.addAttribute("userMessages", userMessages);
         modelMap.addAttribute("user", friendList);
         modelMap.addAttribute("us", user);
         modelMap.addAttribute("posts", postList);
         modelMap.addAttribute("comments", commentList);
         return "userPage";
-    }
-
-
-    @GetMapping("/userPhotos/{id}")
-    public String userPhotos(@PathVariable("id") int id, ModelMap modelMap, @AuthenticationPrincipal UserDetails userDetails) {
-        user = ((CurrentUser) userDetails).getUser();
-        photos = photosRepository.findAllByUserId(id);
-        User one = userRepository.getOne(id);
-        List<User> userList = userRepository.findAll();
-        List<UsersMessage> userMessages = userMessageRepository.getUserMessages(user.getId());
-        modelMap.addAttribute("userMessages", userMessages);
-        modelMap.addAttribute("user", userList);
-        modelMap.addAttribute("photos", photos);
-        modelMap.addAttribute("us", one);
-        return "userPhotos";
-    }
-
-    @PostMapping("/addUserPhotos")
-    public String addUserPhotos(@RequestParam("user_id") int id, @RequestParam("image") MultipartFile multipartFile) {
-        File dir = new File(adPicDir);
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
-        String picName = System.currentTimeMillis() + "_" + multipartFile.getOriginalFilename();
-        try {
-            multipartFile.transferTo(new File(dir, picName));
-        } catch (IOException e) {
-            e.printStackTrace();
-
-        }
-        UserPhotos photos = UserPhotos.builder()
-                .user(userRepository.getOne(id))
-                .pic_url(picName)
-                .build();
-        photosRepository.save(photos);
-        return "redirect:/userPhotos/" + id;
-    }
-
-    @GetMapping("/userFriends/{id}")
-    public String userFriends(ModelMap modelMap, @PathVariable("id") int id, @AuthenticationPrincipal UserDetails userDetails) {
-        User one = userRepository.getOne(id);
-        user = ((CurrentUser) userDetails).getUser();
-        List<Friend> friendList = friendRepository.findAllByUserId(one.getId());
-        List<UsersMessage> userMessages = userMessageRepository.getUserMessages(user.getId());
-        modelMap.addAttribute("userMessages", userMessages);
-        modelMap.addAttribute("friends", friendList);
-        modelMap.addAttribute("photos", one);
-        modelMap.addAttribute("us",one);
-        return "userFriends";
     }
 
     @GetMapping("/message/{id}")
@@ -154,44 +102,7 @@ public class MainController {
     }
 
 
-    @GetMapping("/friend1Page")
-    public String friendPage(ModelMap modelMap) {
-        boolean requestStatus = false;
-        List<Post> postsList = postRepository.findAllByFriendId(friendUser.getId());
-        for (Post post : postsList) {
-            post.setComments(commentRepository.findAllByPostId(post.getId()));
-            post.setLikes(likeRepository.findAllByPostId(post.getId()));
-            for (PostLike like : post.getLikes()) {
-                if (user.getId() == like.getUser().getId()) {
-                    post.setListStatus(ListStatus.TRUE);
-                } else {
-                    post.setListStatus(ListStatus.FALSE);
-                }
-            }
-            modelMap.addAttribute("posts", postsList);
-        }
-        List<Friend> all1 = friendRepository.findAll();
-        for (Friend friend : all1) {
-            if (friend.getUser().getId() == user.getId() & friend.getFriend().getId() == friendUser.getId()) {
-                requestStatus = true;
-            }
-        }
-        List<Request> all = requestRepository.findAll();
-        for (Request request : all) {
-            if (request.getTo().getId() == friendUser.getId()) {
-                requestStatus = true;
-            }
-        }
-        List<UsersMessage> userMessages = userMessageRepository.getUserMessages(user.getId());
-        List<Friend> allFriends = friendRepository.findAllByUserId(user.getId());
-        modelMap.addAttribute("userMessages", userMessages);
-        modelMap.addAttribute("reqStatus", requestStatus);
-        modelMap.addAttribute("allFriends", allFriends);
-        modelMap.addAttribute("us", user);
-        modelMap.addAttribute("friend", friendUser);
-        modelMap.addAttribute("comments", commentList);
-        return "friendPage";
-    }
+
 
     @GetMapping("/indexPage")
     public String indexPage() {
@@ -214,13 +125,12 @@ public class MainController {
         }
         List<Friend> allFriends = friendRepository.findAllByUserId(user.getId());
         List<Request> requests = requestRepository.findAllByToId(user.getId());
-        List<UsersMessage> userMessages = userMessageRepository.getUserMessages(user.getId());
         List<Notification> notifications = notificationRepository.findAllByToId(user.getId());
-
+        List<UsersMessage> userMessages = userMessageRepository.getUserMessages(user.getId());
+        modelMap.addAttribute("userMessages", userMessages);
         modelMap.addAttribute("notifications", notifications);
         modelMap.addAttribute("requests", requests);
         modelMap.addAttribute("posts", postList);
-        modelMap.addAttribute("userMessages", userMessages);
         modelMap.addAttribute("friends", allFriends);
         modelMap.addAttribute("us", user);
         modelMap.addAttribute("comments", commentList);
@@ -250,22 +160,4 @@ public class MainController {
         return "redirect:/home";
     }
 
-
-    @PostMapping("/addComment")
-    public String addComment(@RequestParam String comment, @RequestParam("post_id") int postId, @RequestParam("user_id") int userId) {
-        Comment commment = Comment.builder()
-                .comment(comment)
-                .post(postRepository.getOne(postId))
-                .user(userRepository.getOne(userId))
-                .build();
-        commentRepository.save(commment);
-        commentList = commentRepository.findAllByPostId(postId);
-        Notification notification = Notification.builder()
-                .notStatus(NotificationStatus.COMMENT)
-                .from(userRepository.getOne(userId))
-                .to(postRepository.getOne(postId).getUser())
-                .build();
-        notificationRepository.save(notification);
-        return "redirect:/homePage";
-    }
 }

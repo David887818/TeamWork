@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Request;
 import com.example.demo.model.User;
 import com.example.demo.model.UserType;
 import com.example.demo.repository.FriendRepository;
@@ -54,15 +53,8 @@ public class UserController {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         modelMap.addAttribute("errMessage", errMessage);
+
         return "index";
-    }
-
-
-    @GetMapping(value = "/adImage")
-    public @ResponseBody
-    byte[] userImage(@RequestParam("pic_url") String pic_url) throws IOException {
-        InputStream in = new FileInputStream(adPicDir + pic_url);
-        return IOUtils.toByteArray(in);
     }
 
     @PostMapping("/addImage")
@@ -106,111 +98,10 @@ public class UserController {
         return "redirect:/userPage";
     }
 
-
-//    @GetMapping("/requests")
-//    public String requests(ModelMap map, @SessionAttribute("user") User user) {
-//        List<Request> allByToId = requestRepository.findAllByToId (user.getId ());
-//        List<User> friendRequests = new ArrayList<> ();
-//        for (Request request : allByToId) {
-//
-//            friendRequests.add (userRepository.getOne (request.getFromId ()));
-//        }
-//        map.addAttribute ("friendRequests", friendRequests);
-//        return "request";
-//    }
-//
-//    @GetMapping("/sendRequest")
-//    public HttpServletResponse sendRequest(HttpServletResponse response, @SessionAttribute("friend") User friend, @SessionAttribute("user") User user) {
-//        if (!friend.equals (user)) {
-//            Request request = new Request ();
-//            request.setToId (friend.getId ());
-//            request.setFromId (user.getId ());
-//            Request request1 = requestRepository.findByFromIdAndToId (user.getId (), friend.getId ());
-//            Request request2 = requestRepository.findByToIdAndFromId (user.getId (), friend.getId ());
-//            Friend byFriendIdAndUserId = friendRepository.findByFriendIdAndUserId (user.getId (), friend.getId ());
-//            Friend byUserIdAndFriendId = friendRepository.findByUserIdAndFriendId (user.getId (), friend.getId ());
-//            if (byFriendIdAndUserId == null && byUserIdAndFriendId == null) {
-//                if (request1 == null && request2 == null) {
-//                    requestRepository.save (request);
-//                }
-//            }
-//        }
-//
-//        return response;
-//    }
-//
-//    @GetMapping("/acceptRequest")
-//    public String acceptRequest(@RequestParam("friendId") int fromId, HttpServletResponse response, @SessionAttribute("user") User user, ModelMap map) {
-//        Friend friend = new Friend ();
-//        friend.setUserId (user.getId ());
-//        friend.setFriendId (fromId);
-//        friendRepository.save (friend);
-//        Request request = requestRepository.findByFromIdAndToId (fromId, user.getId ());
-//        requestRepository.deleteById (request.getId ());
-//        List<Request> allByToId = requestRepository.findAllByToId (user.getId ());
-//        List<User> friendRequests = new ArrayList<> ();
-//        for (Request request1 : allByToId) {
-//
-//            friendRequests.add (userRepository.getOne (request1.getFromId ()));
-//        }
-//        map.addAttribute ("friendRequests", friendRequests);
-//        return "request";
-//    }
-//
-//    @GetMapping("/rejectRequest")
-//    public String rejectRequest(@RequestParam("friendId") int fromId, HttpServletResponse response, @SessionAttribute("user") User user, ModelMap map) {
-//
-//        Request request = requestRepository.findByFromIdAndToId (fromId, user.getId ());
-//        requestRepository.deleteById (request.getId ());
-//        List<Request> allByToId = requestRepository.findAllByToId (user.getId ());
-//        List<User> friendRequests = new ArrayList<> ();
-//        for (Request request1 : allByToId) {
-//
-//            friendRequests.add (userRepository.getOne (request1.getFromId ()));
-//        }
-//        map.addAttribute ("friendRequests", friendRequests);
-//        return "request";
-//    }
-//
-//    @GetMapping("/removeFriend")
-//    public HttpServletResponse removeFriend(@RequestParam("friendForRemove") int id, HttpServletResponse response, @SessionAttribute("user") User user) {
-//
-//        Friend friend = friendRepository.customGetFriend (user.getId (), id);
-//        if (friend != null) {
-//
-//            friendRepository.delete (friend);
-//        }
-//        return response;
-//    }
-//
-//    @GetMapping("/removeFriends")
-//    public String removeFriends(@RequestParam("friendForRemove") int id, @SessionAttribute("user") User user) {
-//
-//        Friend friend = friendRepository.customGetFriend (user.getId (), id);
-//        if (friend != null) {
-//
-//            friendRepository.delete (friend);
-//        }
-//        return "redirect:/allFriends";
-//    }
-//
-//    @GetMapping("/allFriends")
-//    public String allFriendsPage(ModelMap map, @SessionAttribute("user") User user) {
-//        List<Friend> friends = friendRepository.serchAllFriends (user.getId ());
-//        List<User> userFriends = new LinkedList<> ();
-//
-//        for (Friend friend : friends) {
-//            if (friend.getFriendId () == user.getId ()) {
-//                User one = userRepository.getOne (friend.getId ());
-//                userFriends.add (one);
-//            } else {
-//                User one = userRepository.getOne (friend.getFriendId ());
-//                userFriends.add (one);
-//            }
-//        }
-//
-//        map.addAttribute ("userFriends", userFriends);
-//        return "friend";
-//    }
-
+    @GetMapping(value = "/userImg")
+    public @ResponseBody
+    byte[] userImg(@RequestParam("picUrl") String picUrl) throws IOException {
+        InputStream in = new FileInputStream(adPicDir + picUrl);
+        return IOUtils.toByteArray(in);
+    }
 }

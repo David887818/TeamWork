@@ -27,10 +27,10 @@ public class DemoApplication implements CommandLineRunner {
         User user = userRepository.findUserByEmail ("admin@mail.com");
         if (user == null) {
             User admin = User.builder ()
-                    .email ("admin@mail.com")
-                    .name ("admin")
-                    .surname ("admin")
-                    .password (passwordEncoder.encode ("admin"))
+                    .email ("greenbot@mail.com")
+                    .name ("Green")
+                    .surname ("Bot")
+                    .password (passwordEncoder.encode ("bot"))
                     .userType (UserType.ADMIN)
                     .activeStatus (ActiveStatus.DELETED)
                     .userStatus (UserStatus.OFFLINE)

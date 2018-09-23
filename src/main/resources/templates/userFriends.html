@@ -174,59 +174,10 @@
 <div class="d-flex flex-column w-85 justify-content-center align-items-center">
     <div class="userProfile">
         <div th:if="${us.pic_url_cover == null}">
-            <div class="addPic">
-                <button onclick="document.getElementById('id03').style.display='block'"
-                        class="btn btn-outline-success m-3 iBlack">Choose Cover Photo
-                </button>
-            </div>
             <div class="backgroundImg d-flex align-items-end">
-
-                <div id="id03" class="modal">
-                    <form class="modal-content animate d-flex justify-content-center align-items-center"
-                          action="/user/addImageCover"
-                          enctype="multipart/form-data"
-                          method="post">
-                            <span onclick="document.getElementById('id03').style.display='none'" class="close"
-                                  title="Close Modal">&times;</span>
-
-                        <input type="file" name="img" class="btn btn-outline-success mt-3 w-75">
-                        <div class="container">
-                            <button type="button" onclick="document.getElementById('id03').style.display='none'"
-                                    class="btn btn-danger">Cancel
-                            </button>
-                            <input class="btn btn-success ml-3"
-                                   onclick="document.getElementById('id03').style.display='none'" type="submit"
-                                   value="Add"/>
-                        </div>
-                    </form>
-                </div>
                 <div class="profileBar"></div>
                 <div th:if="${us.pic_url == null}">
                     <div class="profilePic" src="/user.png">
-                        <div class="addPic">
-                            <button onclick="document.getElementById('id01').style.display='block'"
-                                    class="btn btn-outline-success iBlack">Choose Photo
-                            </button>
-                        </div>
-                    </div>
-
-                    <div id="id01" class="modal">
-                        <form class="modal-content animate d-flex justify-content-center align-items-center"
-                              action="/user/addImage" enctype="multipart/form-data"
-                              method="post">
-                            <span onclick="document.getElementById('id01').style.display='none'" class="close"
-                                  title="Close Modal">&times;</span>
-
-                            <input type="file" name="image" class="btn btn-outline-success mt-3 w-75">
-                            <div class="container">
-                                <button type="button" onclick="document.getElementById('id01').style.display='none'"
-                                        class="btn btn-danger">Cancel
-                                </button>
-                                <input class="btn btn-success ml-3"
-                                       onclick="document.getElementById('id01').style.display='none'" type="submit"
-                                       value="Add"/>
-                            </div>
-                        </form>
                     </div>
                 </div>
                 <div th:if="${us.pic_url != null}">
@@ -234,7 +185,7 @@
                 </div>
                 <div class="profileToolBar ">
                     <ul class="d-flex ml-5">
-                        <li><a th:href="@{'/friendsPage/'+${us.id}}">Information</a></li>
+                        <li><a th:href="@{'/information/'+${us.id}}">Information</a></li>
                         <li><a th:href="@{'/userPhotos/'+${us.id}}">Photos</a></li>
                         <li><a th:href="@{'/userFriends/'+${us.id}}">Friends</a></li>
                     </ul>
@@ -248,29 +199,6 @@
                 <div class="profileBar"></div>
                 <div th:if="${us.pic_url == null}" style="display:flex;align-items: center;justify-content: center">
                     <img class="profilePic" src="/user.png">
-                    <div class="addPic">
-                        <button onclick="document.getElementById('id02').style.display='block'"
-                                class="btn btn-outline-success m-3 iBlack">Choose Cover Photo
-                        </button>
-                    </div>
-                    <div id="id02" class="modal">
-                        <form class="modal-content animate d-flex justify-content-center align-items-center"
-                              action="/user/addImage" enctype="multipart/form-data"
-                              method="post">
-                            <span onclick="document.getElementById('id02').style.display='none'" class="close"
-                                  title="Close Modal">&times;</span>
-
-                            <input type="file" name="image" class="btn mt-3 btn-outline-success w-75">
-                            <div class="container">
-                                <button type="button" onclick="document.getElementById('id02').style.display='none'"
-                                        class="btn btn-danger">Cancel
-                                </button>
-                                <input class="btn  btn-success ml-3"
-                                       onclick="document.getElementById('id02').style.display='none'" type="submit"
-                                       value="Add"/>
-                            </div>
-                        </form>
-                    </div>
                 </div>
                 <div th:if="${us.pic_url != null}">
                     <div class="profilePic"
@@ -279,21 +207,17 @@
                 </div>
                 <div class="profileToolBar d-flex ">
                     <ul class="d-flex ml-5">
-                        <li><a th:href="@{'/friendsPage/'+${us.id}}">Information</a></li>
+                        <li><a th:href="@{'/information/'+${us.id}}">Information</a></li>
                         <li><a th:href="@{'/userPhotos/'+${us.id}}">Photos</a></li>
                         <li><a th:href="@{'/userFriends/'+${us.id}}"></a></li>
                     </ul>
-
-
                 </div>
-
             </div>
-
         </div>
         <div class="userPost d-flex">
             <div class=" mt-4 d-flex bg-light">
                 <div th:each="friend : ${friends}" class="d-flex  iconHover">
-                    <a th:href="@{'/friendsPage/' +${friend.friend.id}}">
+                    <a th:href="@{'/information/' +${friend.friend.id}}">
                         <ul class="d-flex m-2">
                             <li class="d-flex">
                                 <div th:if="${friend.friend.pic_url != null}">
