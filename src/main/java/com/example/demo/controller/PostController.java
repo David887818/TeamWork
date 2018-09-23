@@ -20,6 +20,8 @@ import java.util.List;
 @RequestMapping("/post")
 public class PostController {
     private User user;
+    private List<Comment> commentList;
+
     public SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd 'at' HH:mm z");
     @Autowired
     PostRepository postRepository;
@@ -132,10 +134,30 @@ public class PostController {
         return "redirect:/homePage";
     }
 
+    @PostMapping("/addComment")
+    public String addComment(@RequestParam String comment, @RequestParam("post_id") int postId, @RequestParam("user_id") int userId) {
+        Comment commment = Comment.builder()
+                .comment(comment)
+                .post(postRepository.getOne(postId))
+                .user(userRepository.getOne(userId))
+                .build();
+        commentRepository.save(commment);
+        commentList = commentRepository.findAllByPostId(postId);
+        Notification notification = Notification.builder()
+                .notStatus(NotificationStatus.COMMENT)
+                .from(userRepository.getOne(userId))
+                .to(postRepository.getOne(postId).getUser())
+                .build();
+        notificationRepository.save(notification);
+        return "redirect:/homePage";
+    }
+
     @GetMapping(value = "/userImage")
     public @ResponseBody
     byte[] userImage(@RequestParam("picUrl") String picUrl) throws IOException {
         InputStream in = new FileInputStream(adPicDir + picUrl);
         return IOUtils.toByteArray(in);
     }
+
+
 }
