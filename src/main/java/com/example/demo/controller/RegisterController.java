@@ -65,7 +65,7 @@ public class RegisterController {
         user.setToken (UUID.randomUUID ().toString ());
         userRepository.save (user);
         String url = String.format ("http://localhost:8080/verify?token=%s&email=%s", user.getToken (), user.getEmail ());
-        String text = String.format ("Dear %s Thank you, you have successfully registered to our Follower, Please visit by link in order to activate your profile. %s", user.getName (), url);
+        String text = String.format ("Dear %s Thank you, you have successfully registered to our Team, Please visit by link in order to activate your profile. %s", user.getName (), url);
         emailService.sendSimpleMessage (user.getEmail (), "Welcome", text);
         modelMap.addAttribute ("errMessage", errMessage);
 
