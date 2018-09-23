@@ -4,3 +4,4 @@ public enum ListStatus {
     TRUE,
     FALSE
 }
+
