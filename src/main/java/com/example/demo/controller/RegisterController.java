@@ -7,8 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -62,6 +61,24 @@ public class RegisterController {
         modelMap.addAttribute ("errMessage", errMessage);
 
         return "index";
+    }
+
+    @RequestMapping(value = "/verify", method = RequestMethod.GET)
+    public String verify(@RequestParam("token") String token, @RequestParam("email") String email) {
+        User oneByEmail = userRepository.findUserByEmail (email);
+        if (oneByEmail != null) {
+            if (oneByEmail.getToken () != null && oneByEmail.getToken ().equals (token)) {
+                oneByEmail.setToken (null);
+                oneByEmail.setUserVerify (UserVerify.TRUE);
+                userRepository.save (oneByEmail);
+            }
+        }
+        return "redirect:/";
+    }
+
+    @RequestMapping(value = "/verifyError", method = RequestMethod.GET)
+    public String verifyError() {
+        return "verifyError";
     }
 
 }
