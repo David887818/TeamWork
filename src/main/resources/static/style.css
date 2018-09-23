@@ -20,7 +20,9 @@ body {
     display: inline-block;
 }
 
-.dropdown-content {
+.dropdown-content2 {
+    max-width: 187px;
+    max-height: 300px;
     display: none;
     position: absolute;
     background-color: rgba(110, 255, 47, 0.62);
@@ -31,7 +33,7 @@ body {
     right: 20%;
 
 }
-.dropdown-content2,.dropdown-content3,.dropdown-content4 {
+.dropdown-content,.dropdown-content3,.dropdown-content4 {
     display: none;
     position: absolute;
     background-color: rgba(110, 255, 47, 0.62);

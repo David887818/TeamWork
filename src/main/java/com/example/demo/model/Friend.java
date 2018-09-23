@@ -19,8 +19,8 @@ public class Friend {
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "user_id")
-    private int userId;
-    @Column(name = "friend_id")
-    private int friendId;
+    @ManyToOne
+    private User user;
+    @ManyToOne
+    private User friend;
 }
