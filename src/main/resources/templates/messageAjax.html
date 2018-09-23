@@ -10,24 +10,27 @@
 
         <span th:text="${message.text}"></span>
     </div>
+
     <div th:if="${message.fromId == user.id}">
 
         <span th:text="${message.text}"></span>
     </div>
+
 </div>
+
 
 <!--<div id="messageAjax">-->
 
-    <!--// ajax message-->
+<!--// ajax message-->
 <!--</div>-->
 <!--<div>-->
-    <!--<form class="messageInput" action="/sendMessage" method="post" id="1111">-->
-        <!--<input type="text" class="btn btn-outline-success" id="8888" name="text"-->
-               <!--placeholder="Write your message..." name="text"/>-->
-        <!--<input name="toId" th:value="3" type="hidden"/>-->
-        <!--<input type="submit" value="Send">-->
+<!--<form class="messageInput" action="/sendMessage" method="post" id="1111">-->
+<!--<input type="text" class="btn btn-outline-success" id="8888" name="text"-->
+<!--placeholder="Write your message..." name="text"/>-->
+<!--<input name="toId" th:value="3" type="hidden"/>-->
+<!--<input type="submit" value="Send">-->
 
-    <!--</form>-->
+<!--</form>-->
 <!--</div>-->
 
 </div>
@@ -44,11 +47,6 @@
     //     // getFriendProfile(id.id);
     //
     // }
-
-
-
-
-
 
 </script>
 </body>
