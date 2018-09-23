@@ -15,13 +15,6 @@ import java.util.UUID;
 
 @Controller
 public class RegisterController {
-    private User user;
-    private User friendUser;
-    private User messageUser;
-    private User searchedUser;
-    private List<Comment> commentList;
-    private List<Post> postList;
-    private List<UserPhotos> photos;
 
     @Autowired
     PostRepository postRepository;
