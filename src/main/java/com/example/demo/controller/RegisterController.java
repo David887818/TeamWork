@@ -50,18 +50,16 @@ public class RegisterController {
     @Value(value = "${TeamWork.post.pic.url}")
     private String adPicDir;
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String register(@ModelAttribute("user") User user) {
-//    @PostMapping("/add")
-//    public String add(@ModelAttribute User user, ModelMap modelMap) {
-//        User user1 = userRepository.findUserByEmail (user.getEmail ());
-//        String errMessage = "";
-//        if (user1 != null) {
-//            errMessage += "Error";
-//            modelMap.addAttribute ("errMessage", errMessage);
-//            return "index";
-//        }
-//        errMessage += "Success";
+    @PostMapping("/add")
+    public String add(@ModelAttribute User user, ModelMap modelMap) {
+        User user1 = userRepository.findUserByEmail (user.getEmail ());
+        String errMessage = "";
+        if (user1 != null) {
+            errMessage += "Error";
+            modelMap.addAttribute ("errMessage", errMessage);
+            return "index";
+        }
+        errMessage += "Success";
         user.setPassword (passwordEncoder.encode (user.getPassword ()));
         user.setUserType (UserType.USER);
         user.setToken (UUID.randomUUID ().toString ());
@@ -69,7 +67,7 @@ public class RegisterController {
         String url = String.format ("http://localhost:8080/verify?token=%s&email=%s", user.getToken (), user.getEmail ());
         String text = String.format ("Dear %s Thank you, you have successfully registered to our Follower, Please visit by link in order to activate your profile. %s", user.getName (), url);
         emailService.sendSimpleMessage (user.getEmail (), "Welcome", text);
-//        modelMap.addAttribute ("errMessage", errMessage);
+        modelMap.addAttribute ("errMessage", errMessage);
 
         return "index";
     }
