@@ -143,24 +143,26 @@ public class MainController {
 
     @GetMapping("/search")
     public String search(@RequestParam("text") String string, ModelMap modelMap) {
-        List<User> users = userRepository.findAll();
+        List<User> users = null;
         String[] split = string.split(" ");
-        for (User user : users) {
-            if (split[0].equals(user.getName())) {
-                modelMap.addAttribute("searched", user);
-                List<Friend> allFriends = friendRepository.findAllByUserId(user.getId());
-                List<Request> requests = requestRepository.findAllByToId(user.getId());
-                List<Notification> notifications = notificationRepository.findAllByToId(user.getId());
-                List<UsersMessage> userMessages = userMessageRepository.getUserMessages(user.getId());
-                modelMap.addAttribute("userMessages", userMessages);
-                modelMap.addAttribute("notifications", notifications);
-                modelMap.addAttribute("requests", requests);
-                modelMap.addAttribute("friends", allFriends);
-                modelMap.addAttribute("comments", commentList);
-                return "searchResult";
-            }
+        if (split.length == 1) {
+            users = userRepository.findAllByName(split[0]);
+        }else{
+            users = userRepository.findAllByNameOrSurname(split[0], split[1]);
         }
-        return "redirect:/homePage";
+
+        modelMap.addAttribute("searched", users);
+        List<Friend> allFriends = friendRepository.findAllByUserId(user.getId());
+        List<Request> requests = requestRepository.findAllByToId(user.getId());
+        List<Notification> notifications = notificationRepository.findAllByToId(user.getId());
+        List<UsersMessage> userMessages = userMessageRepository.getUserMessages(user.getId());
+        modelMap.addAttribute("userMessages", userMessages);
+        modelMap.addAttribute("notifications", notifications);
+        modelMap.addAttribute("requests", requests);
+        modelMap.addAttribute("friends", allFriends);
+        modelMap.addAttribute("us", user);
+        return "searchResult";
+
     }
 
 }

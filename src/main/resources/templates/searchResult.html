@@ -32,16 +32,16 @@
         </div>
         <div class="w-50 ml-4 d-flex ">
             <ul class="d-flex mt-2 barIcons">
-                <div class="iconHover" th:if="${searched.pic_url != null}">
+                <div class="iconHover" th:if="${us.pic_url != null}">
                     <li><a href="/userPage"><img class="userPicBar m-1 border border-light"
-                                                 th:src="@{'/post/userImage?'(picUrl=${searched.getPic_url()})}" alt=""> <span
-                            class=" iconFontBar" th:text="${searched.name + ' ' + searched.surname}"></span></a>
+                                                 th:src="@{'/user/userImg?'(picUrl=${us.getPic_url()})}" alt=""> <span
+                            class=" iconFontBar" th:text="${us.name + ' ' + us.surname}"></span></a>
                     </li>
                 </div>
-                <div class="iconHover" th:if="${searched.pic_url == null}">
+                <div class="iconHover" th:if="${us.pic_url == null}">
                     <li><a href="/userPage"><img class="userPicBar m-1 border border-light" src="/user.png" alt="">
                         <span
-                                class=" iconFontBar" th:text="${searched.name + ' ' + searched.surname}"></span></a>
+                                class=" iconFontBar" th:text="${us.name + ' ' + us.surname}"></span></a>
                     </li>
                 </div>
                 <div class="iconHover">
@@ -61,7 +61,7 @@
                                                         <li class="d-flex">
                                                             <div th:if="${users.to.pic_url != null}">
                                                                 <img class="userPicMessage"
-                                                                     th:src="@{'/post/userImage?'(picUrl=${users.to.getPic_url()})}">
+                                                                     th:src="@{'/user/userImg'(picUrl=${users.to.getPic_url()})}">
                                                             </div>
                                                             <div th:if="${users.to.pic_url == null}">
                                                                 <img class="userPicMessage " src="/user.png">
@@ -97,7 +97,7 @@
                                             <li class="d-flex mb-2">
                                                 <div th:if="${req.from.pic_url != null}">
                                                     <img class="userPicMessage"
-                                                         th:src="@{'/post/userImage?'(picUrl=${req.from.pic_url})}">
+                                                         th:src="@{'/user/userImg?'(picUrl=${req.from.pic_url})}">
                                                 </div>
                                                 <div th:if="${req.from.pic_url == null}">
                                                     <img class="userPicMessage " src="/user.png">
@@ -168,25 +168,94 @@
         </div>
     </div>
 </div>
+<div class="d-flex">
+    <div class=" sideNav">
+        <div>
+            <ul>
+                <div class="iconHover">
+                    <div th:if="${us.pic_url != null}">
+                        <li><a href="/userPage"><img class="userPic m-1"
+                                                     th:src="@{'/post/userImage?'(picUrl=${us.getPic_url()})}"> <span
+                                th:text="${us.name + ' ' + us.surname} " class="ml-2  iconFont"></span></a>
+                        </li>
+                    </div>
+                    <div th:if="${us.pic_url == null}">
+                        <li><a href="/userPage"><img class="userPic m-1"
+                                                     src="/user.png"> <span
+                                th:text="${us.name + ' ' + us.surname} " class="ml-2  iconFont"></span></a>
+                        </li>
+                    </div>
+                </div>
+                <div class="iconHover">
+                    <li class="mt-3"><a href="/homePage"><i class="fas fa-columns iGreen"></i> <span
+                            class="ml-1 iconFont">News Feed</span></a>
+                    </li>
+                </div>
+                <div class="iconHover">
+                    <li class="mt-1"><a href="/messagePage"><i class="fab fa-facebook-messenger iGreen"> </i> <span
+                            class="ml-2 iconFont">messenger</span></a></li>
+                </div>
+            </ul>
+        </div>
 
-<div>
-    <h3 th:text="${searched.name + ' ' + searched.surname}"></h3>
+        <div class="mt-3">
+            <h4 class="iconFontInteresting">Explore</h4>
+            <ul>
+                <li class="mt-1"><a class="iconHover" href="/"><i class="fas fa-ribbon iGreen"></i> <span
+                        class="ml-1 iconFont">News Feed</span></a>
+                </li>
+                <li class="mt-1"><a class="iconHover" href="/"><i class="fas fa-calendar iGreen"></i> <span
+                        class="ml-1 iconFont">Events</span></a></li>
+                <li class="mt-1"><a class="iconHover" href="/"><i class="fas fa-flag iGreen"> </i> <span
+                        class="ml-2 iconFont">Pages</span></a></li>
+                <li class="mt-1"><a class="iconHover" href="/"><i class="fas fa-users iGreen"></i> </i> <span
+                        class="ml-2 iconFont">Groups</span></a></li>
+                <li class="mt-1"><a class="iconHover" href="/"><i class="fas fa-sun iGreen"> </i> <span
+                        class="ml-2 iconFont">Weather</span></a></li>
+
+            </ul>
+        </div>
+    </div>
+    <div class="d-flex sideNavTwo">
+        <div class=" naveOne  col-md-7">
+            <div>
+                <span class="GFBFont">Search Result</span>
+            </div>
+            <div th:each="search : ${searched}" class="d-flex m-2  iconHover">
+                <a th:href="@{'/friendsPage/' +${search.id}}">
+                    <ul class="d-flex m-2">
+                        <li class="d-flex">
+                            <div th:if="${search.pic_url != null}">
+                                <img class="userPicSearch"
+                                     th:src="@{'/post/userImage?'(picUrl=${search.pic_url})}">
+                            </div>
+                            <div th:if="${search.pic_url == null}">
+                                <img class="userPicSearch " src="/user.png">
+                            </div>
+                            <span th:text="${search.name}" class="ml-3 iBlack mt-3"></span>
+                            <span th:text="${search.surname}" class="ml-2 iBlack mt-3"></span></li>
+                    </ul>
+                </a>
+            </div>
+        </div>
+        <div class=" bg-light borderRounded naveTwo border col-md-4 ml-2">33333333</div>
+    </div>
 </div>
-
 <div class="borderMessage sideNavThree">
-    <div class="d-flex  iconHover">
-        <a th:href="@{'/friendsPage/' +${searched.id}}">
+    <div th:each="friend : ${friends}" class="d-flex  iconHover">
+
+        <a th:href="@{'/friendsPage/' +${friend.friend.id}}">
             <ul class="d-flex m-2">
                 <li class="d-flex">
-                    <div th:if="${searched.pic_url != null}">
+                    <div th:if="${friend.friend.pic_url != null}">
                         <img class="userPicMessage"
-                             th:src="@{'/post/userImage?'(picUrl=${searched.pic_url})}">
+                             th:src="@{'/post/userImage?'(picUrl=${friend.friend.pic_url})}">
                     </div>
-                    <div th:if="${searched.pic_url == null}">
+                    <div th:if="${friend.friend.pic_url == null}">
                         <img class="userPicMessage " src="/user.png">
                     </div>
-                    <span th:text="${searched.name}" class="ml-3 iBlack mt-1"></span>
-                    <span th:text="${searched.surname}" class="ml-2 iBlack mt-1"></span></li>
+                    <span th:text="${friend.friend.name}" class="ml-3 iBlack mt-1"></span>
+                    <span th:text="${friend.friend.surname}" class="ml-2 iBlack mt-1"></span></li>
             </ul>
         </a>
     </div>

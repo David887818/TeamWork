@@ -216,19 +216,19 @@
         </div>
         <div class="userPost d-flex">
             <div class=" mt-4 d-flex bg-light">
-                <div th:each="friend : ${friends}" class="d-flex  iconHover">
+                <div th:each="friend : ${friends}" class="d-flex m-2 iconHover">
                     <a th:href="@{'/information/' +${friend.friend.id}}">
                         <ul class="d-flex m-2">
                             <li class="d-flex">
                                 <div th:if="${friend.friend.pic_url != null}">
-                                    <img class="userPicMessage"
+                                    <img class="userPicSearch"
                                          th:src="@{'/post/userImage?'(picUrl=${friend.friend.pic_url})}">
                                 </div>
                                 <div th:if="${friend.friend.pic_url == null}">
-                                    <img class="userPicMessage " src="/user.png">
+                                    <img class="userPicSearch " src="/user.png">
                                 </div>
-                                <span th:text="${friend.friend.name}" class="ml-3 iBlack mt-1"></span>
-                                <span th:text="${friend.friend.surname}" class="ml-2 iBlack mt-1"></span></li>
+                                <span th:text="${friend.friend.name}" class="ml-3 iBlack mt-3"></span>
+                                <span th:text="${friend.friend.surname}" class="ml-2 iBlack mt-3"></span></li>
                         </ul>
                     </a>
                 </div>
