@@ -13,7 +13,10 @@ span {
     margin-left: 10px;
     margin-bottom: 50px;
 }
-
+.messages::-webkit-scrollbar {
+    width: 0;
+    background-color: rgba(0, 0, 0, 0.71);
+}
 .messages{
     min-height: 1vh;
     height: 70vh;
