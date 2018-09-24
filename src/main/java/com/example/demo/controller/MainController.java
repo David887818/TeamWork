@@ -77,27 +77,6 @@ public class MainController {
         return "userPage";
     }
 
-    @GetMapping("/message/{id}")
-    public String findMessagePage(@PathVariable("id") int id, ModelMap modelMap, @AuthenticationPrincipal UserDetails userDetails) {
-        if (id != 0) {
-            messageUser = userRepository.findUserById(id);
-            modelMap.addAttribute("messageUser", messageUser);
-        }
-        user = ((CurrentUser) userDetails).getUser();
-        List<User> userList = userRepository.findAll();
-        List<UsersMessage> userMessages = userMessageRepository.getUserMessages(user.getId());
-        modelMap.addAttribute("userMessages", userMessages);
-        modelMap.addAttribute("users", userList);
-        modelMap.addAttribute("user", user);
-        return "messagePage";
-    }
-
-    @GetMapping("/messagePage")
-    public String messagePage(@AuthenticationPrincipal UserDetails userDetails) {
-        user = ((CurrentUser) userDetails).getUser();
-        return "redirect:/message/" + user.getId();
-    }
-
     @GetMapping("/indexPage")
     public String indexPage() {
         return "redirect:/homePage";
