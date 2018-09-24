@@ -9,11 +9,17 @@ span {
     box-sizing: border-box;
 }
 .messageInput{
-    margin-top: 60vh;
+    margin-top: 10vh;
     margin-left: 10px;
     margin-bottom: 50px;
 }
 
+.messages{
+    min-height: 1vh;
+    height: 70vh;
+    overflow: auto;
+    padding: 5px
+}
 
 body {
 

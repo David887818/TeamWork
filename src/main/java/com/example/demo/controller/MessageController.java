@@ -9,8 +9,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -42,6 +41,8 @@ public class MessageController {
     FriendRepository friendRepository;
     @Autowired
     NotificationRepository notificationRepository;
+    @Autowired
+    MessageRepository  messageRepository;
 
     @Value(value = "${TeamWork.post.pic.url}")
     private String adPicDir;
@@ -55,7 +56,9 @@ public class MessageController {
         user = ((CurrentUser) userDetails).getUser();
         List<User> userList = userRepository.findAll();
         List<UsersMessage> userMessages = userMessageRepository.getUserMessages(user.getId());
+        List<Message> messages = messageRepository.customGetMessagesByUserAndFriend(user.getId(),id);
         modelMap.addAttribute("userMessages", userMessages);
+        modelMap.addAttribute("messages", messages);
         modelMap.addAttribute("users", userList);
         modelMap.addAttribute("user", user);
         return "messagePage";
@@ -65,5 +68,18 @@ public class MessageController {
     public String messagePage(@AuthenticationPrincipal UserDetails userDetails) {
         user = ((CurrentUser) userDetails).getUser();
         return "redirect:/message/" + user.getId();
+    }
+
+    @PostMapping("/sendMessage")
+    public  @ResponseBody
+    String sendMessage(@AuthenticationPrincipal UserDetails userDetails, @RequestParam("text")String text, @RequestParam("toId")int toId){
+        user = ((CurrentUser) userDetails).getUser();
+        Message message=Message.builder()
+                .from(user)
+                .to(userRepository.getOne(toId))
+                .text(text)
+                .build();
+        messageRepository.save(message);
+        return "redirect:/message/"+toId;
     }
 }

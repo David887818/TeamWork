@@ -388,6 +388,7 @@ body {
     /*background-image: url("/keyt-apton-10000x4840-keyt-apton-17362.jpg");*/
 }
 .naveTwo {
+    margin-top: 50px;
     position: static;
     height: 400px;
     min-height: 350px;

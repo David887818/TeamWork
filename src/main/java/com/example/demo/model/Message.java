@@ -21,9 +21,9 @@ public class Message {
     private int id;
     @Column
     private String text;
-    @Column(name = "from_id")
-    private int fromId;
-    @Column(name = "to_id")
-    private int toId;
+    @ManyToOne
+    private User from;
+    @ManyToOne
+    private User to;
 
 }

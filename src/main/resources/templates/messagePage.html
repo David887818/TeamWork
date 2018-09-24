@@ -15,6 +15,20 @@
     <link rel="stylesheet" href="/styleMessage.css"/>
     <title>Message</title>
 </head>
+<script>
+    //send message Ajax
+    $('#1111').submit(function (e) {
+        e.preventDefault();
+        var fd = new FormData;
+        fd.append('file', $('#1111')[0].files[0])
+    $.ajax({
+        url: "/sendMessage",
+        type: "POST",
+        data:{text:$('#8888').value, toId:$('#to').value} ,
+    });
+    document.getElementById("8888").value = "";
+    });
+</script>
 <body>
 <div class="container app">
     <div class="row app-one">
@@ -127,38 +141,41 @@
 
                 </div>
             </a>
-            <div class="row message-body">
-                <div class="col-sm-12 message-main-receiver">
-                    <div class="receiver">
-                        <div class="message-text">
-
-                            Hi, what are you doing?!
+            <div class="messages">
+                <div th:if="${messages!=null}">
+                    <div th:each="message : ${messages}">
+                        <div th:if="${message.from.id==messageUser.id}" class="row message-body">
+                            <div class="col-sm-12 message-main-receiver">
+                                <div class="receiver">
+                                    <div class="message-text">
+                                        <p th:text="${message.text}"></p>
+                                    </div>
+                                    <span class="message-time pull-right">Date</span>
+                                </div>
+                            </div>
                         </div>
-                        <span class="message-time pull-right">
-                Sun
-              </span>
+                        <div th:if="${message.from.id==user.id}" class="row message-body">
+                            <div class="col-sm-12 message-main-sender">
+                                <div class="sender">
+                                    <div  class="message-text">
+                                        <p th:text="${message.text}"></p>
+                                    </div>
+                                    <span class="message-time pull-right">Date </span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="row message-body">
-                <div class="col-sm-12 message-main-sender">
-                    <div class="sender">
-                        <div class="message-text">
-                            I am doing nothing man!
-                        </div>
-                        <span class="message-time pull-right">
-                Sun
-
-              </span>
-                    </div>
+                <div th:if="${messages==null}">
+                    <p class="iGreen" th:text="'No Messages with'+' '+${messageUser.name}+' '+'write first'"></p>
                 </div>
+
             </div>
             <div>
                 <form class="messageInput d-flex" action="/sendMessage" method="post" id="1111">
-                    <input type="text" class="btn w-100j btn-outline-success" id="8888"
-                           placeholder="Write your message..." name="text"/>
-                    <input name="toId" th:value="${user.id}" type="hidden"/>
+                    <input type="text" class="btn w-100 btn-outline-success" id="8888" name="text"
+                           placeholder="Write your message..."/>
+                    <input id="to" name="toId" th:value="${messageUser.id}" type="hidden"/>
                     <input type="submit" value="Send">
                 </form>
             </div>
@@ -208,6 +225,7 @@
         }
         getFriendProfile(id);
     }
+
     function inter(id) {
         $.ajax({
             url: "/getMessages?id=" + id,
@@ -228,21 +246,6 @@
         })
 
     }
-    //send message Ajax
-    $("#1111").submit(function (e) {
-        e.preventDefault();
-        var fd = new FormData($("#1111")[0]);
-        $.ajax({
-            url: "/sendMessage",
-            type: "POST",
-            data: fd,
-            cache: false,
-            success: function (result) {
-                $("#messageAjax").html(result);
-            }
-        });
-        document.getElementById("8888").value = "";
-    });
 </script>
 
 </html>

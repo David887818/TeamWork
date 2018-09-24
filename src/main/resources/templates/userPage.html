@@ -237,6 +237,7 @@
                         <li><a th:href="@{'/userPhotos/'+${us.id}}">Photos</a></li>
                         <li><a th:href="@{'/userFriends/'+${us.id}}">Friends</a></li>
                     </ul>
+
                 </div>
             </div>
         </div>
@@ -294,6 +295,14 @@
                 <span th:text="${us.name}" class="GFBFont m-2"></span>
                 <span th:text="${ us.surname}" class="GFBFont m-2"></span>
                 <span th:text="${ us.email}" class="GFBFont m-2"></span>
+                <span class="iGreen mt-3"> Add Photos</span>
+                <div class="mt-2 ">
+                    <form action="/addUserPhotos" class="d-flex m-2" enctype="multipart/form-data">
+                        <input type="file" name="image" class="btn w-75 btn-outline-success">
+                        <input type="hidden" name="user_id" th:value="${us.id}">
+                        <input type="submit" value="Add" class="btn ml-2 btn-outline-success">
+                    </form>
+                </div>
             </div>
             <div class="col-md-7 mt-4">
                 <form action="/post/addPostFromUserPage" method="post" enctype="multipart/form-data">
