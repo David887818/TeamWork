@@ -22,5 +22,4 @@ public class MyUserDetails implements UserDetailsService {
         }
         return new CurrentUser (byEmail);
     }
-
 }

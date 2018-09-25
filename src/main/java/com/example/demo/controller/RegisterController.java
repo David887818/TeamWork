@@ -37,7 +37,6 @@ public class RegisterController {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private EmailServiceImpl emailService;
-
     @Value(value = "${TeamWork.post.pic.url}")
     private String adPicDir;
 
@@ -59,7 +58,6 @@ public class RegisterController {
         String text = String.format ("Dear %s Thank you, you have successfully registered to our Team, Please visit by link in order to activate your profile. %s", user.getName (), url);
         emailService.sendSimpleMessage (user.getEmail (), "Welcome", text);
         modelMap.addAttribute ("errMessage", errMessage);
-
         return "index";
     }
 

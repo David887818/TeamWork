@@ -53,27 +53,27 @@ public class MainController {
 
     @GetMapping("/userPage")
     public String homePage(ModelMap modelMap) {
-        postList = postRepository.findAllByOrderByDateDesc();
+        postList = postRepository.findAllByOrderByDateDesc ();
         for (Post post : postList) {
-            post.setComments(commentRepository.findAllByPostId(post.getId()));
-            post.setLikes(likeRepository.findAllByPostId(post.getId()));
-            for (PostLike like : post.getLikes()) {
-                if (user.getId() == like.getUser().getId()) {
-                    post.setListStatus(ListStatus.TRUE);
+            post.setComments (commentRepository.findAllByPostId (post.getId ()));
+            post.setLikes (likeRepository.findAllByPostId (post.getId ()));
+            for (PostLike like : post.getLikes ()) {
+                if (user.getId () == like.getUser ().getId ()) {
+                    post.setListStatus (ListStatus.TRUE);
                 } else {
-                    post.setListStatus(ListStatus.FALSE);
+                    post.setListStatus (ListStatus.FALSE);
                 }
             }
-            List<Post> postList = postRepository.findAllByUserId(user.getId());
-            modelMap.addAttribute("userPost", postList);
+            List<Post> postList = postRepository.findAllByUserId (user.getId ());
+            modelMap.addAttribute ("userPost", postList);
         }
-        List<Friend> friendList = friendRepository.findAllByUserId(user.getId());
-        List<UsersMessage> userMessages = userMessageRepository.getUserMessages(user.getId());
-        modelMap.addAttribute("userMessages", userMessages);
-        modelMap.addAttribute("user", friendList);
-        modelMap.addAttribute("us", user);
-        modelMap.addAttribute("posts", postList);
-        modelMap.addAttribute("comments", commentList);
+        List<Friend> friendList = friendRepository.findAllByUserId (user.getId ());
+        List<UsersMessage> userMessages = userMessageRepository.getUserMessages (user.getId ());
+        modelMap.addAttribute ("userMessages", userMessages);
+        modelMap.addAttribute ("user", friendList);
+        modelMap.addAttribute ("us", user);
+        modelMap.addAttribute ("posts", postList);
+        modelMap.addAttribute ("comments", commentList);
         return "userPage";
     }
 
@@ -84,62 +84,68 @@ public class MainController {
 
     @GetMapping("/homePage")
     public String mainPageUser(ModelMap modelMap) {
-        postList = postRepository.findAllByOrderByDateDesc();
+        postList = postRepository.findAllByOrderByDateDesc ();
         for (Post post : postList) {
-            post.setComments(commentRepository.findAllByPostId(post.getId()));
-            post.setLikes(likeRepository.findAllByPostId(post.getId()));
-            for (PostLike like : post.getLikes()) {
-                if (user.getId() == like.getUser().getId()) {
-                    post.setListStatus(ListStatus.TRUE);
+            post.setComments (commentRepository.findAllByPostId (post.getId ()));
+            post.setLikes (likeRepository.findAllByPostId (post.getId ()));
+            for (PostLike like : post.getLikes ()) {
+                if (user.getId () == like.getUser ().getId ()) {
+                    post.setListStatus (ListStatus.TRUE);
                 } else {
-                    post.setListStatus(ListStatus.FALSE);
+                    post.setListStatus (ListStatus.FALSE);
                 }
             }
         }
-        List<Friend> allFriends = friendRepository.findAllByUserId(user.getId());
-        List<Request> requests = requestRepository.findAllByToId(user.getId());
-        List<Notification> notifications = notificationRepository.findAllByToId(user.getId());
-        List<UsersMessage> userMessages = userMessageRepository.getUserMessages(user.getId());
-        modelMap.addAttribute("userMessages", userMessages);
-        modelMap.addAttribute("notifications", notifications);
-        modelMap.addAttribute("requests", requests);
-        modelMap.addAttribute("posts", postList);
-        modelMap.addAttribute("friends", allFriends);
-        modelMap.addAttribute("us", user);
-        modelMap.addAttribute("comments", commentList);
+        List<Friend> allFriends = friendRepository.findAllByUserId (user.getId ());
+        List<Request> requests = requestRepository.findAllByToId (user.getId ());
+        List<Notification> notifications = notificationRepository.findAllByToId (user.getId ());
+        List<UsersMessage> userMessages = userMessageRepository.getUserMessages (user.getId ());
+        modelMap.addAttribute ("userMessages", userMessages);
+        modelMap.addAttribute ("notifications", notifications);
+        modelMap.addAttribute ("requests", requests);
+        modelMap.addAttribute ("posts", postList);
+        modelMap.addAttribute ("friends", allFriends);
+        modelMap.addAttribute ("us", user);
+        modelMap.addAttribute ("comments", commentList);
         return "home";
     }
 
     @PostMapping("/loginUser")
     public String loginUser(@AuthenticationPrincipal UserDetails userDetails, ModelMap modelMap) {
-        user = ((CurrentUser) userDetails).getUser();
-        if (user.getUserType() == UserType.USER) {
-            modelMap.addAttribute("user", user);
-            return "redirect:/homePage";
+        user = ((CurrentUser) userDetails).getUser ();
+        if (user.getUserVerify () != null) {
+            if (user.getUserType () == UserType.USER && user.getUserVerify ().equals (UserVerify.TRUE)) {
+                modelMap.addAttribute ("user", user);
+
+                return "redirect:/homePage";
+            }
+
         }
+        modelMap.addAttribute ("err", "err");
         return "redirect:/indexPage";
+
     }
 
     @GetMapping("/search")
     public String search(@RequestParam("text") String string, ModelMap modelMap) {
         List<User> users = null;
-        String[] split = string.split(" ");
+        String[] split = string.split (" ");
         if (split.length == 1) {
-            users = userRepository.findAllByName(split[0]);
-        }else{
-            users = userRepository.findAllByNameOrSurname(split[0], split[1]);
+            users = userRepository.findAllByName (split[0]);
+        } else {
+            users = userRepository.findAllByNameOrSurname (split[0], split[1]);
         }
 
-        modelMap.addAttribute("searched", users);
-        List<Friend> allFriends = friendRepository.findAllByUserId(user.getId());
-        List<Request> requests = requestRepository.findAllByToId(user.getId());
-        List<Notification> notifications = notificationRepository.findAllByToId(user.getId());
-        List<UsersMessage> userMessages = userMessageRepository.getUserMessages(user.getId());
-        modelMap.addAttribute("userMessages", userMessages);
-        modelMap.addAttribute("notifications", notifications);
-        modelMap.addAttribute("requests", requests);
-        modelMap.addAttribute("friends", allFriends);
-        modelMap.addAttribute("us", user);
+        modelMap.addAttribute ("searched", users);
+        List<Friend> allFriends = friendRepository.findAllByUserId (user.getId ());
+        List<Request> requests = requestRepository.findAllByToId (user.getId ());
+        List<Notification> notifications = notificationRepository.findAllByToId (user.getId ());
+        List<UsersMessage> userMessages = userMessageRepository.getUserMessages (user.getId ());
+        modelMap.addAttribute ("userMessages", userMessages);
+        modelMap.addAttribute ("notifications", notifications);
+        modelMap.addAttribute ("requests", requests);
+        modelMap.addAttribute ("friends", allFriends);
+        modelMap.addAttribute ("us", user);
         return "searchResult";
 
     }

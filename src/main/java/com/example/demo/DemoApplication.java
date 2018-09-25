@@ -21,7 +21,6 @@ public class DemoApplication implements CommandLineRunner {
 
     @Autowired
     PasswordEncoder passwordEncoder;
-
     public static void main(String[] args) {
         SpringApplication.run (DemoApplication.class, args);
     }
@@ -41,9 +40,7 @@ public class DemoApplication implements CommandLineRunner {
                     .build ();
             userRepository.save (admin);
         }
-
     }
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder ();

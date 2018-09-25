@@ -21,12 +21,12 @@
         e.preventDefault();
         var fd = new FormData;
         fd.append('file', $('#1111')[0].files[0])
-    $.ajax({
-        url: "/sendMessage",
-        type: "POST",
-        data:{text:$('#8888').value, toId:$('#to').value} ,
-    });
-    document.getElementById("8888").value = "";
+        $.ajax({
+            url: "/sendMessage",
+            type: "POST",
+            data: {text: $('#8888').value, toId: $('#to').value},
+        });
+        document.getElementById("8888").value = "";
     });
 </script>
 <body>
@@ -157,7 +157,7 @@
                         <div th:if="${message.from.id==user.id}" class="row message-body">
                             <div class="col-sm-12 message-main-sender">
                                 <div class="sender">
-                                    <div  class="message-text">
+                                    <div class="message-text">
                                         <p th:text="${message.text}"></p>
                                     </div>
                                     <span class="message-time pull-right">Date </span>
