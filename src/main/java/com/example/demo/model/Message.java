@@ -25,5 +25,7 @@ public class Message {
     private User from;
     @ManyToOne
     private User to;
+    @Column(name = "created_date")
+    private String date;
 
 }

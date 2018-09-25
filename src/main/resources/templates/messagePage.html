@@ -67,8 +67,8 @@
                                                 <div th:if="${users.to.pic_url == null}">
                                                     <img class="userPicMessage " src="/user.png">
                                                 </div>
-                                                <p th:text="${users.to.name}" class="ml-3 iBlue mt-1">User</p>
-                                                <p th:text="${users.to.surname}" class="ml-2 iBlue mt-1">User</p>
+                                                <p th:text="${users.to.name}" class="ml-3 iBlue mt-1"></p>
+                                                <p th:text="${users.to.surname}" class="ml-2 iBlue mt-1"></p>
                                             </li>
                                         </ul>
                                     </div>
@@ -150,7 +150,7 @@
                                     <div class="message-text">
                                         <p th:text="${message.text}"></p>
                                     </div>
-                                    <span class="message-time pull-right">Date</span>
+                                    <span class="message-time pull-right" th:text="${message.date}"></span>
                                 </div>
                             </div>
                         </div>
@@ -160,7 +160,7 @@
                                     <div class="message-text">
                                         <p th:text="${message.text}"></p>
                                     </div>
-                                    <span class="message-time pull-right">Date </span>
+                                    <span class="message-time pull-right" th:text="${message.date}"></span>
                                 </div>
                             </div>
                         </div>
