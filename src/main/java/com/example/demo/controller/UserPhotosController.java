@@ -87,7 +87,8 @@ public class UserPhotosController {
     }
 
     @PostMapping("/addUserPhotos")
-    public String addUserPhotos(@RequestParam("user_id") int id, @RequestParam("image") MultipartFile multipartFile) {
+    public String addUserPhotos(@AuthenticationPrincipal UserDetails userDetails,@RequestParam("user_id") int id, @RequestParam("image") MultipartFile multipartFile) {
+        user=((CurrentUser)userDetails).getUser();
         File dir = new File(adPicDir);
         if (!dir.exists()) {
             dir.mkdirs();
