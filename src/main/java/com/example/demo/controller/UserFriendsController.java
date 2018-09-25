@@ -50,10 +50,28 @@ public class UserFriendsController {
     public String userFriends(ModelMap modelMap, @PathVariable("id") int id, @AuthenticationPrincipal UserDetails userDetails) {
         User one = userRepository.getOne(id);
         user = ((CurrentUser) userDetails).getUser();
+        boolean requestStatus = false;
+        boolean friendStatus = false;
         List<Friend> friendList = friendRepository.findAllByUserId(one.getId());
         List<UsersMessage> userMessages = userMessageRepository.getUserMessages(user.getId());
         List<Friend> allFriends = friendRepository.findAllByUserId(user.getId());
         List<Notification> notifications = notificationRepository.findAllByToId(user.getId());
+        List<Friend> all1 = friendRepository.findAll();
+        for (Friend friend : all1) {
+            if (friend.getUser().getId() == user.getId() & friend.getFriend().getId() == friendUser.getId()) {
+                requestStatus = true;
+                friendStatus = true;
+
+            }
+        }
+        List<Request> all = requestRepository.findAll();
+        for (Request request : all) {
+            if (request.getTo().getId() == friendUser.getId()) {
+                requestStatus = true;
+            }
+        }
+        modelMap.addAttribute("reqStatus", requestStatus);
+        modelMap.addAttribute("friendStatus", friendStatus);
         modelMap.addAttribute("notifications", notifications);
         modelMap.addAttribute("userMessages", userMessages);
         modelMap.addAttribute("allFriends", allFriends);

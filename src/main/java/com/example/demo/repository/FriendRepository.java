@@ -18,6 +18,6 @@ public interface FriendRepository extends JpaRepository<Friend, Integer> {
     Friend findByUserIdAndFriendId(int userId, int friendId);
 
     @Query(value = "select * from friend where (friend_id=:fId and user_id=:uId) or (friend_id=:uId and user_id=:fId)", nativeQuery = true)
-    Friend customGetFriend(@Param(value = "fId") int friendId, @Param(value = "uId") int userId);
+    List<Friend> customGetFriend(@Param(value = "fId") int friendId, @Param(value = "uId") int userId);
 
 }

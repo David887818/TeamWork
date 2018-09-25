@@ -189,10 +189,14 @@
                         <div th:if="${reqStatus==false}" class="ml-3 mt-2 ">
                             <a th:href="@{'/addRequest/'+${friend.id}}"><p class="iGreenFriend">+ Add Friend</p></a>
                         </div>
-
+                        <div th:if="${friendStatus!=false}" class="ml-3 mt-2">
+                            <a class="friendGreen" th:href="@{'/deleteFriend/'+${friend.id}}"><p class="iGreenFriend">Delete
+                                Friend</p></a>
+                        </div>
                         <div class="ml-3 mt-2 ">
                             <a th:href="@{'/message/'+${friend.id}}"><p class="iGreenFriend">Send Message</p></a>
                         </div>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -218,6 +222,11 @@
                     <a class="friendGreen" th:href="@{'/addRequest/'+${friend.id}}"><p class="iGreenFriend">+ Add
                         Friend</p></a>
                 </div>
+                <div th:if="${friendStatus!=false}" class="ml-3 mt-2">
+                    <a class="friendGreen" th:href="@{'/deleteFriend/'+${friend.id}}"><p class="iGreenFriend">Delete
+                        Friend</p></a>
+                </div>
+
                 <div class="ml-3 mt-2">
                     <a class="friendGreen" th:href="@{'/message/'+${friend.id}}"><p class="iGreenFriend">Send
                         Message</p></a>

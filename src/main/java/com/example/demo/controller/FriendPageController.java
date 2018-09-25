@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -64,6 +65,7 @@ public class FriendPageController {
     public String friendPage(ModelMap modelMap, @AuthenticationPrincipal UserDetails userDetails) {
         user = ((CurrentUser) userDetails).getUser();
         boolean requestStatus = false;
+        boolean friendStatus = false;
         List<Post> postsList = postRepository.findAllByFriendId(friendUser.getId());
         for (Post post : postsList) {
             post.setComments(commentRepository.findAllByPostId(post.getId()));
@@ -81,6 +83,8 @@ public class FriendPageController {
         for (Friend friend : all1) {
             if (friend.getUser().getId() == user.getId() & friend.getFriend().getId() == friendUser.getId()) {
                 requestStatus = true;
+                friendStatus = true;
+
             }
         }
         List<Request> all = requestRepository.findAll();
@@ -89,16 +93,27 @@ public class FriendPageController {
                 requestStatus = true;
             }
         }
+        modelMap.addAttribute("reqStatus", requestStatus);
+        modelMap.addAttribute("friendStatus", friendStatus);
         List<UsersMessage> userMessages = userMessageRepository.getUserMessages(user.getId());
         List<Friend> allFriends = friendRepository.findAllByUserId(user.getId());
         List<Notification> notifications = notificationRepository.findAllByToId(user.getId());
         modelMap.addAttribute("notifications", notifications);
         modelMap.addAttribute("userMessages", userMessages);
         modelMap.addAttribute("allFriends", allFriends);
-        modelMap.addAttribute("reqStatus", requestStatus);
         modelMap.addAttribute("us", user);
         modelMap.addAttribute("friend", friendUser);
         modelMap.addAttribute("comments", commentList);
         return "friendPage";
+    }
+
+    @GetMapping("/deleteFriend/{id}")
+    public String deleteFriend(@PathVariable("id")int id, @AuthenticationPrincipal UserDetails userDetails){
+        user=((CurrentUser)userDetails).getUser();
+        List<Friend> friends = friendRepository.customGetFriend(id, user.getId());
+        for (Friend friend : friends) {
+            friendRepository.delete(friend);
+        }
+        return "redirect:/friendsPage/" + id;
     }
 }

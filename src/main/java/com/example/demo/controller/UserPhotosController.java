@@ -53,11 +53,29 @@ public class UserPhotosController {
     public String userPhotos(@PathVariable("id") int id, ModelMap modelMap, @AuthenticationPrincipal UserDetails userDetails) {
         user = ((CurrentUser) userDetails).getUser();
         photos = photosRepository.findAllByUserId(id);
+        boolean requestStatus = false;
+        boolean friendStatus = false;
         User one = userRepository.getOne(id);
         List<User> userList = userRepository.findAll();
         List<UsersMessage> userMessages = userMessageRepository.getUserMessages(user.getId());
         List<Friend> allFriends = friendRepository.findAllByUserId(user.getId());
         List<Notification> notifications = notificationRepository.findAllByToId(user.getId());
+        List<Friend> all1 = friendRepository.findAll();
+        for (Friend friend : all1) {
+            if (friend.getUser().getId() == user.getId() & friend.getFriend().getId() == friendUser.getId()) {
+                requestStatus = true;
+                friendStatus = true;
+
+            }
+        }
+        List<Request> all = requestRepository.findAll();
+        for (Request request : all) {
+            if (request.getTo().getId() == friendUser.getId()) {
+                requestStatus = true;
+            }
+        }
+        modelMap.addAttribute("reqStatus", requestStatus);
+        modelMap.addAttribute("friendStatus", friendStatus);
         modelMap.addAttribute("notifications", notifications);
         modelMap.addAttribute("userMessages", userMessages);
         modelMap.addAttribute("user", allFriends);
