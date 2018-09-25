@@ -207,45 +207,5 @@
         });
     })
 
-    //  see messages the friend
-    function getMessages(id) {
-        currentFriendId = id;
-        if (x) {
-            clearInterval(x);
-            inter(id);
-            x = setInterval(function () {
-                inter(id)
-            }, 1000);
-        }
-        else {
-            inter(id);
-            x = setInterval(function () {
-                inter(id)
-            }, 1000);
-        }
-        getFriendProfile(id);
-    }
-
-    function inter(id) {
-        $.ajax({
-            url: "/getMessages?id=" + id,
-            success: function (result) {
-                $("#messageAjax").html(result);
-            }
-        })
-    }
-
-
-    //contact-profile in message
-    function getFriendProfile(id) {
-        $.ajax({
-            url: "getFriendProfileMessage?id =" + id,
-            success: function (result) {
-                $(".contact-profile").html(result);
-            }
-        })
-
-    }
 </script>
-
 </html>
