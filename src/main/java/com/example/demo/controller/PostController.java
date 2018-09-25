@@ -135,7 +135,7 @@ public class PostController {
     }
 
     @PostMapping("/addComment")
-    public String addComment(@RequestParam String comment, @RequestParam("post_id") int postId, @RequestParam("user_id") int userId) {
+    public String addComment(@RequestParam("comment") String comment, @RequestParam("post_id") int postId, @RequestParam("user_id") int userId) {
         Comment commment = Comment.builder()
                 .comment(comment)
                 .post(postRepository.getOne(postId))
