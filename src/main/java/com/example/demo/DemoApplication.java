@@ -27,7 +27,7 @@ public class DemoApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        User user = userRepository.findUserByEmail ("admin@mail.com");
+        User user = userRepository.findUserByEmail ("greenbot@mail.com");
         if (user == null) {
             User admin = User.builder ()
                     .email ("greenbot@mail.com")

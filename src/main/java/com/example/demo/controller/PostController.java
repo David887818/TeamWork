@@ -51,6 +51,21 @@ public class PostController {
         notificationRepository.save(notification);
         return "redirect:/homePage";
     }
+    @PostMapping("/addLikeUserPage")
+    public String addLikeUserPage(@RequestParam("user_id") int user_id, @RequestParam("post_id") int post_id) {
+        PostLike likes = PostLike.builder()
+                .post(postRepository.getOne(post_id))
+                .user(userRepository.getOne(user_id))
+                .build();
+        likeRepository.save(likes);
+        Notification notification=Notification.builder()
+                .notStatus(NotificationStatus.LIKE)
+                .from(userRepository.getOne(user_id))
+                .to(postRepository.getOne(post_id).getUser())
+                .build();
+        notificationRepository.save(notification);
+        return "redirect:/userPage";
+    }
 
     @PostMapping("/disLike")
     public String disLike(@RequestParam("user_id") int user_id, @RequestParam("post_id") int post_id) {
@@ -61,6 +76,16 @@ public class PostController {
             }
         }
         return "redirect:/homePage";
+
+    }@PostMapping("/disLikeUserPage")
+    public String disLikeUserPage(@RequestParam("user_id") int user_id, @RequestParam("post_id") int post_id) {
+        List<PostLike> all = likeRepository.findAll();
+        for (PostLike like : all) {
+            if (like.getUser().getId() == user_id && like.getPost().getId() == post_id) {
+                likeRepository.deleteById(like.getId());
+            }
+        }
+        return "redirect:/userPage";
     }
 
 

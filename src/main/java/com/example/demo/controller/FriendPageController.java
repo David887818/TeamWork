@@ -83,7 +83,7 @@ public class FriendPageController {
         }
         List<Friend> all1 = friendRepository.findAll ();
         for (Friend friend : all1) {
-            if (friend.getUser ().getId () == user.getId () & friend.getFriend ().getId () == friendUser.getId ()) {
+            if (friend.getUser ().getId () == user.getId ()) {
                 requestStatus = true;
                 friendStatus = true;
 

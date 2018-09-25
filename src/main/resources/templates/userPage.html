@@ -367,7 +367,7 @@
                     <div class="postComment d-flex">
                         <div th:if="${post.listStatus.name() != 'TRUE'}"
                              class="w-50 d-flex align-items-center justify-content-center">
-                            <form class="d-flex align-items-center justify-content-center" action="/post/addLike"
+                            <form class="d-flex align-items-center justify-content-center" action="/post/addLikeUserPage"
                                   method="post">
                                 <i class="far iGreen fa-thumbs-up"></i>
                                 <input type="submit" class="btn iGreen btn-link" value="Like">
@@ -377,7 +377,7 @@
                         </div>
                         <div th:if="${post.listStatus.name() == 'TRUE'}"
                              class="w-50 d-flex align-items-center justify-content-center">
-                            <form class="d-flex align-items-center justify-content-center" action="/post/disLike"
+                            <form class="d-flex align-items-center justify-content-center" action="/post/disLikeUserPage"
                                   method="post">
                                 <i class="far iBlue fa-thumbs-up"></i>
                                 <input type="submit" class="btn iBlue  btn-link" value="Dislike">
