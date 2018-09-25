@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Controller
@@ -31,6 +32,7 @@ public class UserPhotosController {
 
     @Autowired
     PostRepository postRepository;
+    public SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd 'at' HH:mm z");
     @Autowired
     UserRepository userRepository;
     @Autowired
@@ -101,6 +103,14 @@ public class UserPhotosController {
                 .user(userRepository.getOne(id))
                 .pic_url(picName)
                 .build();
+        Post post = Post.builder()
+                .date(sdf.format(new java.util.Date()))
+                .user(user)
+                .pic_url(picName)
+                .listStatus(ListStatus.FALSE)
+                .name(user.getName()+"Add Photo")
+                .build();
+        postRepository.save(post);
         photosRepository.save(photos);
         return "redirect:/userPhotos/" + id;
     }

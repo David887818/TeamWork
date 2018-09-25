@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Controller
@@ -22,6 +23,7 @@ public class MessageController {
     private List<Comment> commentList;
     private List<Post> postList;
     private List<UserPhotos> photos;
+    public SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd 'at' HH:mm z");
 
     @Autowired
     PostRepository postRepository;
@@ -78,6 +80,7 @@ public class MessageController {
                 .from(user)
                 .to(userRepository.getOne(toId))
                 .text(text)
+                .date(sdf.format(new java.util.Date()))
                 .build();
         messageRepository.save(message);
         return "redirect:/message/"+toId;

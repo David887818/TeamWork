@@ -1,8 +1,11 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.ListStatus;
+import com.example.demo.model.Post;
 import com.example.demo.model.User;
 import com.example.demo.model.UserType;
 import com.example.demo.repository.FriendRepository;
+import com.example.demo.repository.PostRepository;
 import com.example.demo.repository.RequestRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.CurrentUser;
@@ -21,11 +24,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
     private User user;
+    public SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd 'at' HH:mm z");
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
@@ -34,7 +39,8 @@ public class UserController {
     private FriendRepository friendRepository;
     @Autowired
     private RequestRepository requestRepository;
-
+    @Autowired
+    PostRepository postRepository;
     @Value(value = "${TeamWork.post.pic.url}")
     private String adPicDir;
 
@@ -54,6 +60,14 @@ public class UserController {
         }
         User user = ((CurrentUser) userDetails).getUser();
         user.setPic_url(picName);
+        Post post = Post.builder()
+                .date(sdf.format(new java.util.Date()))
+                .user(user)
+                .pic_url(picName)
+                .listStatus(ListStatus.FALSE)
+                .name(user.getName()+"Add Photo")
+                .build();
+        postRepository.save(post);
         userRepository.save(user);
         return "redirect:/userPage";
     }
@@ -74,6 +88,14 @@ public class UserController {
         }
         User user = ((CurrentUser) userDetails).getUser();
         user.setPic_url_cover(picName);
+        Post post = Post.builder()
+                .date(sdf.format(new java.util.Date()))
+                .user(user)
+                .pic_url(picName)
+                .listStatus(ListStatus.FALSE)
+                .name(user.getName()+"Add Photo")
+                .build();
+        postRepository.save(post);
         userRepository.save(user);
 
         return "redirect:/userPage";

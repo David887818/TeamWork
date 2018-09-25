@@ -169,7 +169,6 @@
         </div>
     </div>
 </div>
-
 <div class="d-flex flex-column w-85 justify-content-center align-items-center">
     <div class="userProfile">
         <div th:if="${us.pic_url_cover == null}">
@@ -297,7 +296,7 @@
                 <span th:text="${ us.email}" class="GFBFont m-2"></span>
                 <span class="iGreen mt-3"> Add Photos</span>
                 <div class="mt-2 ">
-                    <form action="/addUserPhotos" class="d-flex m-2" enctype="multipart/form-data">
+                    <form action="/addUserPhotos" class="d-flex m-2" enctype="multipart/form-data" method="post">
                         <input type="file" name="image" class="btn w-75 btn-outline-success">
                         <input type="hidden" name="user_id" th:value="${us.id}">
                         <input type="submit" value="Add" class="btn ml-2 btn-outline-success">
