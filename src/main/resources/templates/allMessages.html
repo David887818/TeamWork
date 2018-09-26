@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Jua|Varela+Round" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+          integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" href="/styleMessage.css"/>
+    <title>Message</title>
+</head>
+<body>
+    <div th:each="message : ${messages}">
+        <div th:if="${message.from.id==messageUser.id}" class="row message-body">
+            <div class="col-sm-12 message-main-receiver">
+                <div class="receiver">
+                    <div class="message-text">
+                        <p th:text="${message.text}"></p>
+                    </div>
+                    <span class="message-time pull-right" th:text="${message.date}"></span>
+                </div>
+            </div>
+        </div>
+        <div th:if="${message.from.id==user.id}" class="row message-body">
+            <div class="col-sm-12 message-main-sender">
+                <div class="sender">
+                    <div  class="message-text">
+                        <p th:text="${message.text}"></p>
+                    </div>
+                    <span class="message-time pull-right" th:text="${message.date}"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

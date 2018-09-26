@@ -16,20 +16,20 @@
     <title>Message</title>
 </head>
 <script>
-    //send message Ajax
-    $('#1111').submit(function (e) {
-        e.preventDefault();
-        var fd = new FormData;
-        fd.append('file', $('#1111')[0].files[0])
+    setInterval(function(){
         $.ajax({
-            url: "/sendMessage",
-            type: "POST",
-            data: {text: $('#8888').value, toId: $('#to').value},
+            type:'POST',
+            url:"/allMessages/"+$('#id').val(),
+            success: function (result) {
+                $("#messages").html(result);
+            }
         });
-        document.getElementById("8888").value = "";
-    });
+    },1500);
+
+
 </script>
 <body>
+<input type="hidden" id="id" th:value="${messageUser.id}">
 <div class="container app">
     <div class="row app-one">
         <div class="col-sm-4 side">
@@ -141,35 +141,7 @@
 
                 </div>
             </a>
-            <div class="messages">
-                <div th:if="${messages!=null}">
-                    <div th:each="message : ${messages}">
-                        <div th:if="${message.from.id==messageUser.id}" class="row message-body">
-                            <div class="col-sm-12 message-main-receiver">
-                                <div class="receiver">
-                                    <div class="message-text">
-                                        <p th:text="${message.text}"></p>
-                                    </div>
-                                    <span class="message-time pull-right" th:text="${message.date}"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div th:if="${message.from.id==user.id}" class="row message-body">
-                            <div class="col-sm-12 message-main-sender">
-                                <div class="sender">
-                                    <div class="message-text">
-                                        <p th:text="${message.text}"></p>
-                                    </div>
-                                    <span class="message-time pull-right" th:text="${message.date}"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div th:if="${messages==null}">
-                    <p class="iGreen" th:text="'No Messages with'+' '+${messageUser.name}+' '+'write first'"></p>
-                </div>
-
+            <div id="messages" class="messages">
             </div>
             <div>
                 <form class="messageInput d-flex" action="/sendMessage" method="post" id="1111">
@@ -179,33 +151,8 @@
                     <input type="submit" value="Send">
                 </form>
             </div>
-            <div id="messageAjax">
-
-            </div>
         </div>
     </div>
 </div>
 </body>
-<script>
-    $(function () {
-        $(".heading-compose").click(function () {
-            $(".side-two").css({
-                "left": "0"
-            });
-            $("#chat").css({
-                "display": "none"
-            })
-        });
-
-        $(".newMessage-back").click(function () {
-            $(".side-two").css({
-                "left": "-100%"
-            });
-            $("#chat").css({
-                "display": "block"
-            })
-        });
-    })
-
-</script>
 </html>

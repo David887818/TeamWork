@@ -5,9 +5,11 @@ import com.example.demo.repository.*;
 import com.example.demo.service.CurrentUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
@@ -59,11 +61,26 @@ public class MessageController {
         List<User> userList = userRepository.findAll();
         List<UsersMessage> userMessages = userMessageRepository.getUserMessages(user.getId());
         List<Message> messages = messageRepository.customGetMessagesByUserAndFriend(user.getId(),id);
-        modelMap.addAttribute("userMessages", userMessages);
         modelMap.addAttribute("messages", messages);
+        modelMap.addAttribute("userMessages", userMessages);
         modelMap.addAttribute("users", userList);
         modelMap.addAttribute("user", user);
         return "messagePage";
+    }
+
+    @PostMapping(value = "/allMessages/{id}")
+    public String Submit(ModelMap modelMap,@PathVariable("id") int id,@AuthenticationPrincipal UserDetails userDetails) {
+        if (id != 0) {
+            messageUser = userRepository.findUserById(id);
+            modelMap.addAttribute("messageUser", messageUser);
+        }
+        user = ((CurrentUser) userDetails).getUser();
+        List<UsersMessage> userMessages = userMessageRepository.getUserMessages(user.getId());
+        List<Message> messages = messageRepository.customGetMessagesByUserAndFriend(user.getId(),id);
+        modelMap.addAttribute("messages", messages);
+        modelMap.addAttribute("userMessages", userMessages);
+        modelMap.addAttribute("user", user);
+        return "allMessages";
     }
 
     @GetMapping("/messagePage")
@@ -83,6 +100,6 @@ public class MessageController {
                 .date(sdf.format(new java.util.Date()))
                 .build();
         messageRepository.save(message);
-        return "redirect:/message/"+toId;
+        return "allMessages";
     }
 }
