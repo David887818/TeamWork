@@ -16,16 +16,15 @@
     <title>Message</title>
 </head>
 <script>
-    setInterval(function(){
+    setInterval(function () {
         $.ajax({
-            type:'POST',
-            url:"/allMessages/"+$('#id').val(),
+            type: 'POST',
+            url: "/allMessages/" + $('#id').val(),
             success: function (result) {
                 $("#messages").html(result);
             }
         });
-    },1500);
-
+    }, 3000);
 
 </script>
 <body>
@@ -142,17 +141,28 @@
                 </div>
             </a>
             <div id="messages" class="messages">
+                <span class="GFBFont m-5">LOADING..................</span>
             </div>
-            <div>
-                <form class="messageInput d-flex" action="/sendMessage" method="post" id="1111">
-                    <input type="text" class="btn w-100 btn-outline-success" id="8888" name="text"
-                           placeholder="Write your message..."/>
-                    <input id="to" name="toId" th:value="${messageUser.id}" type="hidden"/>
-                    <input type="submit" value="Send">
-                </form>
+            <div class="d-flex">
+                <input type="text" class="btn w-100 btn-outline-success" id="text"
+                       placeholder="Write your message..."/>
+                <input id="to" th:value="${messageUser.id}" type="hidden"/>
+                <a class="btn btn-success" onclick="myFunction()" value="Send">Send</a>
             </div>
         </div>
     </div>
 </div>
 </body>
+<script>
+    function myFunction() {
+        $.ajax({
+            type: 'POST',
+            url: "/sendMessage",
+            data: {text: $('#text').val(), id: $("#to").val()},
+            success: function () {
+                $("#text").value="Input...."
+            }
+        });
+    }
+</script>
 </html>

@@ -89,13 +89,13 @@ public class MessageController {
         return "redirect:/message/" + user.getId();
     }
 
-    @PostMapping("/sendMessage")
-    public  @ResponseBody
-    String sendMessage(@AuthenticationPrincipal UserDetails userDetails, @RequestParam("text")String text, @RequestParam("toId")int toId){
+    @RequestMapping(value = "/sendMessage", method = RequestMethod.POST)
+    @ResponseBody
+    public String saveHosting(@RequestParam("id") int id, @RequestParam("text") String text,@AuthenticationPrincipal UserDetails userDetails){
         user = ((CurrentUser) userDetails).getUser();
         Message message=Message.builder()
                 .from(user)
-                .to(userRepository.getOne(toId))
+                .to(userRepository.getOne(id))
                 .text(text)
                 .date(sdf.format(new java.util.Date()))
                 .build();
