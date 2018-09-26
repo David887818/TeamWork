@@ -54,19 +54,20 @@ public class UserFriendsController {
         boolean friendStatus = false;
         List<Friend> friendList = friendRepository.findAllByUserId(one.getId());
         List<UsersMessage> userMessages = userMessageRepository.getUserMessages(user.getId());
+        Friend friendq = friendRepository.findByUserId(one.getId());
         List<Friend> allFriends = friendRepository.findAllByUserId(user.getId());
         List<Notification> notifications = notificationRepository.findAllByToId(user.getId());
         List<Friend> all1 = friendRepository.findAll();
         for (Friend friend : all1) {
-            if (friend.getUser().getId() == user.getId() & friend.getFriend().getId() == friendUser.getId()) {
+            if (friend.getUser().getId() == user.getId() && friend.getFriend().getId() == friendq.getFriend().getId() ||
+                    friend.getUser().getId() == user.getId() && friend.getFriend().getId() == id) {
                 requestStatus = true;
                 friendStatus = true;
-
             }
         }
         List<Request> all = requestRepository.findAll();
         for (Request request : all) {
-            if (request.getTo().getId() == friendUser.getId()) {
+            if (request.getTo().getId() == friendq.getFriend().getId()) {
                 requestStatus = true;
             }
         }

@@ -185,11 +185,10 @@
                         <li><a th:href="@{'/userPhotos/'+${friend.id}}">Photos</a></li>
                         <li><a th:href="@{'/userFriends/'+${friend.id}}">Friends</a></li>
 
-
                         <div th:if="${reqStatus==false}" class="ml-3 mt-2 ">
                             <a th:href="@{'/addRequest/'+${friend.id}}"><p class="iGreenFriend">+ Add Friend</p></a>
                         </div>
-                        <div th:if="${friendStatus!=false}" class="ml-3 mt-2">
+                        <div th:if="${friendStatus == true}" class="ml-3 mt-2">
                             <a class="friendGreen" th:href="@{'/deleteFriend/'+${friend.id}}"><p class="iGreenFriend">Delete
                                 Friend</p></a>
                         </div>

@@ -21,14 +21,13 @@ public class DemoApplication implements CommandLineRunner {
 
     @Autowired
     PasswordEncoder passwordEncoder;
-
     public static void main(String[] args) {
         SpringApplication.run (DemoApplication.class, args);
     }
 
     @Override
     public void run(String... args) throws Exception {
-        User user = userRepository.findUserByEmail ("admin@mail.com");
+        User user = userRepository.findUserByEmail ("greenbot@mail.com");
         if (user == null) {
             User admin = User.builder ()
                     .email ("greenbot@mail.com")
@@ -41,9 +40,7 @@ public class DemoApplication implements CommandLineRunner {
                     .build ();
             userRepository.save (admin);
         }
-
     }
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder ();

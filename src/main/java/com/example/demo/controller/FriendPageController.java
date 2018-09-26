@@ -46,15 +46,17 @@ public class FriendPageController {
 
     @Value(value = "${TeamWork.post.pic.url}")
     private String adPicDir;
+
     @GetMapping("/friendsPage/{id}")
     public String findFriendPage(@PathVariable("id") int id) {
-        friendUser = userRepository.findUserById(id);
+        friendUser = userRepository.findUserById (id);
         return "redirect:/friend1Page";
     }
+
     @GetMapping("/information/{id}")
     public String information(@PathVariable("id") int id, @AuthenticationPrincipal UserDetails userDetails) {
-        user = ((CurrentUser) userDetails).getUser();
-        if (user.getId() == id) {
+        user = ((CurrentUser) userDetails).getUser ();
+        if (user.getId () == id) {
             return "redirect:/userPage";
         } else {
             return "redirect:/friendsPage/" + id;
@@ -63,56 +65,56 @@ public class FriendPageController {
 
     @GetMapping("/friend1Page")
     public String friendPage(ModelMap modelMap, @AuthenticationPrincipal UserDetails userDetails) {
-        user = ((CurrentUser) userDetails).getUser();
+        user = ((CurrentUser) userDetails).getUser ();
         boolean requestStatus = false;
         boolean friendStatus = false;
-        List<Post> postsList = postRepository.findAllByFriendId(friendUser.getId());
+        List<Post> postsList = postRepository.findAllByFriendId (friendUser.getId ());
         for (Post post : postsList) {
-            post.setComments(commentRepository.findAllByPostId(post.getId()));
-            post.setLikes(likeRepository.findAllByPostId(post.getId()));
-            for (PostLike like : post.getLikes()) {
-                if (user.getId() == like.getUser().getId()) {
-                    post.setListStatus(ListStatus.TRUE);
+            post.setComments (commentRepository.findAllByPostId (post.getId ()));
+            post.setLikes (likeRepository.findAllByPostId (post.getId ()));
+            for (PostLike like : post.getLikes ()) {
+                if (user.getId () == like.getUser ().getId ()) {
+                    post.setListStatus (ListStatus.TRUE);
                 } else {
-                    post.setListStatus(ListStatus.FALSE);
+                    post.setListStatus (ListStatus.FALSE);
                 }
             }
-            modelMap.addAttribute("posts", postsList);
+            modelMap.addAttribute ("posts", postsList);
         }
-        List<Friend> all1 = friendRepository.findAll();
+        List<Friend> all1 = friendRepository.findAll ();
         for (Friend friend : all1) {
-            if (friend.getUser().getId() == user.getId() & friend.getFriend().getId() == friendUser.getId()) {
+            if (friend.getUser ().getId () == user.getId ()) {
                 requestStatus = true;
                 friendStatus = true;
 
             }
         }
-        List<Request> all = requestRepository.findAll();
+        List<Request> all = requestRepository.findAll ();
         for (Request request : all) {
-            if (request.getTo().getId() == friendUser.getId()) {
+            if (request.getTo ().getId () == friendUser.getId ()) {
                 requestStatus = true;
             }
         }
-        modelMap.addAttribute("reqStatus", requestStatus);
-        modelMap.addAttribute("friendStatus", friendStatus);
-        List<UsersMessage> userMessages = userMessageRepository.getUserMessages(user.getId());
-        List<Friend> allFriends = friendRepository.findAllByUserId(user.getId());
-        List<Notification> notifications = notificationRepository.findAllByToId(user.getId());
-        modelMap.addAttribute("notifications", notifications);
-        modelMap.addAttribute("userMessages", userMessages);
-        modelMap.addAttribute("allFriends", allFriends);
-        modelMap.addAttribute("us", user);
-        modelMap.addAttribute("friend", friendUser);
-        modelMap.addAttribute("comments", commentList);
+        modelMap.addAttribute ("reqStatus", requestStatus);
+        modelMap.addAttribute ("friendStatus", friendStatus);
+        List<UsersMessage> userMessages = userMessageRepository.getUserMessages (user.getId ());
+        List<Friend> allFriends = friendRepository.findAllByUserId (user.getId ());
+        List<Notification> notifications = notificationRepository.findAllByToId (user.getId ());
+        modelMap.addAttribute ("notifications", notifications);
+        modelMap.addAttribute ("userMessages", userMessages);
+        modelMap.addAttribute ("allFriends", allFriends);
+        modelMap.addAttribute ("us", user);
+        modelMap.addAttribute ("friend", friendUser);
+        modelMap.addAttribute ("comments", commentList);
         return "friendPage";
     }
 
     @GetMapping("/deleteFriend/{id}")
-    public String deleteFriend(@PathVariable("id")int id, @AuthenticationPrincipal UserDetails userDetails){
-        user=((CurrentUser)userDetails).getUser();
-        List<Friend> friends = friendRepository.customGetFriend(id, user.getId());
+    public String deleteFriend(@PathVariable("id") int id, @AuthenticationPrincipal UserDetails userDetails) {
+        user = ((CurrentUser) userDetails).getUser ();
+        List<Friend> friends = friendRepository.customGetFriend (id, user.getId ());
         for (Friend friend : friends) {
-            friendRepository.delete(friend);
+            friendRepository.delete (friend);
         }
         return "redirect:/friendsPage/" + id;
     }

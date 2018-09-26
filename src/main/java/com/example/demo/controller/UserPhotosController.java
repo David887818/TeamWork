@@ -58,21 +58,21 @@ public class UserPhotosController {
         boolean requestStatus = false;
         boolean friendStatus = false;
         User one = userRepository.getOne(id);
-        List<User> userList = userRepository.findAll();
         List<UsersMessage> userMessages = userMessageRepository.getUserMessages(user.getId());
         List<Friend> allFriends = friendRepository.findAllByUserId(user.getId());
+        List<Friend> friendList = friendRepository.findAllByUserId(one.getId());
         List<Notification> notifications = notificationRepository.findAllByToId(user.getId());
+        Friend friendq = friendRepository.findByUserId(one.getId());
         List<Friend> all1 = friendRepository.findAll();
         for (Friend friend : all1) {
-            if (friend.getUser().getId() == user.getId() & friend.getFriend().getId() == friendUser.getId()) {
+            if (friend.getUser().getId() == user.getId() & friend.getFriend().getId() ==friendq.getFriend().getId()) {
                 requestStatus = true;
                 friendStatus = true;
-
             }
         }
         List<Request> all = requestRepository.findAll();
         for (Request request : all) {
-            if (request.getTo().getId() == friendUser.getId()) {
+            if (request.getTo().getId() == friendq.getFriend().getId()) {
                 requestStatus = true;
             }
         }
@@ -81,14 +81,15 @@ public class UserPhotosController {
         modelMap.addAttribute("notifications", notifications);
         modelMap.addAttribute("userMessages", userMessages);
         modelMap.addAttribute("user", allFriends);
+        modelMap.addAttribute("friends", friendList);
         modelMap.addAttribute("photos", photos);
         modelMap.addAttribute("us", one);
         return "userPhotos";
     }
 
     @PostMapping("/addUserPhotos")
-    public String addUserPhotos(@AuthenticationPrincipal UserDetails userDetails,@RequestParam("user_id") int id, @RequestParam("image") MultipartFile multipartFile) {
-        user=((CurrentUser)userDetails).getUser();
+    public String addUserPhotos(@RequestParam("user_id") int id, @RequestParam("image") MultipartFile multipartFile,@AuthenticationPrincipal UserDetails userDetails) {
+        user = ((CurrentUser) userDetails).getUser();
         File dir = new File(adPicDir);
         if (!dir.exists()) {
             dir.mkdirs();

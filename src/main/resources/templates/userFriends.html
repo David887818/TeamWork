@@ -188,15 +188,18 @@
                         <li><a th:href="@{'/information/'+${us.id}}">Information</a></li>
                         <li><a th:href="@{'/userPhotos/'+${us.id}}">Photos</a></li>
                         <li><a th:href="@{'/userFriends/'+${us.id}}">Friends</a></li>
-                        <div th:if="${reqStatus==false}" class="ml-3 mt-2 ">
-                            <a th:href="@{'/addRequest/'+${friend.id}}"><p class="iGreenFriend">+ Add Friend</p></a>
-                        </div>
-                        <div th:if="${friendStatus!=false}" class="ml-3 mt-2">
-                            <a class="friendGreen" th:href="@{'/deleteFriend/'+${friend.id}}"><p class="iGreenFriend">Delete
-                                Friend</p></a>
-                        </div>
-                        <div class="ml-3 mt-2 ">
-                            <a th:href="@{'/message/'+${friend.id}}"><p class="iGreenFriend">Send Message</p></a>
+                        <div th:each="friend : ${friends}">
+                            <div th:if="${reqStatus == false}" class="ml-3 mt-2 ">
+                                <a th:href="@{'/addRequest/'+${friend.friend.id}}"><p class="iGreenFriend">+ Add Friend</p></a>
+                            </div>
+                            <div th:if="${friendStatus == true}" class="ml-3 mt-2">
+                                <a class="friendGreen" th:href="@{'/deleteFriend/'+${friend.friend.id}}"><p
+                                        class="iGreenFriend">Delete
+                                    Friend</p></a>
+                            </div>
+                            <div class="ml-3 mt-2 ">
+                                <a th:href="@{'/message/'+${friend.friend.id}}"><p class="iGreenFriend">Send Message</p></a>
+                            </div>
                         </div>
                     </ul>
                 </div>
@@ -221,15 +224,19 @@
                         <li><a th:href="@{'/userPhotos/'+${us.id}}">Photos</a></li>
                         <li><a th:href="@{'/userFriends/'+${us.id}}">Friends</a></li>
                     </ul>
-                    <div th:if="${reqStatus==false}" class="ml-3 mt-2 ">
-                        <a th:href="@{'/addRequest/'+${friend.id}}"><p class="iGreenFriend">+ Add Friend</p></a>
-                    </div>
-                    <div th:if="${friendStatus!=false}" class="ml-3 mt-2">
-                        <a class="friendGreen" th:href="@{'/deleteFriend/'+${friend.id}}"><p class="iGreenFriend">Delete
-                            Friend</p></a>
-                    </div>
-                    <div class="ml-3 mt-2 ">
-                        <a th:href="@{'/message/'+${friend.id}}"><p class="iGreenFriend">Send Message</p></a>
+                    <div th:each="friend : ${friends}">
+                        <div th:if="${reqStatus == false}" class="ml-3 mt-2 ">
+                            <a th:href="@{'/addRequest/'+${friend.friend.id}}"><p class="iGreenFriend">+ Add Friend</p>
+                            </a>
+                        </div>
+                        <div th:if="${friendStatus == true}" class="ml-3 mt-2">
+                            <a class="friendGreen" th:href="@{'/deleteFriend/'+${friend.friend.id}}"><p
+                                    class="iGreenFriend">Delete
+                                Friend</p></a>
+                        </div>
+                        <div class="ml-3 mt-2 ">
+                            <a th:href="@{'/message/'+${friend.friend.id}}"><p class="iGreenFriend">Send Message</p></a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -248,7 +255,8 @@
                                     <img class="userPicSearch " src="/user.png">
                                 </div>
                                 <span th:text="${friend.friend.name}" class="ml-3 iBlack mt-3"></span>
-                                <span th:text="${friend.friend.surname}" class="ml-2 iBlack mt-3"></span></li>
+                                <span th:text="${friend.friend.surname}" class="ml-2 iBlack mt-3"></span>
+                            </li>
                         </ul>
                     </a>
                 </div>
